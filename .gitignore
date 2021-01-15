@@ -1,4 +1,5 @@
 .*.swp
-mlx/
+mlx/*.o
+mlx/*.a
 objs/
 cub3D
