@@ -41,3 +41,8 @@ parsing; Floor color out of range
 parsing; Ceiling color out of range
 
 Map; Empty line in your map or element after the map.
+Map; No player position defined
+Map; To many player position defined
+Map; Invalid map -spaces in the middle
+Map; Invalid map -Wall missing
+Map; Invalid map -Unknown character

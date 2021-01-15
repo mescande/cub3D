@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/15 15:18:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 23:44:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			ft_puterror(int i)
 		}
 		if (i - k == 0)
 		{
-			ft_fprintf(2, "Error %d\n\t%s\n", i, line_interpret(line));
+			ft_fprintf(2, "\nError %d\n\t%s\n", i, line_interpret(line));
 			return (ft_close(fd, i, line));
 		}
 		free(line);

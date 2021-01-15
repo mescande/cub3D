@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 20:14:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/16 00:04:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		assign(char *id, t_file *file)
 		return (set_colors(file, 0));
 	if (!ft_strcmp(id, "C"))
 		return (set_colors(file, 1));
-	if (ft_strnstr(id, "11", 2))
+	if (ft_strnstr(id, "11", ft_strlen(id)))
 	{
 		map = 1;
 		return (-1);
@@ -78,17 +78,16 @@ int		parsit(t_file *file, char *name)
 	{
 		if (gnl == -1)
 			return (ft_close(fd, 5, line));
-		if ((gnl = assign(ft_strtok(line, " \t"), file)) > 0)
+		if ((gnl = assign(ft_strtok(line, "\t"), file)) > 0)
 			return (ft_close(fd, gnl, line));
 		if (gnl == -1)
 		{
 			if ((gnl = map_parse(line, file)))
 				return (ft_close(fd, gnl, line));
 		}
-		else
-			free(line);
+		free(line);
 	}
-	if ((gnl = map_verif()))
-		return (gnl);
+	if ((gnl = map_verif(file)))
+		return (ft_close(fd, gnl, line));
 	return (ft_close(fd, 0, line));
 }

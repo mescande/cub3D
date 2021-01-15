@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 20:14:21 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 22:01:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct	s_wall_textures {
 typedef struct	s_map {
 	char	**map;
 	int		height;
-	int		lenght;
+	int		length;
 }				t_map;
 
 typedef struct	s_file_information {
