@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 12:36:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 20:14:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,15 @@ typedef struct	s_wall_textures {
 	struct s_wall_textures	*next;
 }				t_tex;
 
+typedef struct	s_map {
+	char	**map;
+	int		height;
+	int		lenght;
+}				t_map;
+
 typedef struct	s_file_information {
 	char	res[2];
-	char	*map;
+	t_map	map;
 	t_tex	*textures;
 	char	ceiling[3];
 	char	floor[3];
@@ -67,6 +73,13 @@ int				args_management(int ac, char **av);
 int				verif_file_extension(char *name);
 char			*vlen(char *str, char *type);
 int				parsit(t_file *file, char *name);
+
+int				set_resolution(t_file *file);
+int				set_textures(t_file *file, char id);
+int				set_colors(t_file *file, char id);
+
+int				map_verif();
+int				map_parse(char *line, t_file *file);
 
 /*
 **		error manager and free gestion

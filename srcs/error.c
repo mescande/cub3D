@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/14 23:45:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 15:18:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			ft_puterror(int i)
 	int		k;
 
 	k = 1;
-	if ((fd = open("srcs/errors", O_RDONLY)) == -1)
+	if ((fd = open("srcs/error", O_RDONLY)) == -1)
 		return ((write(2, "open is broken, fix your computer...\n", 37)) == 37);
 	while ((gnl = get_next_line(fd, &line)) && i)
 	{
@@ -71,26 +71,23 @@ int			ft_puterror(int i)
 
 int			ft_freeemee(t_gnrl *data, int i)
 {
-/*	void	*p1;
+	void	*p1;
+	int		l;
 
-	while (info->cams)
+	l = -1;
+	while (data->file.textures)
 	{
-		p1 = info->cams;
-		info->cams = info->cams->next;
+		p1 = data->file.textures;
+		free(data->file.textures->name);
+		data->file.textures = data->file.textures->next;
 		free(p1);
 	}
-	while (info->lights)
+	while (++l < data->file.map.height)
 	{
-		p1 = info->lights;
-		info->lights = info->lights->next;
-		free(p1);
+		free(data->file.map.map[l]);
 	}
-	while (info->obj)
-	{
-		p1 = info->obj;
-		info->obj = info->obj->next;
-		free(p1);
-	}*/
+	if (data->file.map.map)
+		free(data->file.map.map);
 	if (data->mlx.mlx || data->mlx.win)
 		end_mlx(data->mlx);
 	return ((i == 0 ? 0 : ft_puterror(i)));

@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:50:08 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/14 23:41:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 16:47:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		start_mlx(t_gnrl *data)
 {
-	int	x;
-	int	y;
-	t_mlx w;
+	int		x;
+	int		y;
+	t_mlx	w;
 
 	w = data->mlx;
 	if (!(w.mlx = mlx_init()))

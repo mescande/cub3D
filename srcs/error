@@ -30,3 +30,14 @@ parsing; Texture for SO has too many arguments
 parsing; Texture for WE has too many arguments
 parsing; Texture for EA has too many arguments
 parsing; Texture for S has too many arguments
+
+parsing; Floor color has not enough arguments
+parsing; Ceiling color has not enough arguments
+
+parsing; Floor color has too many arguments
+parsing; Ceiling color has too many arguments
+
+parsing; Floor color out of range
+parsing; Ceiling color out of range
+
+Map; Empty line in your map or element after the map.

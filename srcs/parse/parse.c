@@ -6,13 +6,13 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 12:59:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 20:14:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		select_id(char *id)
+char	select_id(char *id)
 {
 	if (id[0] == 'N')
 		return (T_NO);
@@ -22,23 +22,34 @@ int		select_id(char *id)
 			return (T_SO);
 		return (T_S);
 	}
-	if (id[0] = 'E')
+	if (id[0] == 'E')
 		return (T_EA);
 	return (T_WE);
 }
 
 int		assign(char *id, t_file *file)
 {
-	(void)line;
-	(void)file;
+	static int	map = 0;
+
+	if (map)
+		return (-1);
+	if (id == NULL)
+		return (0);
 	if (!ft_strcmp(id, "R"))
 		return (set_resolution(file));
 	if (!ft_strcmp(id, "NO") || !ft_strcmp(id, "SO") || !ft_strcmp(id, "EA")
 			|| !ft_strcmp(id, "WE") || !ft_strcmp(id, "S"))
-		return (set texture(file, selectid(id)));
+		return (set_textures(file, select_id(id)));
 	if (!ft_strcmp(id, "F"))
-		return (set_color(file, 
+		return (set_colors(file, 0));
 	if (!ft_strcmp(id, "C"))
+		return (set_colors(file, 1));
+	if (ft_strnstr(id, "11", 2))
+	{
+		map = 1;
+		return (-1);
+	}
+	printf("|%s|\n", id);
 	return (11);
 }
 
@@ -67,11 +78,17 @@ int		parsit(t_file *file, char *name)
 	{
 		if (gnl == -1)
 			return (ft_close(fd, 5, line));
-		if (!ft_strcmp(line, ""))
-			;
-		else if ((gnl = assign(ft_strtok(line, " \t"), file)) != 0)
+		if ((gnl = assign(ft_strtok(line, " \t"), file)) > 0)
 			return (ft_close(fd, gnl, line));
-		free(line);
+		if (gnl == -1)
+		{
+			if ((gnl = map_parse(line, file)))
+				return (ft_close(fd, gnl, line));
+		}
+		else
+			free(line);
 	}
+	if ((gnl = map_verif()))
+		return (gnl);
 	return (ft_close(fd, 0, line));
 }
