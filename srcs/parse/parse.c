@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 00:04:33 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/16 11:19:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,15 @@ int		assign(char *id, t_file *file)
 	return (11);
 }
 
-int		verif_file_extension(char *name)
-{
-	size_t	len;
-
-	len = ft_strlen(name);
-	if (name[len - 4] != '.' || name[len - 3] != 'c' || name[len - 2] != 'u'
-			|| name[len - 1] != 'b')
-		return (1);
-	return (0);
-}
-
 int		parsit(t_file *file, char *name)
 {
 	int		fd;
 	char	*line;
 	int		gnl;
 
+	if (ft_strcmp(name + ft_strlen(name) - 4, ".cub"))
+		return (3);
 	if ((fd = open(name, O_RDONLY)) == -1)
-		return (1);
-	if (verif_file_extension(name))
 		return (2);
 	while ((gnl = get_next_line(fd, &line)))
 	{

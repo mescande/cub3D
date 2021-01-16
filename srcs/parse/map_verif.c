@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:29:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 00:04:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/16 11:12:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			map_squarer(t_map *map)
 	while (i < map->height)
 	{
 		len = ft_strlen(map->map[i]);
-		if (!(res = /*ft_me*/malloc(map->length + 2)))
+		if (!(res = ft_memalloc(map->length + 2)))
 			return (0);
 		res[0] = ' ';
 		ft_memcpy(res + 1, map->map[i], len);
@@ -34,33 +34,31 @@ int			map_squarer(t_map *map)
 	return (0);
 }
 
-int			map_verif_char(int i, int j, t_map map_d, char **map, int *pos)
+int			map_verif_char(int i, int j, t_map *map_d, int *pos)
 {
+	char	**map;
+
+	map = map_d->map;
 	if (map[i][j] == '0' || map[i][j] == '2')
 	{
-		if (i == 0 || i == map_d.height || j == 1 || j == map_d.length)
+		if (i == 0 || i == map_d->height || j == 1 || j == map_d->length)
 			return (47);
-		if (	   map[i - 1][j - 1] == ' ' || map[i - 1][j] == ' '
+		if (map[i - 1][j - 1] == ' ' || map[i - 1][j] == ' '
 				|| map[i - 1][j + 1] == ' ' || map[i][j - 1] == ' '
 				|| map[i][j + 1] == ' ' || map[i + 1][j - 1] == ' '
 				|| map[i + 1][j] == ' ' || map[i + 1][j + 1] == ' ')
-		{
-/*		printf("map[%d][%d] = %c\nmap[%d] = |%s|\n", i, j, map[i][j], i, map[i]);
-		printf("%c%c%c\n%c%c%c\n%c%c%c\n", map[i - 1][j - 1], map[i - 1][j], map[i - 1][j + 1], map[i][j - 1], 'H', map[i][j + 1], map[i + 1][j - 1], map[i + 1][j], map[i + 1][j + 1]);
-		printf("%s\n", map[i + 1]);
-*/			return (46);
-		}
+			return (46);
 	}
 	else if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
 			|| map[i][j] == 'W')
 	{
 		if ((*pos)++)
 			return (45);
+		map_d->start[X] = i;
+		map_d->start[Y] = j;
 	}
 	else if (map[i][j] != '1' && map[i][j] != ' ')
-	{
 		return (48);
-	}
 	return (0);
 }
 
@@ -81,7 +79,7 @@ int			map_verif(t_file *file)
 		j = 0;
 		while (++j < file->map.length + 1)
 		{
-			if ((ret = map_verif_char(i, j, file->map, file->map.map, &pos)))
+			if ((ret = map_verif_char(i, j, &file->map, &pos)))
 				return (ret);
 		}
 	}

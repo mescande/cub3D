@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 22:01:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/16 11:11:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_map {
 	char	**map;
 	int		height;
 	int		length;
+	int		start[2];
 }				t_map;
 
 typedef struct	s_file_information {
@@ -92,7 +93,7 @@ int				ft_freeemee(t_gnrl *info, int i);
 **		MLX managing (start, close, free...)
 */
 int				start_mlx(t_gnrl *info);
-void			end_mlx(t_mlx win);
+void			end_mlx(t_mlx *win);
 
 
 #endif
