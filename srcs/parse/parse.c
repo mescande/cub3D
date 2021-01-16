@@ -6,50 +6,59 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 11:19:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/16 16:12:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	select_id(char *id)
-{
-	if (id[0] == 'N')
-		return (T_NO);
-	if (id[0] == 'S')
-	{
-		if (id[1] == 'O')
-			return (T_SO);
-		return (T_S);
-	}
-	if (id[0] == 'E')
-		return (T_EA);
-	return (T_WE);
-}
+static struct s_parse_assign_fonction	dest[] = {
+	{"R", set_resolution},
+	{"NO", set_textures},
+	{"SO", set_textures},
+	{"WE", set_textures},
+	{"EA", set_textures},
+	{"S", set_textures},
+	{"F", set_colors},
+	{"C", set_colors},
+	{NULL, 0}
+};
 
-int		assign(char *id, t_file *file)
+int		assign(char *line, t_file *file)
 {
 	static int	map = 0;
+	int			i;
+	char		*id;
+	char		*save;
+	const char	*sep = /*(IS_SMART == 0 ? " \t\r\n\v\f" : */" \t"/*)*/;
 
+	i = -1;
 	if (map)
 		return (-1);
+	save = ft_strdup(line);
+//	printf("Try with [%s]\n", save);
+	id = ft_strtok(save, sep);
 	if (id == NULL)
+	{
+		free(save);
 		return (0);
-	if (!ft_strcmp(id, "R"))
-		return (set_resolution(file));
-	if (!ft_strcmp(id, "NO") || !ft_strcmp(id, "SO") || !ft_strcmp(id, "EA")
-			|| !ft_strcmp(id, "WE") || !ft_strcmp(id, "S"))
-		return (set_textures(file, select_id(id)));
-	if (!ft_strcmp(id, "F"))
-		return (set_colors(file, 0));
-	if (!ft_strcmp(id, "C"))
-		return (set_colors(file, 1));
+	}
+//	printf("Try with [%s]\n", id);
+	while (dest[++i].id)
+		if (!ft_strcmp(dest[i].id, id))
+		{
+			i = dest[i].fct(file, i, (char *)sep);
+			free(save);
+			return (i);
+		}
 	if (ft_strnstr(id, "11", ft_strlen(id)))
 	{
 		map = 1;
+		free(save);
 		return (-1);
 	}
 	printf("|%s|\n", id);
+	free(save);
 	return (11);
 }
 
@@ -67,7 +76,7 @@ int		parsit(t_file *file, char *name)
 	{
 		if (gnl == -1)
 			return (ft_close(fd, 5, line));
-		if ((gnl = assign(ft_strtok(line, "\t"), file)) > 0)
+		if ((gnl = assign(line, file)) > 0)
 			return (ft_close(fd, gnl, line));
 		if (gnl == -1)
 		{

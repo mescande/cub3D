@@ -6,11 +6,64 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/16 11:21:39 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/16 13:07:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static char	*errors[] = {
+	"Undefined error, something went really wrong",
+	"file error; Can't find the file or the file cannot be read\n\
+		Check if the path is ok.",
+	"file error; Your file is not a .cub file.",
+	"Allocation error, Malloc went wrong",
+	"GNL status -1; cf -gnlhelp",
+	"USAGE :\n\t./cub3D FILE (arg)\n\tUse -h for more help",
+	"mlx_init() failed to set up a connection to the X server",
+	"mlx_get_screen_size() returned 0",
+	"mlx_new_window() failed to create a new window",
+	"mlx_get_data_addr() didn't return 4 bits per pixel",
+	"parsing; Unknown identifier",
+	"parsing; Resolution has not enough arguments",
+	"parsing; Resolution has to many arguments",
+	"parsing; Resolution is defined twice",
+	"",
+	"parsing; Texture for NO is defined twice",
+	"parsing; Texture for SO is defined twice",
+	"parsing; Texture for WE is defined twice",
+	"parsing; Texture for EA is defined twice",
+	"parsing; Texture for S is defined twice",
+	"",
+	"parsing; Texture for NO is not specified",
+	"parsing; Texture for SO is not specified",
+	"parsing; Texture for WE is not specified",
+	"parsing; Texture for EA is not specified",
+	"parsing; Texture for S is not specified",
+	"",
+	"parsing; Texture for NO has too many arguments",
+	"parsing; Texture for SO has too many arguments",
+	"parsing; Texture for WE has too many arguments",
+	"parsing; Texture for EA has too many arguments",
+	"parsing; Texture for S has too many arguments",
+	"",
+	"parsing; Floor color has not enough arguments",
+	"parsing; Ceiling color has not enough arguments",
+	"",
+	"parsing; Floor color has too many arguments",
+	"parsing; Ceiling color has too many arguments",
+	"",
+	"parsing; Floor color out of range",
+	"parsing; Ceiling color out of range",
+	"",
+	"Map; Empty line in your map or element after the map.",
+	"Map; No player position defined",
+	"Map; To many player position defined",
+	"Map; Invalid map -spaces in the middle",
+	"Map; Invalid map -Wall missing",
+	"Map; Invalid map -Unknown character",
+	""
+};
 
 static char	*line_interpret(char *line)
 {
@@ -43,30 +96,19 @@ int			ft_close(int fd, int ret, char *line)
 
 int			ft_puterror(int i)
 {
-	int		fd;
-	char	*line;
-	int		gnl;
 	int		k;
 
-	k = 1;
-	if ((fd = open("srcs/error", O_RDONLY)) == -1)
-		return ((write(2, "open is broken, fix your computer...\n", 37)) == 37);
-	while ((gnl = get_next_line(fd, &line)) && i)
+	k = 0;
+	while (errors[k])
 	{
-		if (gnl == -1 || i == 3)
-		{
-			gnl = write(2, "Error 3 : GNL status -1; cf -gnlhelp\n", 27);
-			return (ft_close(fd, 5, line));
-		}
 		if (i - k == 0)
 		{
-			ft_fprintf(2, "\nError %d\n\t%s\n", i, line_interpret(line));
-			return (ft_close(fd, i, line));
+			ft_fprintf(2, "\nError %d\n\t%s\n", i, line_interpret(errors[k]));
+			return (i);
 		}
-		free(line);
 		k++;
 	}
-	return (ft_close(fd, i, line));
+	return (i);
 }
 
 int			ft_freeemee(t_gnrl *data, int i)
@@ -91,3 +133,4 @@ int			ft_freeemee(t_gnrl *data, int i)
 	end_mlx(&data->mlx);
 	return ((i == 0 ? 0 : ft_puterror(i)));
 }
+
