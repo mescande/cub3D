@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arguments.c                                        :+:      :+:    :+:   */
+/*   player_manage.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/14 23:33:25 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 18:38:15 by user42           ###   ########.fr       */
+/*   Created: 2021/01/16 17:50:24 by user42            #+#    #+#             */
+/*   Updated: 2021/01/16 18:42:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		args_management(int ac, char **av, t_gnrl *data)
+void		player_manage(t_gnrl *data)
 {
-	data->fov = 66;
-	if (ac == 2 || av[1][0] != '-')
-		return (1);
-	else
-		return (2);
+	data->player.pos[X] = data->file.map.start[X];
+	data->player.pos[Y] = data->file.map.start[Y];
+	data->player.dir[X] = 1;
+	data->player.dir[Y] = 0;
+	data->player.plane[X] = 0;
+	data->player.plane[Y] = atan(data->fov * M_PI_4 / 90);
+	data->player.life = 100;
+	return ;
+//	return (0);
 }

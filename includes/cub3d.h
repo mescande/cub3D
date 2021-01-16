@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 16:28:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/16 22:27:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,10 @@
 # define X 0
 # define Y 1
 
-# ifndef IS_SMART
-#  define IS_SMART 0
-# endif
-
-enum	e_textures {
-	T_NO,
-	T_SO,
-	T_WE,
-	T_EA,
-	T_S,
-};
-
 typedef struct	s_wall_textures {
 	char					*name;
 	int						id;
+	unsigned int			color;
 	struct s_wall_textures	*next;
 }				t_tex;
 
@@ -65,9 +54,20 @@ typedef struct	s_mlx_informations {
 	void	*img;
 }				t_mlx;
 
+typedef struct	s_player_informations {
+	double	pos[2];
+	double	dir[2];
+	double	plane[2];
+	int		posi[2];
+	int		life;
+}				t_play;
+
 typedef struct	s_general_informations {
 	t_file	file;
 	t_mlx	mlx;
+	t_play	player;
+	double	fov;
+	int		is_smart;
 }				t_gnrl;
 
 struct			s_parse_assign_fonction {
@@ -75,10 +75,27 @@ struct			s_parse_assign_fonction {
 	int		(*fct)(t_file *file, char id, char *sep);
 };
 
-int				args_management(int ac, char **av);
+typedef struct	s_ray_informations {
+	int		gap[2];
+	double	*i;
+	int		pos[2];
+	double	ray[2];
+	double	side[2];
+	double	delta[2];
+	double	ratio;
+	t_play	player;
+	int		wall;
+	double	dist;
+	t_map	map;
+}				t_ray;
 
 /*
-**		Parsing main function
+**		Argument management
+*/
+int				args_management(int ac, char **av, t_gnrl *data);
+
+/*
+**		Parsing functions
 */
 int				verif_file_extension(char *name);
 char			*vlen(char *str, char *type);
@@ -88,7 +105,7 @@ int				set_resolution(t_file *file, char id, char *sep);
 int				set_textures(t_file *file, char id, char *sep);
 int				set_colors(t_file *file, char id, char *sep);
 
-int				map_verif();
+int				map_verif(t_file *file);
 int				map_parse(char *line, t_file *file);
 
 /*
@@ -105,5 +122,18 @@ int				start_mlx(t_gnrl *info);
 void			end_mlx(t_mlx *win);
 
 int				c3d_loop(t_gnrl *data);
+
+void			player_manage(t_gnrl *data);
+
+int				calcul_img(t_gnrl *data);
+
+/*
+**		Math fonctions
+*/
+double			*add_2d(double *t1, double *t2);
+double			*sub_2d(double *t1, double *t2);
+double			*mul_2d(double *t1, double val);
+
+double			abs_d(double i);
 
 #endif

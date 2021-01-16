@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/16 13:07:38 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/16 17:25:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			ft_puterror(int i)
 	k = 0;
 	while (errors[k])
 	{
-		if (i - k == 0)
+		if (i - k == 1)
 		{
 			ft_fprintf(2, "\nError %d\n\t%s\n", i, line_interpret(errors[k]));
 			return (i);

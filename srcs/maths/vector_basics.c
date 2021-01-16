@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arguments.c                                        :+:      :+:    :+:   */
+/*   vector_basics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/14 23:33:25 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 18:38:15 by user42           ###   ########.fr       */
+/*   Created: 2021/01/16 18:55:39 by user42            #+#    #+#             */
+/*   Updated: 2021/01/16 19:34:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		args_management(int ac, char **av, t_gnrl *data)
+double	*add_2d(double *t1, double *t2)
 {
-	data->fov = 66;
-	if (ac == 2 || av[1][0] != '-')
-		return (1);
-	else
-		return (2);
+	t1[X] += t2[X];
+	t1[Y] += t2[Y];
+	return (t1);
+}
+
+double	*sub_2d(double *t1, double *t2)
+{
+	t1[X] -= t2[X];
+	t1[Y] -= t2[Y];
+	return (t1);
+}
+
+double	*mul_2d(double *t1, double val)
+{
+	t1[X] *= val;
+	t1[Y] *= val;
+	return (t1);
 }

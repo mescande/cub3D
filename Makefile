@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/16 14:19:07 by user42           ###   ########.fr        #
+#    Updated: 2021/01/16 21:49:00 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,11 @@ SRC_LIST	=	main.c\
 				arguments.c\
 				error.c\
 				mlx_manage.c\
-				loop.c
+				loop.c\
+				player_manage.c\
+				calcul_img.c\
+				maths/vector_basics.c\
+				maths/general_basics.c
 
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))

@@ -6,13 +6,13 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:29:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 11:12:13 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/16 18:12:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int			map_squarer(t_map *map)
+static int	map_squarer(t_map *map)
 {
 	int		i;
 	int		len;
@@ -34,12 +34,21 @@ int			map_squarer(t_map *map)
 	return (0);
 }
 
-int			map_verif_char(int i, int j, t_map *map_d, int *pos)
+static int	is_player_position(char c)
+{
+	if (c == 'n' || c == 's' || c == 'N'
+			|| c == 'S' || c == 'E' || c == 'W'
+			|| c == 'e' || c == 'w')
+		return (1);
+	return (0);
+}
+
+static int	map_verif_char(int i, int j, t_map *map_d, int *pos)
 {
 	char	**map;
 
 	map = map_d->map;
-	if (map[i][j] == '0' || map[i][j] == '2')
+	if (map[i][j] == '0' || map[i][j] == '2' || is_player_position(map[i][j]))
 	{
 		if (i == 0 || i == map_d->height || j == 1 || j == map_d->length)
 			return (47);
@@ -48,14 +57,13 @@ int			map_verif_char(int i, int j, t_map *map_d, int *pos)
 				|| map[i][j + 1] == ' ' || map[i + 1][j - 1] == ' '
 				|| map[i + 1][j] == ' ' || map[i + 1][j + 1] == ' ')
 			return (46);
-	}
-	else if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
-			|| map[i][j] == 'W')
-	{
-		if ((*pos)++)
-			return (45);
-		map_d->start[X] = i;
-		map_d->start[Y] = j;
+		if (is_player_position(map[i][j]))
+		{
+			if ((*pos)++)
+				return (45);
+			map_d->start[X] = i;
+			map_d->start[Y] = j;
+		}
 	}
 	else if (map[i][j] != '1' && map[i][j] != ' ')
 		return (48);
