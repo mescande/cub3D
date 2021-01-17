@@ -1,10 +1,10 @@
-R	3000 3000
+R	1280 1024
 
-NO	./path_to_the_north_texture
-SO	./path_to_the_south_texture
-WE	./path_to_the_west_texture
-EA	./path_to_the_east_texture
-S	./path_to_the_sprite_texture
+NO	./textures/redbrick.xpm
+SO	./textures/wood.xpm
+WE	./textures/purplestone.xpm
+EA	./textures/greystone.xpm
+S	./textures/pillar.xpm
 
 F 220,100,0
 C	50,50,255

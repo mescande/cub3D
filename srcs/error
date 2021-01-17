@@ -46,3 +46,9 @@ Map; To many player position defined
 Map; Invalid map -spaces in the middle
 Map; Invalid map -Wall missing
 Map; Invalid map -Unknown character
+
+Texture; File type for NO is not managed
+Texture; File type for SO is not managed
+Texture; File type for WE is not managed
+Texture; File type for EA is not managed
+Texture; File type for S is not managed

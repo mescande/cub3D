@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 16:43:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 23:32:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,23 @@ void	add_textures(t_file *file, t_tex *tree, t_tex *new)
 		tree->next = new;
 	else
 		add_textures(file, tree->next, new);
+}
+
+int		open_texture(t_gnrl *data)
+{
+	t_tex	*p;
+
+	p = data->file.textures;
+	while (p)
+	{
+		if (ft_strcmp(p->name + ft_strlen(p->name) - 4, ".xpm"))
+			return (50 + p->id -1 );
+		if (!(p->img = mlx_xpm_file_to_image(data->mlx.mlx, p->name, &p->width,
+					&p->height)))
+			return (55 + p->id - 1);
+		p = p->next;
+	}
+	return (0);
 }
 
 /*

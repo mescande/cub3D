@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/17 20:22:20 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 23:34:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,17 @@ static char	*errors[] = {
 	"Map; Invalid map -spaces in the middle",
 	"Map; Invalid map -Wall missing",
 	"Map; Invalid map -Unknown character",
+	"",
+	"Texture; File type for NO is not managed"
+	"Texture; File type for SO is not managed"
+	"Texture; File type for WE is not managed"
+	"Texture; File type for EA is not managed"
+	"Texture; File type for S is not managed"
+	"Texture; File for NO couldn't been read"
+	"Texture; File for SO couldn't been read"
+	"Texture; File for WE couldn't been read"
+	"Texture; File for EA couldn't been read"
+	"Texture; File for S couldn't been read"
 	""
 };
 
@@ -121,6 +132,7 @@ int			ft_freeemee(t_gnrl *data, int i)
 	{
 		p1 = data->file.textures;
 		free(data->file.textures->name);
+		mlx_destroy_image(data->mlx.mlx, data->file.textures->img);
 		data->file.textures = data->file.textures->next;
 		free(p1);
 	}

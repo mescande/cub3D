@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:50:08 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/17 20:37:17 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 23:18:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		start_mlx(t_gnrl *data)
 	mlx_get_screen_size(w->mlx, &x, &y);
 	data->file.res[X] = (x > data->file.res[X] ? data->file.res[X] : x);
 	data->file.res[Y] = (y > data->file.res[Y] ? data->file.res[Y] : y);
+	if ((x = open_texture(data)))
+		return (x);
 	if (!(w->win = mlx_new_window(w->mlx, data->file.res[X],
 					data->file.res[Y], "cub3D by mescande")))
 		return (9);

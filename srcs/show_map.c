@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 11:42:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 20:04:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 22:08:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	show_map(t_gnrl *data)
 	int	y;
 
 	x = 0;
-	while (x < data->file.map.height)
+	while (x < data->file.map.height && data->player.show_map)
 	{
 		y = 1;
 		while (y < data->file.map.length + 1)
@@ -42,6 +42,8 @@ int put_square(int x, int y, t_gnrl *data)
         color = 0x000050;
     else if (val == '9')
         color = 0xff0000; 
+	else if (val == 'H')
+		color = 0x0000ff;
 	else
 		color = 0x505050;
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 13:12:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 20:19:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 21:51:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ int		rotate(t_gnrl *data)
 	double	save;
 	double	cv;
 	double	sv;
+	int		rot;
 
-	cv = cos(1. * data->player.rot * M_PI_4 / 45);
-	sv = sin(1. * data->player.rot * M_PI_4 / 45);
+	rot = (data->player.rot[X] && data->player.rot[Y] ? 0 : 1);
+	rot = rot * (data->player.rot[X] ? -1 : 1);
+	cv = cos(1. * rot * M_PI_4 / 45);
+	sv = sin(1. * rot * M_PI_4 / 45);
 	save = data->player.dir[X];
 	data->player.dir[X] = data->player.dir[X] * cv - data->player.dir[Y] * sv;
 	data->player.dir[Y] = data->player.dir[Y] * cv + save * sv;
@@ -36,13 +39,16 @@ int		rotate(t_gnrl *data)
 */	return (1);
 }
 
-int		movement(t_gnrl *data)
+int		translate(t_gnrl *data)
 {
 	int		ret;
 	double	add;
 	double	save;
+	int		tran;
 
-	add = data->player.mov * 0.1 * data->player.dir[X];
+	tran = (data->player.tran[X] && data->player.tran[Y] ? 0 : 1);
+	tran = tran * (data->player.tran[X] ? -1 : 1);
+	add = tran * 0.1 * data->player.plane[X];
 	save = data->player.pos[X];
 	if (data->file.map.map[(int)(add * 3 +
 				data->player.pos[X])][(int)(data->player.pos[Y])] != '1')
@@ -50,7 +56,34 @@ int		movement(t_gnrl *data)
 		data->player.pos[X] += add;
 		ret = 1;
 	}
-	add = data->player.mov * 0.1 * data->player.dir[Y];
+	add = tran * 0.1 * data->player.plane[Y];
+	if (data->file.map.map[(int)(save)][(int)(add * 3 +
+				data->player.pos[Y])] != '1')
+	{
+		data->player.pos[Y] += add;
+		ret = 1;
+	}
+	return (ret);
+}
+
+int		movement(t_gnrl *data)
+{
+	int		ret;
+	double	add;
+	double	save;
+	int		mov;
+
+	mov = (data->player.mov[X] && data->player.mov[Y] ? 0 : 1);
+	mov = mov * (data->player.mov[X] ? -1 : 1);
+	add = mov * 0.1 * data->player.dir[X];
+	save = data->player.pos[X];
+	if (data->file.map.map[(int)(add * 3 +
+				data->player.pos[X])][(int)(data->player.pos[Y])] != '1')
+	{
+		data->player.pos[X] += add;
+		ret = 1;
+	}
+	add = mov * 0.1 * data->player.dir[Y];
 	if (data->file.map.map[(int)(save)][(int)(add * 3 +
 				data->player.pos[Y])] != '1')
 	{

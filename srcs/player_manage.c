@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:50:24 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 20:43:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 21:20:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,6 @@ int			player_manage(t_gnrl *data)
 		data->player.dir[Y] = 1. * (data->file.map.dir == 'E' ? 1 : -1);
 		data->player.plane[X] = 1. * (data->file.map.dir == 'E' ? 1 : -1);
 	}
-	/*if (data->file.map.dir == 'N')
-	{
-		data->player.dir[X] = -1.;
-		data->player.plane[Y] = 1.;
-	}
-	if (data->file.map.dir == 'S')
-	{
-		data->player.dir[X] = 1.;
-		data->player.plane[Y] = -1.;
-	}
-	if (data->file.map.dir == 'E')
-	{
-		data->player.dir[Y] = 1.;
-		data->player.plane[X] = -1.;
-	}
-	if (data->file.map.dir == 'W')
-	{
-		data->player.dir[Y] = -1.;
-		data->player.plane[X] = 1.;
-	}
-	*/data->player.life = 100;
 	if (player_map(data))
 		return (4);
 	return (0);

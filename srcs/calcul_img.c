@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 20:45:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 22:04:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int					calcul_img(t_gnrl *data)
 	{
 		r.pos[X] = (int)r.player->pos[X];
 		r.pos[Y] = (int)r.player->pos[Y];
+		r.player->map[r.pos[X]][r.pos[Y]] = 'H';
 		r.start[X] = r.player->pos[X];
 		r.start[Y] = r.player->pos[Y];
 //		printf("dist %f\t%c%c%c%c%c\n", r.dist, r.map.map[r.pos[X]][r.pos[Y] - 2], r.map.map[r.pos[X]][r.pos[Y] - 1], r.map.map[r.pos[X]][r.pos[Y]], r.map.map[r.pos[X]][r.pos[Y] + 1], r.map.map[r.pos[X]][r.pos[Y] + 2]);

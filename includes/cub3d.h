@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 20:37:14 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 23:32:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
+# include "keys.h"
 
 # define X 0
 # define Y 1
@@ -30,6 +31,10 @@ typedef struct	s_wall_textures {
 	char					*name;
 	int						id;
 	unsigned int			color;
+	unsigned int			*line;
+	void					*img;
+	int						width;
+	int						height;
 	struct s_wall_textures	*next;
 }				t_tex;
 
@@ -62,9 +67,12 @@ typedef struct	s_player_informations {
 	double	dir[2];
 	double	plane[2];
 	int		posi[2];
-	int		life;
-	int		rot;
-	int		mov;
+	char	life;
+	char	rot[2];
+	char	mov[2];
+	char	tran[2];
+	char	show_map;
+	char	reload;
 	char	**map;
 }				t_play;
 
@@ -110,9 +118,11 @@ char			*vlen(char *str, char *type);
 int				parsit(t_file *file, char *name);
 
 int				set_resolution(t_file *file, char id, char *sep);
+int				open_texture(t_gnrl *data);
 int				set_textures(t_file *file, char id, char *sep);
 int				set_colors(t_file *file, char id, char *sep);
 
+int				is_player_position(char c);
 int				map_verif(t_file *file);
 int				map_parse(char *line, t_file *file);
 
@@ -134,6 +144,7 @@ int				key_press(int key, t_gnrl *data);
 int				c3d_loop(t_gnrl *data);
 
 int				rotate(t_gnrl *data);
+int				translate(t_gnrl *data);
 int				movement(t_gnrl *data);
 void			map_cpy(char **dst, t_map src);
 int				player_manage(t_gnrl *data);
