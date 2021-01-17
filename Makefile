@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/17 12:01:29 by user42           ###   ########.fr        #
+#    Updated: 2021/01/17 15:12:28 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ SRC_LIST	=	main.c\
 				calcul_img.c\
 				maths/vector_basics.c\
 				maths/general_basics.c\
-				show_map.c
+				show_map.c\
+				hooky.c
 
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))
@@ -60,7 +61,7 @@ all:
 	@$(MAKE) -j -C $(MLX_INC)
 	@$(MAKE) -j $(NAME)
 
-$(NAME):		$(OBJ) Makefile $(LIB_DIR)$(LIB_LIB)
+$(NAME):		$(OBJ) Makefile $(LIB_DIR)$(LIB_LIB) 
 	@$(CC) $(CFLAGS) -MMD $(OBJ) -o $@ $(INC_FLAGS) $(MLX_FLAGS)
 	@printf "\r\033[38;5;117m✓ MAKE $(NAME)\033[0m\033[K\n"
 
@@ -87,11 +88,11 @@ clean:
 
 fclean: clean
 	@$(MAKE) -C $(LIB_DIR) fclean
-	@$(MAKE) -C $(MLX_DIR) clean
 	@rm -rf $(NAME)
 
 re: fclean
-	@$(MAKE)
+	@$(MAKE) -j -C $(MLX_INC) re
+	@$(MAKE) all
 
 nolib:
 	@echo "Recompiling everything exept libs"

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 13:01:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 14:51:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ typedef struct	s_player_informations {
 	double	plane[2];
 	int		posi[2];
 	int		life;
+	int		rot;
+	int		mov;
 }				t_play;
 
 typedef struct	s_general_informations {
@@ -71,6 +73,7 @@ typedef struct	s_general_informations {
 	t_play	player;
 	double	fov;
 	int		is_smart;
+	int		quit;
 }				t_gnrl;
 
 struct			s_parse_assign_fonction {
@@ -125,12 +128,14 @@ int				ft_freeemee(t_gnrl *info, int i);
 int				start_mlx(t_gnrl *info);
 void			end_mlx(t_mlx *win);
 
+int				key_release(int key, t_gnrl *data);
+int				key_press(int key, t_gnrl *data);
+int				rotate(t_gnrl *data);
 int				c3d_loop(t_gnrl *data);
 
 void			player_manage(t_gnrl *data);
 
 int				put_square(int x, int y, char val, t_gnrl *data);
-
 int				calcul_img(t_gnrl *data);
 
 /*

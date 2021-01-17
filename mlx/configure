@@ -89,12 +89,6 @@ if [ -n "$1" -a "$1" = "clean" ] ; then
     (cd test ; make -f Makefile.gen clean)
     exit
 fi
-if [ -n "$1" -a "$1" = "fclean" ] ; then
-    echo "Now make it really clean."
-    make -f Makefile.gen clean
-    (cd test ; make -f Makefile.gen clean)
-    exit
-fi
 
 echo "Now make it."
 make -f Makefile.gen all
