@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 23:30:37 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 12:58:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,32 @@ static void			set_side(t_ray *r)
 	if (r->ray[X] < 0)
 	{
 		r->gap[X] = -1;
-	 	r->side[X] = (r->ray[X] - r->player.posi[X]) * r->delta[X];
+	 	r->side[X] = (r->start[X] - r->pos[X]) * r->delta[X];
 	}
 	else
 	{
 		r->gap[X] = 1;
-	 	r->side[X] = ((int)r->ray[X] + 1.0 - r->ray[X]) * r->delta[X];
+	 	r->side[X] = (r->pos[X] + 1. - r->start[X]) * r->delta[X];
 	}
 	if (r->ray[Y] < 0)
 	{
 		r->gap[Y] = -1;
-		r->side[Y] = (r->ray[Y] - (int)r->ray[Y]) * r->delta[Y];
+		r->side[Y] = (r->start[Y] - r->pos[Y]) * r->delta[Y];
 	}
 	else
 	{
 		r->gap[Y] = 1;
-		r->side[Y] = ((int)r->ray[Y] + 1.0 - r->ray[Y]) * r->delta[Y];
+		r->side[Y] = (r->pos[Y] + 1. - r->start[Y]) * r->delta[Y];
 	}
 }
 
-static void			find_wall(t_ray *r)
+static void			find_wall(t_ray *r, t_gnrl *data)
 {
 	int	stop;
-//	int i;
+//	static int k = 1;
+	int i;
 
-//	i = 0;
+	i = 0;
 	stop = 0;
 	while (!stop)
 	{
@@ -59,10 +60,14 @@ static void			find_wall(t_ray *r)
 		}
 		if (r->map.map[r->pos[X]][r->pos[Y]] == '1')
 			stop = 1;
-//		printf("%d %d\n", i, __LINE__);
-//		fflush(stdout);
-//		i++;
+		//if (k)
+			put_square(r->pos[X], r->pos[Y], r->map.map[r->pos[X]][r->pos[Y]], data);
+//		printf("side[X] = %f\tside[Y] = %f\n", r->side[X], r->side[Y]);
+//		printf("%d   %d %d\n", i, r->pos[X], r->pos[Y]);
+		fflush(stdout);
+		i++;
 	}
+//	k = 0;
 }
 
 static unsigned int	find_color(t_tex *t, int id)
@@ -72,54 +77,62 @@ static unsigned int	find_color(t_tex *t, int id)
 	return (find_color(t->next, id));
 }
 
-static void			put_columns(t_gnrl *data, t_ray r, int i, int size)
+static void			put_columns(t_gnrl *data, t_ray r, int i)
 {
 	int				h;
 	int				bottom;
 	int				top;
 	unsigned int	color;
-	unsigned int	*line;
 
-	size = 0;
 	h = (int)(data->file.res[Y] / r.dist);
 	bottom = (int)(-h / 2 + data->file.res[Y] / 2);
 	bottom = (bottom < 0 ? 0 : bottom);
 	top = (int)(h / 2 + data->file.res[Y] / 2);
 	top = (top > data->file.res[Y] ? data->file.res[Y] : top);
 	color = find_color(data->file.textures, r.wall);
-	color = 0xff0000;
-	line = (unsigned int *)mlx_get_data_addr(data->mlx.img, &h, &size, &h);
-//	printf("bottom %d\ttop %d\tcolonne %d\n", bottom, top, i);
+	if (r.wall == 1)
+		color = 0xff0000;
+	if (r.wall == 2)
+		color = 0x00ff00;
+	if (r.wall == 3)
+		color = 0x0000ff;
+	if (r.wall == 4)
+		color = 0x00ffff;
+//	printf("bottom %d\ttop %d\tcolonne %d\thauteur mur %d\n", bottom, top, i, h);
 	while (bottom < top)
-		line[(bottom++ * size) + i] = color;
+		data->mlx.line[(bottom++ * data->mlx.size) + i] = color;
 }
 
 int					calcul_img(t_gnrl *data)
 {
 	t_ray	r;
 	int		i;
-	int		size;
 
 	i = -1;
-	r.i = data->player.pos;
+	ft_bzero((void *)&r, sizeof(t_ray));
+	r.player = &data->player;
 	r.map = data->file.map;
 	while (++i < data->file.res[X])
 	{
-		r.pos[X] = (int)data->player.pos[X];
-		r.pos[Y] = (int)data->player.pos[Y];
+		r.pos[X] = (int)r.player->pos[X];
+		r.pos[Y] = (int)r.player->pos[Y];
+		r.start[X] = r.player->pos[X];
+		r.start[Y] = r.player->pos[Y];
 //		printf("dist %f\t%c%c%c%c%c\n", r.dist, r.map.map[r.pos[X]][r.pos[Y] - 2], r.map.map[r.pos[X]][r.pos[Y] - 1], r.map.map[r.pos[X]][r.pos[Y]], r.map.map[r.pos[X]][r.pos[Y] + 1], r.map.map[r.pos[X]][r.pos[Y] + 2]);
-		r.ratio = 2 * i / (double)(data->file.res[X]) - 1;
-		r.ray[X] = r.i[X] + r.player.plane[X] * r.ratio;
-		r.ray[Y] = r.i[Y] + r.player.plane[Y] * r.ratio;
-		r.delta[X] = sqrt(1 + pow(r.ray[Y] / r.ray[X], 2));
-		r.delta[Y] = sqrt(1 + pow(r.ray[X] / r.ray[Y], 2));
+		r.ratio = (2. * (double)i / (double)(data->file.res[X])) - 1.;
+		//printf("%f\n", r.ratio);
+		r.ray[X] = r.player->pos[X] + r.player->plane[X] * r.ratio;
+		r.ray[Y] = r.player->dir[Y] + r.player->plane[Y] * r.ratio;
+		r.delta[X] = sqrt(1. + pow(r.ray[Y] / r.ray[X], 2));
+		r.delta[Y] = sqrt(1. + pow(r.ray[X] / r.ray[Y], 2));
+		//printf("%f %f\n", r.delta[X], r.delta[Y]);
 		set_side(&r);
-		find_wall(&r);
+		find_wall(&r, data);
 		if (r.wall <= 2)
-			r.dist = abs_d((r.pos[X] - r.i[X] + (1 - r.gap[X]) / 2) / r.ray[X]);
+			r.dist = 5 * abs_d((r.pos[X] - r.start[X] + (1. - r.gap[X]) / 2.) / r.ray[X]);
 		else
-			r.dist = abs_d((r.pos[Y] - r.i[Y] + (1 - r.gap[Y]) / 2) / r.ray[Y]);
-		put_columns(data, r, i, (size = 0));
+			r.dist = 5 * abs_d((r.pos[Y] - r.start[Y] + (1. - r.gap[Y]) / 2.) / r.ray[Y]);
+		put_columns(data, r, i);
 	}
 	return (0);
 }

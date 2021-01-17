@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/16 21:49:00 by user42           ###   ########.fr        #
+#    Updated: 2021/01/17 12:01:29 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ MLX_DIR		=	mlx/
 MLX_LIB		=	mlx/libmlx_Linux.a
 
 INC_FLAGS	=	-I $(INC_DIR) -I $(LIB_INC) -I $(MLX_INC)
-MLX_FLAGS	=	-lft -lmlx -lm -lbsd -lXext -lX11 -L$(LIB_DIR) -L$(MLX_INC) -L/usr/lib/
+MLX_FLAGS	=	-lft -lmlx -lm -lXext -lX11 -L$(LIB_DIR) -L$(MLX_INC) -L/usr/lib/
 
 SRC_LIST	=	main.c\
 				parse/parse.c\
@@ -43,7 +43,8 @@ SRC_LIST	=	main.c\
 				player_manage.c\
 				calcul_img.c\
 				maths/vector_basics.c\
-				maths/general_basics.c
+				maths/general_basics.c\
+				show_map.c
 
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))

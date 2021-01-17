@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:29:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 18:12:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 13:02:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static int	map_verif_char(int i, int j, t_map *map_d, int *pos)
 				return (45);
 			map_d->start[X] = i;
 			map_d->start[Y] = j;
+			map_d->dir = ft_toupper(map[i][j]);
 		}
 	}
 	else if (map[i][j] != '1' && map[i][j] != ' ')

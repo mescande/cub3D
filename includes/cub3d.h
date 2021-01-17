@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 22:27:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 13:01:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_map {
 	int		height;
 	int		length;
 	int		start[2];
+	char	dir;
 }				t_map;
 
 typedef struct	s_file_information {
@@ -49,9 +50,11 @@ typedef struct	s_file_information {
 }				t_file;
 
 typedef struct	s_mlx_informations {
-	void	*mlx;
-	void	*win;
-	void	*img;
+	void			*mlx;
+	void			*win;
+	void			*img;
+	unsigned int	*line;
+	int				size;
 }				t_mlx;
 
 typedef struct	s_player_informations {
@@ -80,10 +83,11 @@ typedef struct	s_ray_informations {
 	double	*i;
 	int		pos[2];
 	double	ray[2];
+	double	start[2];
 	double	side[2];
 	double	delta[2];
 	double	ratio;
-	t_play	player;
+	t_play	*player;
 	int		wall;
 	double	dist;
 	t_map	map;
@@ -124,6 +128,8 @@ void			end_mlx(t_mlx *win);
 int				c3d_loop(t_gnrl *data);
 
 void			player_manage(t_gnrl *data);
+
+int				put_square(int x, int y, char val, t_gnrl *data);
 
 int				calcul_img(t_gnrl *data);
 
