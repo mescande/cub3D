@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 11:25:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 15:07:33 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 18:11:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int		c3d_show(t_gnrl *data)
 {
 	int	err;
 
-	printf("COUCOU%d\n", __LINE__);
 	err = 0;
 	if (data->player.rot)
 		err = rotate(data);
@@ -59,13 +58,11 @@ int		c3d_key(int key, t_gnrl *data, int press)
 
 int		key_release(int key, t_gnrl *data)
 {
-	printf("COUCOU%d\n", __LINE__);
 	return (c3d_key(key, data, 0));
 }
 
 int		key_press(int key, t_gnrl *data)
 {
-	printf("COUCOU%d\n", __LINE__);
 	return (c3d_key(key, data, 1));
 }
 
@@ -81,14 +78,17 @@ int		c3d_loop(t_gnrl *data)
 	data->mlx.size = data->mlx.size / 4;
 	if ((err = calcul_img(data)))
 		return (err);
-	mlx_hook(data->mlx.mlx, 02, (1L<<0), key_press, data);//keypress
-	mlx_hook(data->mlx.mlx, 03, (1L<<1), key_release, data);//keyrelease
+	mlx_hook(data->mlx.win, 02, (1L<<0), key_press, data);//keypress
+	mlx_hook(data->mlx.win, 03, (1L<<1), key_release, data);//keyrelease
 /*	mlx_hook(data->mlx.mlx, , , , data);
 	mlx_hook(data->mlx.mlx, , , , data);
 	mlx_hook(data->mlx.mlx, , , , data);
 	mlx_hook(data->mlx.mlx, , , , data);
 */	mlx_loop_hook(data->mlx.mlx, c3d_show, data);
+	if ((err = calcul_img(data)))
+		return (err);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img,
+				0, 0);
 	mlx_loop(data->mlx.mlx);
-	printf("COUCOU%d\n", __LINE__);
 	return (0);
 }

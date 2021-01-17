@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 16:29:06 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 16:43:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,27 @@ int		verif_color(char *sep)
 int		set_colors(t_file *file, char id, char *sep)
 {
 	int		val;
-	char	*tmp;
+	int		*tmp;
+	char	*verif;
 
 	if (id == 6)
-		tmp = file->floor;
+		tmp = &file->floor;
 	else
-		tmp = file->ceiling;
+		tmp = &file->ceiling;
 	if ((val = verif_color(sep)) > 255)
 		return (val - 255 + id);
-	tmp[0] = (char)val;
+	*tmp = (val << 16);
+	printf("color : %d = %d\t", val, *tmp);
 	if ((val = verif_color(sep)) > 255)
 		return (val - 255 + id);
-	tmp[1] = (char)val;
+	*tmp |= val << 8;
+	printf("%d = %d\t", val, *tmp);
 	if ((val = verif_color(sep)) > 255)
 		return (val - 255 + id);
-	tmp[2] = (char)val;
-	tmp = ft_strtok(NULL, sep);
-	if (tmp != NULL)
+	*tmp |= val;
+	printf("%d = %d\t", val, *tmp);
+	verif = ft_strtok(NULL, sep);
+	if (verif != NULL)
 		return (37 + id);
 	return (0);
 }

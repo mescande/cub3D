@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 12:58:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 18:13:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ static void			put_columns(t_gnrl *data, t_ray r, int i)
 	int				bottom;
 	int				top;
 	unsigned int	color;
+	unsigned int	ceil;
+	unsigned int	floor;
+	int				j;
 
 	h = (int)(data->file.res[Y] / r.dist);
 	bottom = (int)(-h / 2 + data->file.res[Y] / 2);
@@ -98,9 +101,20 @@ static void			put_columns(t_gnrl *data, t_ray r, int i)
 		color = 0x0000ff;
 	if (r.wall == 4)
 		color = 0x00ffff;
+	ceil = data->file.ceiling;
+	floor = data->file.floor;
+	j = 0;
 //	printf("bottom %d\ttop %d\tcolonne %d\thauteur mur %d\n", bottom, top, i, h);
-	while (bottom < top)
-		data->mlx.line[(bottom++ * data->mlx.size) + i] = color;
+	while (j < data->file.res[Y])
+	{
+		if (j < bottom)
+			data->mlx.line[(j++ * data->mlx.size) + i] = ceil;
+		else if (j >= bottom && j < top)
+			data->mlx.line[(j++ * data->mlx.size) + i] = color;
+		else if (j >= top)
+			data->mlx.line[(j++ * data->mlx.size) + i] = floor;
+	}
+
 }
 
 int					calcul_img(t_gnrl *data)
@@ -121,17 +135,19 @@ int					calcul_img(t_gnrl *data)
 //		printf("dist %f\t%c%c%c%c%c\n", r.dist, r.map.map[r.pos[X]][r.pos[Y] - 2], r.map.map[r.pos[X]][r.pos[Y] - 1], r.map.map[r.pos[X]][r.pos[Y]], r.map.map[r.pos[X]][r.pos[Y] + 1], r.map.map[r.pos[X]][r.pos[Y] + 2]);
 		r.ratio = (2. * (double)i / (double)(data->file.res[X])) - 1.;
 		//printf("%f\n", r.ratio);
-		r.ray[X] = r.player->pos[X] + r.player->plane[X] * r.ratio;
+		r.ray[X] = r.player->dir[X] + r.player->plane[X] * r.ratio;
 		r.ray[Y] = r.player->dir[Y] + r.player->plane[Y] * r.ratio;
 		r.delta[X] = sqrt(1. + pow(r.ray[Y] / r.ray[X], 2));
+		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img,
+				0, 0);
 		r.delta[Y] = sqrt(1. + pow(r.ray[X] / r.ray[Y], 2));
 		//printf("%f %f\n", r.delta[X], r.delta[Y]);
 		set_side(&r);
 		find_wall(&r, data);
 		if (r.wall <= 2)
-			r.dist = 5 * abs_d((r.pos[X] - r.start[X] + (1. - r.gap[X]) / 2.) / r.ray[X]);
+			r.dist = 2 * abs_d((r.pos[X] - r.start[X] + (1. - r.gap[X]) / 2.) / r.ray[X]);
 		else
-			r.dist = 5 * abs_d((r.pos[Y] - r.start[Y] + (1. - r.gap[Y]) / 2.) / r.ray[Y]);
+			r.dist = 2 * abs_d((r.pos[Y] - r.start[Y] + (1. - r.gap[Y]) / 2.) / r.ray[Y]);
 		put_columns(data, r, i);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 14:51:28 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 16:39:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ typedef struct	s_file_information {
 	int		res[2];
 	t_map	map;
 	t_tex	*textures;
-	char	ceiling[3];
-	char	floor[3];
+	int		ceiling;
+	int		floor;
 }				t_file;
 
 typedef struct	s_mlx_informations {

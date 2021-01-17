@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 13:12:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 15:01:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 18:09:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,17 @@ int		rotate(t_gnrl *data)
 	cv = cos(0.1 * data->player.rot);
 	sv = sin(0.1 * data->player.rot);
 	save = data->player.dir[X];
-	data->player.dir[X] = data->player.dir[X] * cv + data->player.dir[Y] * sv;
+	data->player.dir[X] = data->player.dir[X] * cv - data->player.dir[Y] * sv;
 	data->player.dir[Y] = data->player.dir[Y] * cv + save * sv;
-	save = data->player.plane[X];
-	data->player.plane[X] = data->player.plane[X] * cv +
+/*	save = sqrt(pow(data->player.dir[X], 2) + pow(data->player.dir[Y], 2)); 
+	data->player.dir[X] = data->player.dir[X] / save;
+	data->player.dir[Y] = data->player.dir[Y] / save;
+*/	save = data->player.plane[X];
+	data->player.plane[X] = data->player.plane[X] * cv -
 		data->player.plane[Y] * sv;
 	data->player.dir[Y] = data->player.plane[Y] * cv + save * sv;
-	return (1);
+/*	save = sqrt(pow(data->player.dir[X], 2) + pow(data->player.dir[Y], 2)); 
+	data->player.plane[X] = 3.5 * data->player.plane[X] / save;
+	data->player.plane[Y] = 3.5 * data->player.plane[Y] / save;
+*/	return (1);
 }
