@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 17:17:16 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/17 16:42:30 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 19:43:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int		main(int ac, char **av)
 	ft_bzero(&data, sizeof(t_gnrl));
 	if ((err = parsit(&(data.file), av[args_management(ac, av, &data)])))
 		return (ft_freeemee(&data, err));
-	player_manage(&data);
+	if ((err = player_manage(&data)))
+		return (ft_freeemee(&data, err));
 	if ((err = start_mlx(&data)))
 		return (ft_freeemee(&data, err));
 	printf("\n\

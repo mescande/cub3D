@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/16 17:25:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 20:22:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,13 @@ int			ft_freeemee(t_gnrl *data, int i)
 	}
 	while (++l < data->file.map.height)
 	{
+		free(data->player.map[l]);
 		free(data->file.map.map[l]);
 	}
 	if (data->file.map.map)
 		free(data->file.map.map);
+	if (data->player.map)
+		free(data->player.map);
 	end_mlx(&data->mlx);
 	return ((i == 0 ? 0 : ft_puterror(i)));
 }

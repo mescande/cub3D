@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 11:25:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 18:11:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 20:37:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int		c3d_show(t_gnrl *data)
 		err = rotate(data);
 	if (data->player.mov)
 	{
-		data->player.pos[X] += data->player.mov * 0.1 * data->player.dir[X];
-		data->player.pos[Y] += data->player.mov * 0.1 * data->player.dir[Y];
-		err = 1;
+		err = movement(data);
 	}
 	if (err)
 	{
@@ -76,19 +74,18 @@ int		c3d_loop(t_gnrl *data)
 	data->mlx.line = (unsigned int *)mlx_get_data_addr(data->mlx.img, &err,
 			&data->mlx.size, &err);
 	data->mlx.size = data->mlx.size / 4;
-	if ((err = calcul_img(data)))
-		return (err);
 	mlx_hook(data->mlx.win, 02, (1L<<0), key_press, data);//keypress
 	mlx_hook(data->mlx.win, 03, (1L<<1), key_release, data);//keyrelease
-/*	mlx_hook(data->mlx.mlx, , , , data);
-	mlx_hook(data->mlx.mlx, , , , data);
-	mlx_hook(data->mlx.mlx, , , , data);
-	mlx_hook(data->mlx.mlx, , , , data);
+	mlx_hook(data->mlx.win, 33, (1L << 17), mlx_loop_end, data->mlx.mlx);
+/*	mlx_hook(data->mlx.win, , , , data);
+	mlx_hook(data->mlx.win, , , , data);
+	mlx_hook(data->mlx.win, , , , data);
 */	mlx_loop_hook(data->mlx.mlx, c3d_show, data);
 	if ((err = calcul_img(data)))
 		return (err);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img,
 				0, 0);
 	mlx_loop(data->mlx.mlx);
+	mlx_destroy_image(data->mlx.mlx, data->mlx.img);
 	return (0);
 }

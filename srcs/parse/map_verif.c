@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:29:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 13:02:59 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 20:39:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static int	map_squarer(t_map *map)
 	while (i < map->height)
 	{
 		len = ft_strlen(map->map[i]);
-		if (!(res = ft_memalloc(map->length + 2)))
+		if (!(res = ft_memalloc(map->length + 3)))
 			return (0);
 		res[0] = ' ';
 		ft_memcpy(res + 1, map->map[i], len);
-		ft_memset(res + len + 1, ' ', ((long)(map->length + 2 - len)));
+		ft_memset(res + len + 1, ' ', ((long)(map->length + 1 - len)));
 		free(map->map[i]);
 		map->map[i] = res;
 		i++;

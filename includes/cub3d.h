@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 16:39:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 20:37:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct	s_player_informations {
 	int		life;
 	int		rot;
 	int		mov;
+	char	**map;
 }				t_play;
 
 typedef struct	s_general_informations {
@@ -93,7 +94,7 @@ typedef struct	s_ray_informations {
 	t_play	*player;
 	int		wall;
 	double	dist;
-	t_map	map;
+	t_map	*map;
 }				t_ray;
 
 /*
@@ -130,12 +131,15 @@ void			end_mlx(t_mlx *win);
 
 int				key_release(int key, t_gnrl *data);
 int				key_press(int key, t_gnrl *data);
-int				rotate(t_gnrl *data);
 int				c3d_loop(t_gnrl *data);
 
-void			player_manage(t_gnrl *data);
+int				rotate(t_gnrl *data);
+int				movement(t_gnrl *data);
+void			map_cpy(char **dst, t_map src);
+int				player_manage(t_gnrl *data);
 
-int				put_square(int x, int y, char val, t_gnrl *data);
+int				show_map(t_gnrl *data);
+int				put_square(int x, int y, t_gnrl *data);
 int				calcul_img(t_gnrl *data);
 
 /*

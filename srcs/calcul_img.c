@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 18:13:06 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/17 20:45:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void			find_wall(t_ray *r, t_gnrl *data)
 	int i;
 
 	i = 0;
+	(void)data;
 	stop = 0;
 	while (!stop)
 	{
@@ -50,18 +51,22 @@ static void			find_wall(t_ray *r, t_gnrl *data)
 		{
 			r->side[X] += r->delta[X];
 			r->pos[X] += r->gap[X];
-			r->wall = 1 + (r->gap[X] ? 1 : 0);
+			r->wall = 1 + (r->gap[X] > 0 ? 1 : 0);
 		}
 		else
 		{
 			r->side[Y] += r->delta[Y];
 			r->pos[Y] += r->gap[Y];
-			r->wall = 3 + (r->gap[Y] ? 1 : 0);
+			r->wall = 3 + (r->gap[Y] > 0 ? 1 : 0);
 		}
-		if (r->map.map[r->pos[X]][r->pos[Y]] == '1')
+		if (r->map->map[r->pos[X]][r->pos[Y]] == '1')
+		{
+			r->player->map[r->pos[X]][r->pos[Y]] = '9';
 			stop = 1;
+		}
+		else
+			r->player->map[r->pos[X]][r->pos[Y]] = '8';
 		//if (k)
-			put_square(r->pos[X], r->pos[Y], r->map.map[r->pos[X]][r->pos[Y]], data);
 //		printf("side[X] = %f\tside[Y] = %f\n", r->side[X], r->side[Y]);
 //		printf("%d   %d %d\n", i, r->pos[X], r->pos[Y]);
 		fflush(stdout);
@@ -94,13 +99,13 @@ static void			put_columns(t_gnrl *data, t_ray r, int i)
 	top = (top > data->file.res[Y] ? data->file.res[Y] : top);
 	color = find_color(data->file.textures, r.wall);
 	if (r.wall == 1)
-		color = 0xff0000;
+		color = 0xaa5050;
 	if (r.wall == 2)
-		color = 0x00ff00;
+		color = 0x50aa50;
 	if (r.wall == 3)
-		color = 0x0000ff;
+		color = 0x5050aa;
 	if (r.wall == 4)
-		color = 0x00ffff;
+		color = 0x50aaaa;
 	ceil = data->file.ceiling;
 	floor = data->file.floor;
 	j = 0;
@@ -125,7 +130,8 @@ int					calcul_img(t_gnrl *data)
 	i = -1;
 	ft_bzero((void *)&r, sizeof(t_ray));
 	r.player = &data->player;
-	r.map = data->file.map;
+	map_cpy(r.player->map, data->file.map);
+	r.map = &data->file.map;
 	while (++i < data->file.res[X])
 	{
 		r.pos[X] = (int)r.player->pos[X];
@@ -138,8 +144,6 @@ int					calcul_img(t_gnrl *data)
 		r.ray[X] = r.player->dir[X] + r.player->plane[X] * r.ratio;
 		r.ray[Y] = r.player->dir[Y] + r.player->plane[Y] * r.ratio;
 		r.delta[X] = sqrt(1. + pow(r.ray[Y] / r.ray[X], 2));
-		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img,
-				0, 0);
 		r.delta[Y] = sqrt(1. + pow(r.ray[X] / r.ray[Y], 2));
 		//printf("%f %f\n", r.delta[X], r.delta[Y]);
 		set_side(&r);
@@ -150,5 +154,6 @@ int					calcul_img(t_gnrl *data)
 			r.dist = 2 * abs_d((r.pos[Y] - r.start[Y] + (1. - r.gap[Y]) / 2.) / r.ray[Y]);
 		put_columns(data, r, i);
 	}
+	show_map(data);
 	return (0);
 }
