@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 23:32:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 18:05:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	add_textures(t_file *file, t_tex *tree, t_tex *new)
 int		open_texture(t_gnrl *data)
 {
 	t_tex	*p;
+	int		a;
 
 	p = data->file.textures;
 	while (p)
@@ -55,6 +56,7 @@ int		open_texture(t_gnrl *data)
 		if (!(p->img = mlx_xpm_file_to_image(data->mlx.mlx, p->name, &p->width,
 					&p->height)))
 			return (55 + p->id - 1);
+		p->line = (unsigned int *)mlx_get_data_addr(p->img, &a, &p->size, &a);
 		p = p->next;
 	}
 	return (0);
@@ -102,7 +104,7 @@ int		verif_color(char *sep)
 	tmp = ft_strtok(NULL, sep);
 	free(sep);
 	if (tmp == NULL)
-		return (34 + 255);
+		return (35 + 255);
 	val = ft_atoi(tmp);
 	if (val < 0 || 255 < val)
 		return (40 + 255);
@@ -119,8 +121,10 @@ int		set_colors(t_file *file, char id, char *sep)
 		tmp = &file->floor;
 	else
 		tmp = &file->ceiling;
+	if (tmp[0])
+		return (33);
 	if ((val = verif_color(sep)) > 255)
-		return (val - 255 + id);
+		return (val - 255 + id - 6);
 	*tmp = (val << 16);
 	printf("color : %d = %d\t", val, *tmp);
 	if ((val = verif_color(sep)) > 255)

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 13:12:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 21:51:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 23:40:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int		rotate(t_gnrl *data)
 
 	rot = (data->player.rot[X] && data->player.rot[Y] ? 0 : 1);
 	rot = rot * (data->player.rot[X] ? -1 : 1);
-	cv = cos(1. * rot * M_PI_4 / 45);
-	sv = sin(1. * rot * M_PI_4 / 45);
+	cv = cos(2.5 * rot * M_PI_4 / 45);
+	sv = sin(2.5 * rot * M_PI_4 / 45);
 	save = data->player.dir[X];
 	data->player.dir[X] = data->player.dir[X] * cv - data->player.dir[Y] * sv;
 	data->player.dir[Y] = data->player.dir[Y] * cv + save * sv;

@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/17 21:14:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 23:37:39 by user42           ###   ########.fr       */
+/*   Created: 2021/01/19 18:06:38 by user42            #+#    #+#             */
+/*   Updated: 2021/01/19 18:35:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include "cub3d.h"
 
-# define ESC 65307
-# define UP 65362
-# define DOWN 65364
-# define RIGHT 65363
-# define LEFT 65361
-# define W_KEY 119
-# define A_KEY 97
-# define S_KEY 115
-# define D_KEY 100
-# define TAB 65289
-# define C_KEY 99
-# define Q_KEY 113
-# define P_KEY 112
-# define M_KEY 109
-# define SPACE 32
-# define F_KEY 102
-# define E_KEY 101
+int		is_textured(t_ray r, t_gnrl *data)
+{
+	t_tex	*p;
 
-#endif
+	p = data->file.textures;
+	while (p)
+	{
+		if (p->name && p->id == r.wall)
+			return (1);
+		p = p->next;
+	}
+	return (0);
+}
+
+t_tex	*find_tex(t_ray *r, t_gnrl *data)
+{
+	t_tex	*p;
+
+	p = data->file.textures;
+	while (p)
+	{
+		if (p->id == r->wall)
+			return (p);
+		p = p->next;
+	}
+	return (0);
+}

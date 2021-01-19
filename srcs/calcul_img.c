@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 22:04:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 23:36:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ static void			set_side(t_ray *r)
 static void			find_wall(t_ray *r, t_gnrl *data)
 {
 	int	stop;
-//	static int k = 1;
-	int i;
 
-	i = 0;
 	(void)data;
 	stop = 0;
 	while (!stop)
@@ -66,38 +63,68 @@ static void			find_wall(t_ray *r, t_gnrl *data)
 		}
 		else
 			r->player->map[r->pos[X]][r->pos[Y]] = '8';
-		//if (k)
-//		printf("side[X] = %f\tside[Y] = %f\n", r->side[X], r->side[Y]);
-//		printf("%d   %d %d\n", i, r->pos[X], r->pos[Y]);
 		fflush(stdout);
-		i++;
 	}
-//	k = 0;
 }
-
+/*
 static unsigned int	find_color(t_tex *t, int id)
 {
 	if (t->id == id)
 		return (t->color);
 	return (find_color(t->next, id));
 }
+*//*
+static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
+{
+	int		j;
+	t_tex	*tex;
+	int		bottom;
 
+	bottom = top - 2 * (top - data->file.res[Y] / 2);
+	tex = find_tex(r, data);
+	if (r->wall > 2)
+		r->wallx = r->start[X] + r->dist / r->ray[X];
+	else
+		r->wallx = r->start[Y] + r->dist / r->ray[Y];
+	r->wallx -= (int)r->wallx;
+	r->tex[X] = (int)(tex->width * r->wallx);
+	if (r->wall <= 2 && r->ray[X] > 0)
+		r->tex[X] = tex->width - r->tex[X] - 1;
+	else if (r->wall > 2 && r->ray[Y] < 0)
+		r->tex[X] = tex->width - r->tex[X] - 1;
+	j = 0;
+//	printf("bottom %d\ttop %d\tcolonne %d\n", bottom, top, i);
+	while (j < data->file.res[Y])
+	{
+		r->tex[Y] = (i * 2 - data->file.res[Y] + r->h) * (tex->height / 2) / r->h;
+	//	printf("bottom %d\ti %d\ttop %d\tres %d\thauteur mur %d\thauteur texture %d\ntex[X] = %f\ttex[Y] = %f\n", bottom, j, top, data->file.res[Y], r->h, tex->height, r->tex[X], r->tex[Y]);
+		if (j < bottom)
+			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
+		else if (j >= bottom && j < top)
+			data->mlx.line[(j++ * data->mlx.size) + i] =
+				tex->line[(int)(r->tex[X]) * tex->size / 4 + (int)(r->tex[Y])];
+		else if (j >= top)
+			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;
+	}
+}
+*/
 static void			put_columns(t_gnrl *data, t_ray r, int i)
 {
-	int				h;
 	int				bottom;
 	int				top;
 	unsigned int	color;
-	unsigned int	ceil;
-	unsigned int	floor;
 	int				j;
 
-	h = (int)(data->file.res[Y] / r.dist);
-	bottom = (int)(-h / 2 + data->file.res[Y] / 2);
-	bottom = (bottom < 0 ? 0 : bottom);
-	top = (int)(h / 2 + data->file.res[Y] / 2);
+	r.h = (int)(data->file.res[Y] / r.dist);
+	top = (int)(r.h / 2 + data->file.res[Y] / 2);
 	top = (top > data->file.res[Y] ? data->file.res[Y] : top);
-	color = find_color(data->file.textures, r.wall);
+/*	if (is_textured(r, data))
+	{
+		calcul_tex(&r, data, top, i);
+		return ;
+	}
+*/	bottom = (int)(-r.h / 2 + data->file.res[Y] / 2);
+	bottom = (bottom < 0 ? 0 : bottom);
 	if (r.wall == 1)
 		color = 0xaa5050;
 	if (r.wall == 2)
@@ -106,20 +133,17 @@ static void			put_columns(t_gnrl *data, t_ray r, int i)
 		color = 0x5050aa;
 	if (r.wall == 4)
 		color = 0x50aaaa;
-	ceil = data->file.ceiling;
-	floor = data->file.floor;
 	j = 0;
 //	printf("bottom %d\ttop %d\tcolonne %d\thauteur mur %d\n", bottom, top, i, h);
 	while (j < data->file.res[Y])
 	{
 		if (j < bottom)
-			data->mlx.line[(j++ * data->mlx.size) + i] = ceil;
+			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
 		else if (j >= bottom && j < top)
 			data->mlx.line[(j++ * data->mlx.size) + i] = color;
 		else if (j >= top)
-			data->mlx.line[(j++ * data->mlx.size) + i] = floor;
+			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;
 	}
-
 }
 
 int					calcul_img(t_gnrl *data)

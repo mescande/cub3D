@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/17 23:34:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 20:30:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static char	*errors[] = {
 	"parsing; Texture for WE has too many arguments",
 	"parsing; Texture for EA has too many arguments",
 	"parsing; Texture for S has too many arguments",
-	"",
+	"parsing; Floor is defined twice",
+	"parsing; Ceiling is defined twice",
 	"parsing; Floor color has not enough arguments",
 	"parsing; Ceiling color has not enough arguments",
-	"",
 	"parsing; Floor color has too many arguments",
 	"parsing; Ceiling color has too many arguments",
 	"",
@@ -132,13 +132,15 @@ int			ft_freeemee(t_gnrl *data, int i)
 	{
 		p1 = data->file.textures;
 		free(data->file.textures->name);
-		mlx_destroy_image(data->mlx.mlx, data->file.textures->img);
+		if (data->file.textures->img)
+			mlx_destroy_image(data->mlx.mlx, data->file.textures->img);
 		data->file.textures = data->file.textures->next;
 		free(p1);
 	}
 	while (++l < data->file.map.height)
 	{
-		free(data->player.map[l]);
+		if (data->player.map[l])
+			free(data->player.map[l]);
 		free(data->file.map.map[l]);
 	}
 	if (data->file.map.map)
@@ -148,4 +150,3 @@ int			ft_freeemee(t_gnrl *data, int i)
 	end_mlx(&data->mlx);
 	return ((i == 0 ? 0 : ft_puterror(i)));
 }
-

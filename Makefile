@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/17 15:12:28 by user42           ###   ########.fr        #
+#    Updated: 2021/01/19 18:15:03 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		=	cub3D
 EXEC		=	test
 
 CC			?=	clang-9
-CFLAGS		?=	-Wall -Werror -Wextra -fsanitize=address -Ofast -fPIC 
+CFLAGS		?=	-Wall -Werror -Wextra -fsanitize=address -fPIC 
 
 LEN_NAME	=	`printf "%s" $(NAME) | wc -c`
 DELTA		=	$$(echo "$$(tput cols)-32-$(LEN_NAME)" | bc)
@@ -45,7 +45,8 @@ SRC_LIST	=	main.c\
 				maths/vector_basics.c\
 				maths/general_basics.c\
 				show_map.c\
-				hooky.c
+				hooky.c\
+				textures.c
 
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))

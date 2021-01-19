@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 23:32:55 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 18:34:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_wall_textures {
 	int						id;
 	unsigned int			color;
 	unsigned int			*line;
+	int						size;
 	void					*img;
 	int						width;
 	int						height;
@@ -93,16 +94,19 @@ struct			s_parse_assign_fonction {
 typedef struct	s_ray_informations {
 	int		gap[2];
 	double	*i;
-	int		pos[2];
-	double	ray[2];
-	double	start[2];
-	double	side[2];
-	double	delta[2];
-	double	ratio;
+	int		pos[2];//position en int du rayon -> du mur trouve
+	double	ray[2];//direction rayon
+	double	start[2];//position joueur
+	double	side[2];//longueur sur X/Y parcourue
+	double	delta[2];//ecart entre 2 inter mur/rayon sur les axes X/Y
+	double	ratio;//ratio colonne/largeur ecran
 	t_play	*player;
-	int		wall;
-	double	dist;
+	int		wall;//cote de case touche
+	double	wallx;//distance en
+	double	dist;//dist corrige parcouru par le rayon
 	t_map	*map;
+	int		h;
+	double	tex[2];
 }				t_ray;
 
 /*
@@ -152,6 +156,9 @@ int				player_manage(t_gnrl *data);
 int				show_map(t_gnrl *data);
 int				put_square(int x, int y, t_gnrl *data);
 int				calcul_img(t_gnrl *data);
+
+int				is_textured(t_ray r, t_gnrl *data);
+t_tex			*find_tex(t_ray *r, t_gnrl *data);
 
 /*
 **		Math fonctions

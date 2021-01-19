@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 11:25:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 22:12:11 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 23:38:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int		c3d_key(int key, t_gnrl *data, int press)
 		data->player.mov[X] = press;
 	if (key == UP || key == W_KEY)
 		data->player.mov[Y] = press;
-	if (key == RIGHT || key == D_KEY)
+	if (key == RIGHT || key == E_KEY)
 		data->player.rot[X] = press;
-	if (key == LEFT || key == A_KEY)
+	if (key == LEFT || key == Q_KEY)
 		data->player.rot[Y] = press;
-	if (key == Q_KEY)
+	if (key == A_KEY)
 		data->player.tran[X] = press;
-	if (key == E_KEY)
+	if (key == D_KEY)
 		data->player.tran[Y] = press;
 	if (key == TAB && press)
 	{
