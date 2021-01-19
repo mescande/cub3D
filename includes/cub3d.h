@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 18:34:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 23:45:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct	s_ray_informations {
 	double	ratio;//ratio colonne/largeur ecran
 	t_play	*player;
 	int		wall;//cote de case touche
-	double	wallx;//distance en
+	double	wallx;//distance relative entre le debut d'une case et le pt touche
 	double	dist;//dist corrige parcouru par le rayon
 	t_map	*map;
 	int		h;
