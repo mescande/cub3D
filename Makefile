@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/20 13:42:11 by user42           ###   ########.fr        #
+#    Updated: 2021/01/20 20:20:03 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,10 @@ SRC_LIST	=	main.c\
 				maths/general_basics.c\
 				show_map.c\
 				hooky.c\
-				textures.c
+				textures.c\
+				sprite_manage.c\
+				movements.c\
+				is_mapchar.c
 
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))
@@ -61,6 +64,7 @@ all:
 	@$(MAKE) -j -C $(LIB_DIR) $(LIB_LIB)
 	@$(MAKE) -j -C $(MLX_INC)
 	@$(MAKE) -j $(NAME)
+	@cp cub3D Cub3D 
 
 $(NAME):		$(OBJ) Makefile $(LIB_DIR)$(LIB_LIB) 
 	@$(CC) $(CFLAGS) -MMD $(OBJ) -o $@ $(INC_FLAGS) $(MLX_FLAGS)

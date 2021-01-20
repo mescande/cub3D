@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:29:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 13:44:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/20 20:19:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,6 @@ static int	map_squarer(t_map *map)
 		map->map[i] = res;
 		i++;
 	}
-	return (0);
-}
-
-int			is_player_position(char c)
-{
-	if (c == 'n' || c == 's' || c == 'N'
-			|| c == 'S' || c == 'E' || c == 'W'
-			|| c == 'e' || c == 'w')
-		return (1);
 	return (0);
 }
 

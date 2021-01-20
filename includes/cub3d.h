@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 14:09:37 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/20 20:20:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,9 @@ int				is_player_position(char c);
 int				map_verif(t_file *file);
 int				map_parse(char *line, t_file *file);
 
+int				is_wall(char c);
+int				is_player_position (char c);
+
 /*
 **		error manager and free gestion
 */
@@ -146,22 +149,33 @@ int				ft_freeemee(t_gnrl *info, int i);
 int				start_mlx(t_gnrl *info);
 void			end_mlx(t_mlx *win);
 
+/*
+**		Reaction fonctions to keybinds
+*/
 int				key_release(int key, t_gnrl *data);
 int				key_press(int key, t_gnrl *data);
 int				c3d_loop(t_gnrl *data);
+int				focus_out(int key, t_gnrl *data);
+int				focus_in(int key, t_gnrl *data);
 
+/*
+**		Mouvement calcul
+*/
 int				rotate(t_gnrl *data);
 int				translate(t_gnrl *data);
 int				movement(t_gnrl *data);
-int				focus_out(int key, t_gnrl *data);
-int				focus_in(int key, t_gnrl *data);
 
 void			map_cpy(char **dst, t_map src);
 int				player_manage(t_gnrl *data);
 
+/*
+**		Rendering fonctions
+*/
 int				show_map(t_gnrl *data);
 int				put_square(int x, int y, t_gnrl *data);
 int				calcul_img(t_gnrl *data);
+
+void			sprite_manage(t_gnrl *data, t_ray *r);
 
 int				is_textured(t_ray r, t_gnrl *data);
 t_tex			*find_tex(t_ray *r, t_gnrl *data);

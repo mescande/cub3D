@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 00:08:14 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/20 19:37:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void			find_wall(t_ray *r, t_gnrl *data)
 {
 	int	stop;
 
-	(void)data;
 	stop = 0;
 	while (!stop)
 	{
@@ -61,6 +60,8 @@ static void			find_wall(t_ray *r, t_gnrl *data)
 			r->player->map[r->pos[X]][r->pos[Y]] = '9';
 			stop = 1;
 		}
+		else if (r->map->map[r->pos[X]][r->pos[Y]] == '2')
+			sprite_manage(data, r);
 		else
 			r->player->map[r->pos[X]][r->pos[Y]] = '8';
 	}
