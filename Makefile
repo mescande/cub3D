@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/19 18:15:03 by user42           ###   ########.fr        #
+#    Updated: 2021/01/20 13:42:11 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIB_DIR		=	libft/
 LIB_INC		=	libft/includes/
 MLX_INC		=	mlx/
 MLX_DIR		=	mlx/
-MLX_LIB		=	mlx/libmlx_Linux.a
+MLX_LIB		=	mlx/libmlx.a
 
 INC_FLAGS	=	-I $(INC_DIR) -I $(LIB_INC) -I $(MLX_INC)
 MLX_FLAGS	=	-lft -lmlx -lm -lXext -lX11 -L$(LIB_DIR) -L$(MLX_INC) -L/usr/lib/

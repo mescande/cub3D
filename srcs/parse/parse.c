@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/16 16:12:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/20 13:29:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static struct s_parse_assign_fonction	dest[] = {
 	{NULL, 0}
 };
 
-int		assign(char *line, t_file *file)
+int		assign(char *line, t_file *file, t_gnrl *data)
 {
 	static int	map = 0;
 	int			i;
 	char		*id;
 	char		*save;
-	const char	*sep = /*(IS_SMART == 0 ? " \t\r\n\v\f" : */" \t"/*)*/;
+	const char	*sep = (data->is_smart == 0 ? " \t\r\n\v\f" : " \t");
 
 	i = -1;
 	if (map)
@@ -62,7 +62,7 @@ int		assign(char *line, t_file *file)
 	return (11);
 }
 
-int		parsit(t_file *file, char *name)
+int		parsit(t_file *file, char *name, t_gnrl *data)
 {
 	int		fd;
 	char	*line;
@@ -76,7 +76,7 @@ int		parsit(t_file *file, char *name)
 	{
 		if (gnl == -1)
 			return (ft_close(fd, 5, line));
-		if ((gnl = assign(line, file)) > 0)
+		if ((gnl = assign(line, file, data)) > 0)
 			return (ft_close(fd, gnl, line));
 		if (gnl == -1)
 		{

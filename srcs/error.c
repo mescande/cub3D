@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/18 20:30:55 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/20 13:45:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ static char	*errors[] = {
 	"Map; Invalid map -Wall missing",
 	"Map; Invalid map -Unknown character",
 	"",
-	"Texture; File type for NO is not managed"
-	"Texture; File type for SO is not managed"
-	"Texture; File type for WE is not managed"
-	"Texture; File type for EA is not managed"
-	"Texture; File type for S is not managed"
-	"Texture; File for NO couldn't been read"
-	"Texture; File for SO couldn't been read"
-	"Texture; File for WE couldn't been read"
-	"Texture; File for EA couldn't been read"
-	"Texture; File for S couldn't been read"
+	"Texture; File type for NO is not managed",
+	"Texture; File type for SO is not managed",
+	"Texture; File type for WE is not managed",
+	"Texture; File type for EA is not managed",
+	"Texture; File type for S is not managed",
+	"Texture; File for NO couldn't been read",
+	"Texture; File for SO couldn't been read",
+	"Texture; File for WE couldn't been read",
+	"Texture; File for EA couldn't been read",
+	"Texture; File for S couldn't been read",
 	""
 };
 

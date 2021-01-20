@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 23:45:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/20 14:09:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 # define X 0
 # define Y 1
+# define ON 1
 
 typedef struct	s_wall_textures {
 	char					*name;
@@ -84,6 +85,8 @@ typedef struct	s_general_informations {
 	double	fov;
 	int		is_smart;
 	int		quit;
+	char	help;
+	char	save;
 }				t_gnrl;
 
 struct			s_parse_assign_fonction {
@@ -119,7 +122,7 @@ int				args_management(int ac, char **av, t_gnrl *data);
 */
 int				verif_file_extension(char *name);
 char			*vlen(char *str, char *type);
-int				parsit(t_file *file, char *name);
+int				parsit(t_file *file, char *name, t_gnrl *data);
 
 int				set_resolution(t_file *file, char id, char *sep);
 int				open_texture(t_gnrl *data);
@@ -150,6 +153,9 @@ int				c3d_loop(t_gnrl *data);
 int				rotate(t_gnrl *data);
 int				translate(t_gnrl *data);
 int				movement(t_gnrl *data);
+int				focus_out(int key, t_gnrl *data);
+int				focus_in(int key, t_gnrl *data);
+
 void			map_cpy(char **dst, t_map src);
 int				player_manage(t_gnrl *data);
 
