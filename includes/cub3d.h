@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 20:20:51 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 10:09:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,26 @@ typedef struct	s_mlx_informations {
 	int				size;
 }				t_mlx;
 
+typedef struct	s_sprite_list {
+	int						id;
+	int						pos[2];
+	double					dist;
+	struct s_sprite_list	*next;
+}				t_sprite;
+
 typedef struct	s_player_informations {
-	double	pos[2];
-	double	dir[2];
-	double	plane[2];
-	int		posi[2];
-	char	life;
-	char	rot[2];
-	char	mov[2];
-	char	tran[2];
-	char	show_map;
-	char	reload;
-	char	**map;
+	double		pos[2];
+	double		dir[2];
+	double		plane[2];
+	int			posi[2];
+	char		life;
+	char		rot[2];
+	char		mov[2];
+	char		tran[2];
+	char		show_map;
+	char		reload;
+	char		**map;
+	t_sprite	*sprite;
 }				t_play;
 
 typedef struct	s_general_informations {
@@ -133,7 +141,9 @@ int				is_player_position(char c);
 int				map_verif(t_file *file);
 int				map_parse(char *line, t_file *file);
 
+int				is_sprite(char c);
 int				is_wall(char c);
+int				is_stop(char c);
 int				is_player_position (char c);
 
 /*
@@ -175,7 +185,7 @@ int				show_map(t_gnrl *data);
 int				put_square(int x, int y, t_gnrl *data);
 int				calcul_img(t_gnrl *data);
 
-void			sprite_manage(t_gnrl *data, t_ray *r);
+int				sprite_seen(t_gnrl *data, t_ray *r, int indic);
 
 int				is_textured(t_ray r, t_gnrl *data);
 t_tex			*find_tex(t_ray *r, t_gnrl *data);

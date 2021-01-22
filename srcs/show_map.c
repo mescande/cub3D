@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 11:42:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/17 22:08:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 00:34:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,16 @@ int put_square(int x, int y, t_gnrl *data)
 	char	val;
 
 	val = data->player.map[x][y];
-    if (val == '1')
+    if (is_wall(val))
         color = 0x500050;
-    else if (val == '8')
-        color = 0x000050;
-    else if (val == '9')
-        color = 0xff0000; 
+    else if (val == 1)
+        color = 0x303050;
+    else if (val == 2)
+        color = 0x503030; 
 	else if (val == 'H')
-		color = 0x0000ff;
+		color = 0x1010ff;
+	else if (val == 3)
+		color = 0xa0a0a0;
 	else
 		color = 0x505050;
 	i = -1;

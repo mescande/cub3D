@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 20:03:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 23:51:37 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 00:42:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,17 @@ static int	hitbox(t_gnrl *data, double *add, int dir)
 	pos[Y] = data->player.pos[Y];
 	size = 0.2;
 	map = data->file.map.map;
-	if (dir == X && (
-				map[(int)(pos[X] + add[X] + size)][(int)(pos[Y] + size)] == '1'
-			 || map[(int)(pos[X] + add[X] + size)][(int)(pos[Y] - size)] == '1'
-			 || map[(int)(pos[X] + add[X] - size)][(int)(pos[Y] + size)] == '1'
-			 || map[(int)(pos[X] + add[X] - size)][(int)(pos[Y] - size)] == '1'
-			 ))
+	if (dir == X &&
+		(is_stop(map[(int)(pos[X] + add[X] + size)][(int)(pos[Y] + size)])
+		 || is_stop(map[(int)(pos[X] + add[X] + size)][(int)(pos[Y] - size)])
+		 || is_stop(map[(int)(pos[X] + add[X] - size)][(int)(pos[Y] + size)])
+		 || is_stop(map[(int)(pos[X] + add[X] - size)][(int)(pos[Y] - size)])))
 		return (0);
-	if (dir == Y && (
-				map[(int)(pos[X] + size)][(int)(pos[Y] + add[Y] + size)] == '1'
-			 || map[(int)(pos[X] + size)][(int)(pos[Y] + add[Y] - size)] == '1'
-			 || map[(int)(pos[X] - size)][(int)(pos[Y] + add[Y] + size)] == '1'
-			 || map[(int)(pos[X] - size)][(int)(pos[Y] + add[Y] - size)] == '1'
-			 ))
+	if (dir == Y &&
+		(is_stop(map[(int)(pos[X] + size)][(int)(pos[Y] + add[Y] + size)])
+		 || is_stop(map[(int)(pos[X] + size)][(int)(pos[Y] + add[Y] - size)])
+		 || is_stop(map[(int)(pos[X] - size)][(int)(pos[Y] + add[Y] + size)])
+		 || is_stop(map[(int)(pos[X] - size)][(int)(pos[Y] + add[Y] - size)])))
 		return (0);
 	return (1);
 }
@@ -48,8 +46,8 @@ int			rotate(t_gnrl *data)
 
 	rot = (data->player.rot[X] && data->player.rot[Y] ? 0 : 1);
 	rot = rot * (data->player.rot[X] ? -1 : 1);
-	cv = cos(2.5 * rot * M_PI_4 / 45);
-	sv = sin(2.5 * rot * M_PI_4 / 45);
+	cv = cos(3 * rot * M_PI_4 / 45);
+	sv = sin(3 * rot * M_PI_4 / 45);
 	save = data->player.dir[X];
 	data->player.dir[X] = data->player.dir[X] * cv - data->player.dir[Y] * sv;
 	data->player.dir[Y] = data->player.dir[Y] * cv + save * sv;

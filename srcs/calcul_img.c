@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 19:37:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 10:06:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,35 +36,39 @@ static void			set_side(t_ray *r)
 	}
 }
 
-static void			find_wall(t_ray *r, t_gnrl *data)
+static int			find_wall(t_ray *r, t_gnrl *data)
 {
 	int	stop;
 
-	stop = 0;
-	while (!stop)
+	stop = 1;
+	while (stop)
 	{
 		if (r->side[X] < r->side[Y])
 		{
 			r->side[X] += r->delta[X];
 			r->pos[X] += r->gap[X];
 			r->wall = 1 + (r->gap[X] > 0 ? 1 : 0);
+			stop = 1;
 		}
 		else
 		{
 			r->side[Y] += r->delta[Y];
 			r->pos[Y] += r->gap[Y];
 			r->wall = 3 + (r->gap[Y] > 0 ? 1 : 0);
+			stop = 2;
 		}
 		if (r->map->map[r->pos[X]][r->pos[Y]] == '1')
 		{
-			r->player->map[r->pos[X]][r->pos[Y]] = '9';
-			stop = 1;
+			r->player->map[r->pos[X]][r->pos[Y]] = 2;
+			stop = 0;
 		}
-		else if (r->map->map[r->pos[X]][r->pos[Y]] == '2')
-			sprite_manage(data, r);
+		else if (r->map->map[r->pos[X]][r->pos[Y]] == '2'
+				&& sprite_seen(data, r, stop))
+				return (4);
 		else
-			r->player->map[r->pos[X]][r->pos[Y]] = '8';
+			r->player->map[r->pos[X]][r->pos[Y]] = 1;
 	}
+	return (0);
 }
 /*
 static unsigned int	find_color(t_tex *t, int id)
@@ -172,7 +176,8 @@ int					calcul_img(t_gnrl *data)
 		r.delta[Y] = sqrt(1. + pow(r.ray[X] / r.ray[Y], 2));
 		//printf("%f %f\n", r.delta[X], r.delta[Y]);
 		set_side(&r);
-		find_wall(&r, data);
+		if (find_wall(&r, data))
+			return (4);
 		if (r.wall <= 2)
 			r.dist = 2 * abs_d((r.pos[X] - r.start[X] + (1. - r.gap[X]) / 2.) / r.ray[X]);
 		else
