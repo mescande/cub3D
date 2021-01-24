@@ -6,11 +6,11 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/20 20:20:03 by user42           ###   ########.fr        #
+#    Updated: 2021/01/24 10:36:00 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	cub3D
+NAME		=	Cub3D
 EXEC		=	test
 
 CC			?=	clang-9
@@ -64,7 +64,7 @@ all:
 	@$(MAKE) -j -C $(LIB_DIR) $(LIB_LIB)
 	@$(MAKE) -j -C $(MLX_INC)
 	@$(MAKE) -j $(NAME)
-	@cp cub3D Cub3D 
+#	@cp cub3D Cub3D 
 
 $(NAME):		$(OBJ) Makefile $(LIB_DIR)$(LIB_LIB) 
 	@$(CC) $(CFLAGS) -MMD $(OBJ) -o $@ $(INC_FLAGS) $(MLX_FLAGS)

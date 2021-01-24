@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 13:48:11 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 11:36:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		open_texture(t_gnrl *data)
 					&p->height)))
 			return (55 + p->id - 1);
 		p->line = (unsigned int *)mlx_get_data_addr(p->img, &a, &p->size, &a);
+		p->size = p->size / 4;
 		p = p->next;
 	}
 	return (0);

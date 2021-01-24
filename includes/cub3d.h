@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 10:09:53 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 17:56:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct	s_sprite_list {
 	int						id;
 	int						pos[2];
 	double					dist;
+	int						column;
 	struct s_sprite_list	*next;
 }				t_sprite;
 
@@ -182,13 +183,13 @@ int				player_manage(t_gnrl *data);
 **		Rendering fonctions
 */
 int				show_map(t_gnrl *data);
-int				put_square(int x, int y, t_gnrl *data);
 int				calcul_img(t_gnrl *data);
 
-int				sprite_seen(t_gnrl *data, t_ray *r, int indic);
+int				sprite_seen(t_gnrl *data, t_ray *r, int indic, int i);
+void			put_sprite(t_gnrl *data, t_sprite *s);
 
 int				is_textured(t_ray r, t_gnrl *data);
-t_tex			*find_tex(t_ray *r, t_gnrl *data);
+t_tex			*find_tex(int id, t_gnrl *data);
 
 /*
 **		Math fonctions

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 20:03:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 00:42:04 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 10:19:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			rotate(t_gnrl *data)
 	data->player.plane[X] = data->player.plane[X] * cv -
 		data->player.plane[Y] * sv;
 	data->player.plane[Y] = data->player.plane[Y] * cv + save * sv;
-	printf("\rpos[X] %f   pos[Y] %f   dir[X] %f   dir[Y] %f", data->player.pos[X], data->player.pos[Y], data->player.dir[X], data->player.dir[Y]);
+//	printf("\rpos[X] %f   pos[Y] %f   dir[X] %f   dir[Y] %f", data->player.pos[X], data->player.pos[Y], data->player.dir[X], data->player.dir[Y]);
 	fflush(stdout);
 /*	save = sqrt(pow(data->player.dir[X], 2) + pow(data->player.dir[Y], 2)); 
 	data->player.plane[X] = 3.5 * data->player.plane[X] / save;

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 10:06:26 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/24 11:30:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ static void			set_side(t_ray *r)
 	}
 }
 
-static int			find_wall(t_ray *r, t_gnrl *data)
+static int			find_wall(t_ray *r, t_gnrl *data, int i)
 {
 	int	stop;
 
 	stop = 1;
+	printf("\r");
 	while (stop)
 	{
 		if (r->side[X] < r->side[Y])
@@ -62,12 +63,15 @@ static int			find_wall(t_ray *r, t_gnrl *data)
 			r->player->map[r->pos[X]][r->pos[Y]] = 2;
 			stop = 0;
 		}
-		else if (r->map->map[r->pos[X]][r->pos[Y]] == '2'
-				&& sprite_seen(data, r, stop))
+		else if (r->map->map[r->pos[X]][r->pos[Y]] == '2')
+		{
+			if (sprite_seen(data, r, stop, i))
 				return (4);
+		}
 		else
 			r->player->map[r->pos[X]][r->pos[Y]] = 1;
 	}
+	fflush(stdout);
 	return (0);
 }
 /*
@@ -85,7 +89,7 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 	int		bottom;
 
 	bottom = top - 2 * (top - data->file.res[Y] / 2);
-	tex = find_tex(r, data);
+	tex = find_tex(r->wall, data);
 	if (r->wall > 2)
 		r->wallx = r->start[X] + /*r->dist * */r->ray[X] * ((r->pos[Y] - r->start[Y] + (1. - r->gap[Y]) / 2) / r->ray[Y]);
 	else
@@ -106,7 +110,7 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
 		else if (j >= bottom && j < top)
 			data->mlx.line[(j++ * data->mlx.size) + i] =
-				tex->line[(int)(r->tex[Y]) * tex->size / 4 + (int)(r->tex[X])];
+				tex->line[(int)(r->tex[Y]) * tex->size + (int)(r->tex[X])];
 		else if (j >= top)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;
 	}
@@ -176,7 +180,7 @@ int					calcul_img(t_gnrl *data)
 		r.delta[Y] = sqrt(1. + pow(r.ray[X] / r.ray[Y], 2));
 		//printf("%f %f\n", r.delta[X], r.delta[Y]);
 		set_side(&r);
-		if (find_wall(&r, data))
+		if (find_wall(&r, data, i))
 			return (4);
 		if (r.wall <= 2)
 			r.dist = 2 * abs_d((r.pos[X] - r.start[X] + (1. - r.gap[X]) / 2.) / r.ray[X]);
@@ -184,6 +188,8 @@ int					calcul_img(t_gnrl *data)
 			r.dist = 2 * abs_d((r.pos[Y] - r.start[Y] + (1. - r.gap[Y]) / 2.) / r.ray[Y]);
 		put_columns(data, r, i);
 	}
+	put_sprite(data, data->player.sprite);
+	data->player.sprite = NULL;
 	show_map(data);
 	return (0);
 }
