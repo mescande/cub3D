@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/24 10:36:00 by user42           ###   ########.fr        #
+#    Updated: 2021/01/24 14:40:36 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ $(DIR):
 
 $(EXEC): all
 	@echo "Starting test :"
-	./$(NAME) validfile.rt
+	./$(NAME) test/subject.cub
 
 clean:
 	@$(MAKE) -C $(LIB_DIR) clean

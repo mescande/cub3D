@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 11:25:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 14:14:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 13:55:49 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int		c3d_show(t_gnrl *data)
 
 	err = 0;
 	if (data->player.rot[X] || data->player.rot[Y])
-		err = rotate(data);
+		err += rotate(data);
 	if (data->player.mov[X] || data->player.mov[Y])
-		err = movement(data);
+		err += movement(data);
 	if (data->player.tran[X] || data->player.tran[Y])
-		err = translate(data);
+		err += translate(data);
 	if (err || data->player.reload)
 	{
 		data->player.reload = 0;

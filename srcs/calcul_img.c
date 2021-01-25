@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/24 11:30:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 14:15:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,16 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 //	printf("bottom %d\ttop %d\tcolonne %d\n", bottom, top, i);
 	while (j < data->file.res[Y])
 	{
-		r->tex[Y] = (j * 2 - data->file.res[Y] + r->h) * (tex->height / 2) / r->h;
 	//	printf("bottom %d\ti %d\ttop %d\tres %d\thauteur mur %d\thauteur texture %d\ntex[X] = %f\ttex[Y] = %f\n", bottom, j, top, data->file.res[Y], r->h, tex->height, r->tex[X], r->tex[Y]);
 		if (j < bottom)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
 		else if (j >= bottom && j < top)
+		{
+			r->tex[Y] = (j * 2 - data->file.res[Y] + r->h) * (tex->height / 2)
+				/ r->h;
 			data->mlx.line[(j++ * data->mlx.size) + i] =
 				tex->line[(int)(r->tex[Y]) * tex->size + (int)(r->tex[X])];
+		}
 		else if (j >= top)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;
 	}

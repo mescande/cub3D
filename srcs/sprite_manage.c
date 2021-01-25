@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/24 11:42:18 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/24 15:47:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void		sprite_sort(t_gnrl *data)
 		s[1]->next = s[0];
 		data->player.sprite = s[1];
 		s[1] = s[0];
-		s[0] = data->player.sprite; // ATTENTION, ca marche pas, il faut sortir
-	} // le if de la boucle pour le 1er.... -> recursif ??
+		s[0] = data->player.sprite;
+	}
 	sort_it(s[0], s[1]);
 }
 /*
@@ -155,11 +155,13 @@ void		put_sprite(t_gnrl *data, t_sprite *s)
 	i[0] = 0;
 	while (born[0] + i[0] < born[1])
 	{
-		t[X] = (double)tex->height * (double)i[0] / (double)size[0];
+		//t[X] = (double)tex->height * (double)i[0] / (double)size[0];
+		t[X] = (double)((i[0] + born[0]) * 2 - data->file.res[Y] + size[0]) * (double)tex->height /  (2 *(double)size[0]);
 		i[1] = 0;
 		while (i[1] < size[1] && i[1] + s->column < data->file.res[X])
 		{
 			t[Y] = (double)tex->width * (double)i[1] / (double)size[1];
+//			printf("img[%d][%d] : tex[%f][%f]\n", born[0] + i[0], s->column + i[1], t[X], t[Y]);
 			if (tex->line[(int)(t[X] * tex->size + t[Y])])
 				data->mlx.line[(born[0] + i[0]) * data->mlx.size + s->column +
 					i[1]] =	tex->line[(int)(t[X] * tex->size + t[Y])];
