@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/24 15:47:45 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/26 14:22:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,15 +152,15 @@ void		put_sprite(t_gnrl *data, t_sprite *s)
 	size[1] = (int)(data->file.res[X] / s->dist);
 	tex = find_tex(s->id, data);
 //	printf("%p\n", tex);
-	i[0] = 0;
-	while (born[0] + i[0] < born[1])
+	i[1] = 0;
+	while (i[1] < size[1] && i[1] + s->column < data->file.res[X])
 	{
 		//t[X] = (double)tex->height * (double)i[0] / (double)size[0];
-		t[X] = (double)((i[0] + born[0]) * 2 - data->file.res[Y] + size[0]) * (double)tex->height /  (2 *(double)size[0]);
-		i[1] = 0;
-		while (i[1] < size[1] && i[1] + s->column < data->file.res[X])
+		t[Y] = (double)tex->width * (double)i[1] / (double)size[1];
+		i[0] = 0;
+		while (born[0] + i[0] < born[1] && data)
 		{
-			t[Y] = (double)tex->width * (double)i[1] / (double)size[1];
+			t[X] = (double)((i[0] + born[0]) * 2 - data->file.res[Y] + size[0]) * (double)tex->height /  (2 *(double)size[0]);
 //			printf("img[%d][%d] : tex[%f][%f]\n", born[0] + i[0], s->column + i[1], t[X], t[Y]);
 			if (tex->line[(int)(t[X] * tex->size + t[Y])])
 				data->mlx.line[(born[0] + i[0]) * data->mlx.size + s->column +
