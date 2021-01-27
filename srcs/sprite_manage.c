@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 14:16:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 14:25:49 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,10 @@ int			sprite_seen(t_gnrl *data, t_ray *r, int ind, int i)
 	s->id = 5;
 	s->pos[X] = r->pos[X];
 	s->pos[Y] = r->pos[Y];
-//	s->dist = (ind == 1 ? r->side[X] - r->delta[X] : r->side[Y] - r->delta[Y]);
-	s->dist = sqrt(pow(data->player.pos[X] - s->pos[X] - 0.5 + data->player.dir[X], 2)
-			+ pow(data->player.pos[Y] - s->pos[Y] + 0.5 + data->player.dir[Y], 2));
-	//dist = norm(player->pos - pos + 0.5);
-//	s->column = i;
-//	vect[X] = s->pos[X] - data
 	dist[0] = sqrt(pow(data->player.plane[X], 2) + sqrt(pow(data->player.plane[Y], 2)));
 	dist[1] = sqrt(pow(s->pos[X] - data->player.pos[X] + 0.5, 2)
 			+ pow(s->pos[Y] - data->player.pos[Y] + 0.5, 2));
+	s->dist = dist[1];
 	dist[2] = (double)(
 			(
 			 (s->pos[X] - data->player.pos[X] + 0.5) 
@@ -65,9 +60,8 @@ int			sprite_seen(t_gnrl *data, t_ray *r, int ind, int i)
 			* data->file.res[X] + data->file.res[X] / 2);
 
 
-	printf("%d = dir * %f / sqrt(%f^2 + dist[2]^2)\r", s->column, dist[2], dist[1]);
-	fflush(stdout);
-	//colmn = (dot(ray*dist, plane) / norm(plane)) * res[X] + res[X] / 2
+//	printf("%d = dir * %f / sqrt(%f^2 + dist[2]^2)\r", s->column, dist[2], dist[1]);
+//	fflush(stdout);
 	if (data->player.sprite)
 		add_sprite(data->player.sprite, s);
 	else
