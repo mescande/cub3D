@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 14:25:49 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 14:44:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int			sprite_seen(t_gnrl *data, t_ray *r, int ind, int i)
 	s->pos[X] = r->pos[X];
 	s->pos[Y] = r->pos[Y];
 	dist[0] = sqrt(pow(data->player.plane[X], 2) + sqrt(pow(data->player.plane[Y], 2)));
-	dist[1] = sqrt(pow(s->pos[X] - data->player.pos[X] + 0.5, 2)
-			+ pow(s->pos[Y] - data->player.pos[Y] + 0.5, 2));
-	s->dist = dist[1];
+	dist[1] = sqrt(pow((double)(s->pos[X] - data->player.pos[X] + 0.5), 2)
+			+ pow((double)(s->pos[Y] - data->player.pos[Y] + 0.5), 2));
+	s->dist = 2 * dist[1];
 	dist[2] = (double)(
 			(
 			 (s->pos[X] - data->player.pos[X] + 0.5) 

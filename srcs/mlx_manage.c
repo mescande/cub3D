@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:50:08 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/17 23:18:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:37:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	end_mlx(t_mlx *win)
 	{
 		mlx_clear_window(win->mlx, win->win);
 		mlx_destroy_window(win->mlx, win->win);
+		mlx_destroy_display(win->mlx);
 		win->win = NULL;
 	}
 	if (win->mlx)

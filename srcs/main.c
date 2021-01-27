@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 17:17:16 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/26 20:53:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:24:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ data.file.res[X] = %d\n\
 	if ((err = c3d_loop(&data)))
 		return (ft_freeemee(&data, err));
 	printf("\n");
+//	malloc(36);
 	return (ft_freeemee(&data, 0));
 }
