@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 12:38:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 12:51:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,6 @@ int					calcul_img(t_gnrl *data)
 	put_sprite(data, data->player.sprite);
 	data->player.sprite = NULL;
 	show_map(data);
-	printf("\rpos = [%f;%f]", data->player.pos[X], data->player.pos[Y]);
+//	printf("\rpos = [%f;%f]", data->player.pos[X], data->player.pos[Y]);
 	return (0);
 }
