@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/21 14:46:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/26 16:13:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ int			ft_freeemee(t_gnrl *data, int i)
 		free(data->file.map.map);
 	if (data->player.map)
 		free(data->player.map);
+	if (data->player.dists)
+		free(data->player.dists);
 	end_mlx(&data->mlx);
 	return ((i == 0 ? 0 : ft_puterror(i)));
 }

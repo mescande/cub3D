@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 17:56:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/26 16:07:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct	s_player_informations {
 	double		pos[2];
 	double		dir[2];
 	double		plane[2];
+	double		*dists;
 	int			posi[2];
 	char		life;
 	char		rot[2];

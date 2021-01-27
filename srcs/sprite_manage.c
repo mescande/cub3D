@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/26 14:22:21 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 12:24:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,56 @@ static void	add_sprite(t_sprite *list, t_sprite *new)
 int			sprite_seen(t_gnrl *data, t_ray *r, int ind, int i)
 {
 	t_sprite	*s;
-	double		dist;
+	double		dist[2];
+//	double		vect[2];
 
-	if (data->player.sprite)
-	{
-		data->player.map[r->pos[X]][r->pos[Y]] = 3;
-		s = data->player.sprite;
-		dist = (ind == 1 ? r->side[X] - r->delta[X] : r->side[Y] - r->delta[Y]);
-		while (s && dist)
+	(void)i;
+	(void)ind;
+	if ((s = data->player.sprite))
+		while (s)
 		{
 			if (s->pos[X] == r->pos[X] && s->pos[Y] == r->pos[Y])
-			{
-				if (s->dist > dist)
-					s->dist = dist;
 				return (0);
-			}
 			s = s->next;
 		}
-	}
 	if (!(s = (t_sprite *)ft_memalloc(sizeof(t_sprite))))
 		return (4);
 //	s->id = r->player->map[r->pos[X]][r->pos[Y]];
+	data->player.map[r->pos[X]][r->pos[Y]] = 3;
 	s->id = 5;
 	s->pos[X] = r->pos[X];
 	s->pos[Y] = r->pos[Y];
-	s->dist = (ind == 1 ? r->side[X] - r->delta[X] : r->side[Y] - r->delta[Y]);
-	s->column = i;
+//	s->dist = (ind == 1 ? r->side[X] - r->delta[X] : r->side[Y] - r->delta[Y]);
+	s->dist = sqrt(pow(data->player.pos[X] - s->pos[X] - 0.5 + data->player.dir[X], 2)
+			+ pow(data->player.pos[Y] - s->pos[Y] + 0.5 + data->player.dir[Y], 2));
+	//dist = norm(player->pos - pos + 0.5);
+//	s->column = i;
+//	vect[X] = s->pos[X] - data
+	dist[0] = sqrt(pow(data->player.plane[X], 2) + sqrt(pow(data->player.plane[Y], 2)));
+	dist[1] = sqrt(pow(s->pos[X] - data->player.pos[X] + 0.5, 2)
+			+ pow(s->pos[Y] - data->player.pos[Y] + 0.5, 2));
+	s->column = (int)((
+				(sqrt(pow(data->player.dir[X], 2) + pow(data->player.dir[Y], 2)) 
+				 * dist[0])
+				/ sqrt(pow(dist[1], 2) - pow(dist[0], 2)))
+			* data->file.res[X] + data->file.res[X] / 2);
+/*	s->column = (int)(
+			(
+			 (s->pos[X] - data->player.pos[X] + 0.5) 
+			* data->player.plane[X] +
+			 (s->pos[Y] - data->player.pos[Y] + 0.5)
+			* data->player.plane[Y]
+			) /	sqrt(pow(data->player.plane[X], 2) + pow(data->player.plane[Y], 2))
+			* data->file.res[X] + data->file.res[X] / 2);
+
+
+*/	printf("%d = (((%d-%f+0.5)*%f + (%d-%f+0.5)*%f) / %f) * %d+%d/2  \r",
+			s->column, s->pos[X], data->player.pos[X], data->player.plane[X],
+			s->pos[Y], data->player.pos[Y], data->player.plane[Y],
+			sqrt(pow(data->player.plane[X], 2) + pow(data->player.plane[Y], 2)),
+			data->file.res[X], data->file.res[X]);
+	fflush(stdout);
+	//colmn = (dot(ray*dist, plane) / norm(plane)) * res[X] + res[X] / 2
 	if (data->player.sprite)
 		add_sprite(data->player.sprite, s);
 	else
@@ -94,50 +118,13 @@ void		sprite_sort(t_gnrl *data)
 	}
 	sort_it(s[0], s[1]);
 }
-/*
-void		put_sprite(t_gnrl *data, t_sprite *s)
-{
-	int		h;
-	double	bottom;
-	double	top;
-	double	t[2];
-	int		i;
-	t_tex	*tex;
 
-	if (!s)
-		return ;
-	if (s->next)
-		put_sprite(data, s->next);
-	h = (int)(data->file.res[Y] / s->dist);
-	top = (int)(h / 2 + data->file.res[Y] / 2);
-	top = (top > data->file.res[Y] ? data->file.res[Y] : top);
-	bottom = top - 2 * (top - data->file.res[Y] / 2);
-	h = (int)(data->file.res[X] / s->dist);
-	tex = find_tex(s->id, data);
-	while (bottom < top)
-	{
-		i = 0;
-		t[X] = (bottom * 2 - data->file.res[Y] + h) * (tex->height / 2) / h;
-		while (i < h && i + s->column < data->file.res[X])
-		{
-			t[Y] = (i * 2 - data->file.res[Y] + h);
-	printf("%d\n", __LINE__);
-	printf("%x, %d\n", data->mlx.line[(int)((bottom * data->mlx.size) + i + s->column)], (int)((bottom * data->mlx.size) + i + s->column));
-			data->mlx.line[(int)((bottom * data->mlx.size) + i + s->column)] =
-				tex->line[(int)((t[X] * tex->size) + t[Y])];
-	printf("%d\n", __LINE__);
-			i++;
-		}
-		bottom++;
-	}
-}
-*/
 void		put_sprite(t_gnrl *data, t_sprite *s)
 {
 	int		size[2];
 	int		born[2];
 	double	t[2];
-	int		i[2];
+	int		i[3];
 	t_tex	*tex;
 
 	if (!s)
@@ -153,21 +140,33 @@ void		put_sprite(t_gnrl *data, t_sprite *s)
 	tex = find_tex(s->id, data);
 //	printf("%p\n", tex);
 	i[1] = 0;
-	while (i[1] < size[1] && i[1] + s->column < data->file.res[X])
+	i[2] = s->column - size[1] / 2;
+//	printf("\r%d = %d - %d / 2       ", i[2], s->column, size[1]);
+//	fflush(stdout);
+	if (i[2] < 0)
 	{
-		//t[X] = (double)tex->height * (double)i[0] / (double)size[0];
-		t[Y] = (double)tex->width * (double)i[1] / (double)size[1];
+		i[1] -= i[2];
+		i[2] -= i[2];
+	}
+	while (i[1] < size[1] && i[1] + s->column - size[1] / 2 < data->file.res[X])
+	{
+//		t[X] = (double)tex->height * (double)i[0] / (double)size[0];
+		t[Y] = (double)tex->width * (double)i[1] / ((double)size[1]);
+//	printf("t[Y] %f\ti[1] %d\t %d - %d / 2 = %d\n", t[Y], i[1], s->column, size[1], i[1] + s->column - size[1] / 2);
 		i[0] = 0;
-		while (born[0] + i[0] < born[1] && data)
+		while (born[0] + i[0] < born[1]
+				&& data->player.dists[i[1] + s->column - size[1] / 2] > s->dist)
 		{
-			t[X] = (double)((i[0] + born[0]) * 2 - data->file.res[Y] + size[0]) * (double)tex->height /  (2 *(double)size[0]);
+			t[X] = (double)((i[0] + born[0]) * 2 - data->file.res[Y] + size[0])
+				* (double)tex->height / ((2 *(double)size[0]));
 //			printf("img[%d][%d] : tex[%f][%f]\n", born[0] + i[0], s->column + i[1], t[X], t[Y]);
 			if (tex->line[(int)(t[X] * tex->size + t[Y])])
-				data->mlx.line[(born[0] + i[0]) * data->mlx.size + s->column +
-					i[1]] =	tex->line[(int)(t[X] * tex->size + t[Y])];
-			i[1]++;
+				data->mlx.line[(born[0] + i[0]) * data->mlx.size + i[1] +
+					s->column - size[1] / 2] = 
+					tex->line[(int)(t[X] * tex->size + t[Y])];
+			i[0]++;
 		}
-		i[0]++;
+		i[1]++;
 	}
 	free(s);
 	s = NULL;

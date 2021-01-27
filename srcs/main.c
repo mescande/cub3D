@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 17:17:16 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/20 13:36:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/26 20:53:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ data.file.res[X] = %d\n\
 		 data.player.posi[Y], data.player.life, data.fov, data.is_smart);
 	if ((err = c3d_loop(&data)))
 		return (ft_freeemee(&data, err));
+	printf("\n");
 	return (ft_freeemee(&data, 0));
 }

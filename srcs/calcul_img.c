@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/25 14:15:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 12:38:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ static void			set_side(t_ray *r)
 static int			find_wall(t_ray *r, t_gnrl *data, int i)
 {
 	int	stop;
+	int	dist;
 
 	stop = 1;
-	printf("\r");
+	dist = 0;
 	while (stop)
 	{
 		if (r->side[X] < r->side[Y])
@@ -60,7 +61,7 @@ static int			find_wall(t_ray *r, t_gnrl *data, int i)
 		}
 		if (r->map->map[r->pos[X]][r->pos[Y]] == '1')
 		{
-			r->player->map[r->pos[X]][r->pos[Y]] = 2;
+			data->player.map[r->pos[X]][r->pos[Y]] = 2;
 			stop = 0;
 		}
 		else if (r->map->map[r->pos[X]][r->pos[Y]] == '2')
@@ -69,7 +70,9 @@ static int			find_wall(t_ray *r, t_gnrl *data, int i)
 				return (4);
 		}
 		else
-			r->player->map[r->pos[X]][r->pos[Y]] = 1;
+			data->player.map[r->pos[X]][r->pos[Y]] = 1;
+		if (dist++ > 400)
+			stop = 0;
 	}
 	fflush(stdout);
 	return (0);
@@ -164,21 +167,20 @@ int					calcul_img(t_gnrl *data)
 
 	i = -1;
 	ft_bzero((void *)&r, sizeof(t_ray));
-	r.player = &data->player;
-	map_cpy(r.player->map, data->file.map);
+	map_cpy(data->player.map, data->file.map);
 	r.map = &data->file.map;
 	while (++i < data->file.res[X])
 	{
-		r.pos[X] = (int)r.player->pos[X];
-		r.pos[Y] = (int)r.player->pos[Y];
-		r.player->map[r.pos[X]][r.pos[Y]] = 'H';
-		r.start[X] = r.player->pos[X];
-		r.start[Y] = r.player->pos[Y];
+		r.pos[X] = (int)data->player.pos[X];
+		r.pos[Y] = (int)data->player.pos[Y];
+		data->player.map[r.pos[X]][r.pos[Y]] = 'H';
+		r.start[X] = data->player.pos[X];
+		r.start[Y] = data->player.pos[Y];
 //		printf("dist %f\t%c%c%c%c%c\n", r.dist, r.map.map[r.pos[X]][r.pos[Y] - 2], r.map.map[r.pos[X]][r.pos[Y] - 1], r.map.map[r.pos[X]][r.pos[Y]], r.map.map[r.pos[X]][r.pos[Y] + 1], r.map.map[r.pos[X]][r.pos[Y] + 2]);
 		r.ratio = (2. * (double)i / (double)(data->file.res[X])) - 1.;
 		//printf("%f\n", r.ratio);
-		r.ray[X] = r.player->dir[X] + r.player->plane[X] * r.ratio;
-		r.ray[Y] = r.player->dir[Y] + r.player->plane[Y] * r.ratio;
+		r.ray[X] = data->player.dir[X] + data->player.plane[X] * r.ratio;
+		r.ray[Y] = data->player.dir[Y] + data->player.plane[Y] * r.ratio;
 		r.delta[X] = sqrt(1. + pow(r.ray[Y] / r.ray[X], 2));
 		r.delta[Y] = sqrt(1. + pow(r.ray[X] / r.ray[Y], 2));
 		//printf("%f %f\n", r.delta[X], r.delta[Y]);
@@ -189,10 +191,13 @@ int					calcul_img(t_gnrl *data)
 			r.dist = 2 * abs_d((r.pos[X] - r.start[X] + (1. - r.gap[X]) / 2.) / r.ray[X]);
 		else
 			r.dist = 2 * abs_d((r.pos[Y] - r.start[Y] + (1. - r.gap[Y]) / 2.) / r.ray[Y]);
+		data->player.dists[i] = r.dist;
 		put_columns(data, r, i);
 	}
+//	printf("\r%.20f", sqrt(pow(data->player.plane[X], 2) + pow(data->player.plane[Y], 2)));
 	put_sprite(data, data->player.sprite);
 	data->player.sprite = NULL;
 	show_map(data);
+	printf("\rpos = [%f;%f]", data->player.pos[X], data->player.pos[Y]);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:50:24 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 23:59:26 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/26 16:12:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int			player_manage(t_gnrl *data)
 		data->player.dir[Y] = 1. * (data->file.map.dir == 'E' ? 1 : -1);
 		data->player.plane[X] = 0.75 * (data->file.map.dir == 'E' ? 1 : -1);
 	}
-	if (player_map(data))
+	if (player_map(data) || !(data->player.dists =
+				ft_memalloc(sizeof(double) * data->file.res[X])))
 		return (4);
 	return (0);
 }
