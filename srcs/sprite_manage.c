@@ -6,18 +6,26 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 19:57:37 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/29 20:34:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	add_sprite(t_sprite *list, t_sprite *new)
+t_sprite *add_sprite(t_sprite *sp_list, t_sprite *new_sp)
 {
-	if (list->next)
-		add_sprite(list->next, new);
-	else
-		list->next = new;
+	const t_sprite *head = sp_list;
+
+	if (!sp_list || new_sp->dist > sp_list->dist)
+	{
+		new_sp->next = sp_list;
+		return (new_sp);
+	}
+	while (sp_list->next && new_sp->dist < sp_list->next->dist)
+		sp_list = sp_list->next;
+	new_sp->next = sp_list->next;
+	sp_list->next = new_sp;
+	return ((t_sprite *)head);
 }
 
 int			sprite_seen(t_gnrl *data, t_ray *r, int ind, int i)
@@ -47,64 +55,10 @@ int			sprite_seen(t_gnrl *data, t_ray *r, int ind, int i)
 	tran[Y] = r->idet * (data->player.dir[X] * tmp - data->player.dir[Y] * tran[X]);
 	tran[X] = r->idet * (data->player.plane[Y] * tran[X] - data->player.plane[X] * tmp);
 	s->column = (int)((double)data->file.res[X] / 2. * (1. + tran[Y] / tran[X]));
-	s->dist = 2 * sqrt(pow((double)(s->pos[X] - data->player.pos[X] + 0.5), 2)
-			+ pow((double)(s->pos[Y] - data->player.pos[Y] + 0.5), 2));
-
-
+	s->dist = 2 * tran[X];
 	s->next = NULL;
-	if (data->player.sprite)
-		add_sprite(data->player.sprite, s);
-	else
-		data->player.sprite = s;
+	data->player.sprite = add_sprite(data->player.sprite, s);
 	return (0);
-}
-
-static int	sort_it(t_sprite *sorted)
-{
-	t_sprite	*elem;
-	t_sprite	*next;
-	int			res;
-
-	res = 1;
-	while (res)
-	{
-		elem = sorted->next;
-		next = elem->next;
-		if (!elem || !next)
-			return (0);
-		if (elem->dist < next->dist)
-		{
-			elem->next = next->next;
-			next->next = elem;
-			sorted->next = next;
-			return (1);
-		}
-		res = sort_it(sorted->next);
-	}
-	return (0);
-}
-
-void		sprite_sort(t_gnrl *data)
-{
-	int			res;
-	t_sprite	*s;
-
-	if (!(data->player.sprite) || !(data->player.sprite->next))
-		return ;
-	res = 1;
-	while (res)
-	{
-		res = 0;
-		if (data->player.sprite->dist < data->player.sprite->next->dist)
-		{
-			s = data->player.sprite->next->next;
-			data->player.sprite->next->next = data->player.sprite;
-			data->player.sprite = data->player.sprite->next;
-			data->player.sprite->next->next = s;
-		}
-		if (data->player.sprite->next->next)
-			res = sort_it(data->player.sprite);
-	}
 }
 
 void		put_sprite(t_gnrl *data, t_sprite *s)

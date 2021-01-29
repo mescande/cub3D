@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 19:58:46 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/29 20:31:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,6 @@ int					calcul_img(t_gnrl *data)
 		data->player.dists[i] = r.dist;
 		put_columns(data, r, i);
 	}
-	sprite_sort(data);
 	put_sprite(data, data->player.sprite);
 	data->player.sprite = NULL;
 	show_map(data);
