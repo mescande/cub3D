@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/26 16:07:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/29 15:03:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,11 +164,13 @@ void			end_mlx(t_mlx *win);
 /*
 **		Reaction fonctions to keybinds
 */
+int				c3d_key(int key, t_gnrl *data, int press);
+int				c3d_loop(t_gnrl *data);
+
+int				focus_out(t_gnrl *data);
+int				focus_in(t_gnrl *data);
 int				key_release(int key, t_gnrl *data);
 int				key_press(int key, t_gnrl *data);
-int				c3d_loop(t_gnrl *data);
-int				focus_out(int key, t_gnrl *data);
-int				focus_in(int key, t_gnrl *data);
 
 /*
 **		Mouvement calcul
@@ -186,6 +188,7 @@ int				player_manage(t_gnrl *data);
 int				show_map(t_gnrl *data);
 int				calcul_img(t_gnrl *data);
 
+void			sprite_sort(t_gnrl *data);
 int				sprite_seen(t_gnrl *data, t_ray *r, int indic, int i);
 void			put_sprite(t_gnrl *data, t_sprite *s);
 

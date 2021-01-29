@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/27 15:48:47 by user42           ###   ########.fr        #
+#    Updated: 2021/01/27 18:19:43 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,12 +111,7 @@ help:
 	@echo "test	: all and exec with validfile.rt or a file given in argument"
 	@echo "re	: fclean all"
 	@echo "nolib	: destroy object of programs only (not lib) then compiling again"
-	@echo "is_smart	: add flag IS_SMART to compilation and make"
 	@echo "help	: print this help"
-
-is_smart:
-	$(CFLAGS) = $(CFLAGS) --define IS_SMART 1
-	@$(MAKE)
 
 .PHONY: all clean fclean re
 

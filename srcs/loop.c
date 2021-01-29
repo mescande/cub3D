@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 11:25:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/25 13:55:49 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/29 15:05:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int		c3d_show(t_gnrl *data)
 		err += translate(data);
 	if (err || data->player.reload)
 	{
-		data->player.reload = 0;
-		if ((err = calcul_img(data)))
+		if ((err || data->player.reload == 1) && (err = calcul_img(data)))
 			return (err);
+		data->player.reload = 0;
 		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img,
 				0, 0);
 	}
@@ -36,7 +36,7 @@ int		c3d_show(t_gnrl *data)
 
 int		c3d_key(int key, t_gnrl *data, int press)
 {
-	if (key == ESC)//escape
+	if (key == ESC)
 	{
 		if (!press && data->quit)
 			mlx_loop_end(data->mlx.mlx);
@@ -60,38 +60,26 @@ int		c3d_key(int key, t_gnrl *data, int press)
 		data->player.reload = 1;
 		data->player.show_map = (data->player.show_map + 1) % 2;
 	}
-	(void)data;
 	return (0);
-}
-
-int		key_release(int key, t_gnrl *data)
-{
-	return (c3d_key(key, data, 0));
-}
-
-int		key_press(int key, t_gnrl *data)
-{
-	return (c3d_key(key, data, 1));
 }
 
 int		c3d_loop(t_gnrl *data)
 {
 	int err;
 
-//	mlx_key_hook(data->mlx.win, c3d_key, data);
 	data->mlx.img = mlx_new_image(data->mlx.mlx, data->file.res[X],
 			data->file.res[Y]);
 	data->mlx.line = (unsigned int *)mlx_get_data_addr(data->mlx.img, &err,
 			&data->mlx.size, &err);
 	data->mlx.size = data->mlx.size / 4;
 	mlx_do_key_autorepeatoff(data->mlx.mlx);
-	mlx_hook(data->mlx.win, 02, (1L<<0), key_press, data);//keypress
-	mlx_hook(data->mlx.win, 03, (1L<<1), key_release, data);//keyrelease
-	mlx_hook(data->mlx.win, 33, (1L << 17), mlx_loop_end, data->mlx.mlx);
-	mlx_hook(data->mlx.win, 10, (1L<<5), focus_out, data);//focus out
-	mlx_hook(data->mlx.win, 9, (1L<<4), focus_in, data);//focus in
-/*	mlx_hook(data->mlx.win, , , , data);
-*/	mlx_loop_hook(data->mlx.mlx, c3d_show, data);
+	mlx_hook(data->mlx.win, 02, (1L<<0), key_press, data);
+	mlx_hook(data->mlx.win, 03, (1L<<1), key_release, data);
+	mlx_hook(data->mlx.win, 33, (1L<<17), mlx_loop_end, data->mlx.mlx);
+	mlx_hook(data->mlx.win, 10, (1L<<21), focus_out, data);
+	mlx_hook(data->mlx.win, 9, (1L<<21), focus_in, data);
+//	mlx_hook(data->mlx.win, 12, (1L<<15), expose, data);
+	mlx_loop_hook(data->mlx.mlx, c3d_show, data);
 	if ((err = calcul_img(data)))
 		return (err);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img,

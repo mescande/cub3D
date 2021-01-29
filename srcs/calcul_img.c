@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 12:51:15 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 19:46:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ int					calcul_img(t_gnrl *data)
 		put_columns(data, r, i);
 	}
 //	printf("\r%.20f", sqrt(pow(data->player.plane[X], 2) + pow(data->player.plane[Y], 2)));
+	sprite_sort(data);
 	put_sprite(data, data->player.sprite);
 	data->player.sprite = NULL;
 	show_map(data);
