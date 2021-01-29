@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 13:12:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 15:07:14 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/29 17:04:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,9 @@ int		focus_out(t_gnrl *data)
 
 int		focus_in(t_gnrl *data)
 {
-	printf("bouh\n");
 	data->player.reload = 2;
-	printf("bouh\n");
 	if (data->mlx.mlx)
-	{
-	printf("mlx %p\n", data->mlx.mlx);
 		mlx_do_key_autorepeatoff(data->mlx.mlx);
-	}
-	printf("bouh\n");
 	return (0);
 }
 

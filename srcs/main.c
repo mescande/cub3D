@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 17:17:16 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/27 15:24:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/29 19:18:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ data.file.res[X] = %d\n\
      .......dir[Y]  = %f\n\
      .......plane[X]= %f\n\
      .......plane[Y]= %f\n\
-     .......posi[X] = %d\n\
-     .......posi[Y] = %d\n\
      .......life    = %d\n\
 .....fov = %f\n\
 .....is_smart = %d\n\
@@ -57,8 +55,8 @@ data.file.res[X] = %d\n\
 		 data.file.ceiling, data.file.floor, data.mlx.mlx, data.mlx.win,
 		 data.mlx.img, data.player.pos[X],
 		 data.player.pos[Y], data.player.dir[X], data.player.dir[Y],
-		 data.player.plane[X], data.player.plane[Y], data.player.posi[X],
-		 data.player.posi[Y], data.player.life, data.fov, data.is_smart);
+		 data.player.plane[X], data.player.plane[Y],
+		 data.player.life, data.fov, data.is_smart);
 	if ((err = c3d_loop(&data)))
 		return (ft_freeemee(&data, err));
 	printf("\n");

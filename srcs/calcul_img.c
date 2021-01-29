@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 19:46:57 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/29 19:58:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 	bottom = top - 2 * (top - data->file.res[Y] / 2);
 	tex = find_tex(r->wall, data);
 	if (r->wall > 2)
-		r->wallx = r->start[X] + /*r->dist * */r->ray[X] * ((r->pos[Y] - r->start[Y] + (1. - r->gap[Y]) / 2) / r->ray[Y]);
+		r->wallx = r->start[X] + r->ray[X] * ((r->pos[Y] - r->start[Y] + (1. - r->gap[Y]) / 2) / r->ray[Y]);
 	else
-		r->wallx = r->start[Y] + /*r->dist * */r->ray[Y] * ((r->pos[X] - r->start[X] + (1. - r->gap[X]) / 2.) / r->ray[X]);
+		r->wallx = r->start[Y] + r->ray[Y] * ((r->pos[X] - r->start[X] + (1. - r->gap[X]) / 2.) / r->ray[X]);
 	r->wallx -= (int)r->wallx;
 	r->tex[X] = (int)(tex->width * r->wallx);
 	if (r->wall <= 2 && r->ray[X] > 0)
@@ -104,10 +104,8 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 	else if (r->wall > 2 && r->ray[Y] < 0)
 		r->tex[X] = tex->width - r->tex[X] - 1;
 	j = 0;
-//	printf("bottom %d\ttop %d\tcolonne %d\n", bottom, top, i);
 	while (j < data->file.res[Y])
 	{
-	//	printf("bottom %d\ti %d\ttop %d\tres %d\thauteur mur %d\thauteur texture %d\ntex[X] = %f\ttex[Y] = %f\n", bottom, j, top, data->file.res[Y], r->h, tex->height, r->tex[X], r->tex[Y]);
 		if (j < bottom)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
 		else if (j >= bottom && j < top)
@@ -169,6 +167,8 @@ int					calcul_img(t_gnrl *data)
 	ft_bzero((void *)&r, sizeof(t_ray));
 	map_cpy(data->player.map, data->file.map);
 	r.map = &data->file.map;
+	r.idet = 1. / (data->player.plane[Y] * data->player.dir[X] 
+			- data->player.plane[X] * data->player.dir[Y]);
 	while (++i < data->file.res[X])
 	{
 		r.pos[X] = (int)data->player.pos[X];
@@ -176,14 +176,11 @@ int					calcul_img(t_gnrl *data)
 		data->player.map[r.pos[X]][r.pos[Y]] = 'H';
 		r.start[X] = data->player.pos[X];
 		r.start[Y] = data->player.pos[Y];
-//		printf("dist %f\t%c%c%c%c%c\n", r.dist, r.map.map[r.pos[X]][r.pos[Y] - 2], r.map.map[r.pos[X]][r.pos[Y] - 1], r.map.map[r.pos[X]][r.pos[Y]], r.map.map[r.pos[X]][r.pos[Y] + 1], r.map.map[r.pos[X]][r.pos[Y] + 2]);
 		r.ratio = (2. * (double)i / (double)(data->file.res[X])) - 1.;
-		//printf("%f\n", r.ratio);
 		r.ray[X] = data->player.dir[X] + data->player.plane[X] * r.ratio;
 		r.ray[Y] = data->player.dir[Y] + data->player.plane[Y] * r.ratio;
 		r.delta[X] = sqrt(1. + pow(r.ray[Y] / r.ray[X], 2));
 		r.delta[Y] = sqrt(1. + pow(r.ray[X] / r.ray[Y], 2));
-		//printf("%f %f\n", r.delta[X], r.delta[Y]);
 		set_side(&r);
 		if (find_wall(&r, data, i))
 			return (4);
@@ -194,11 +191,9 @@ int					calcul_img(t_gnrl *data)
 		data->player.dists[i] = r.dist;
 		put_columns(data, r, i);
 	}
-//	printf("\r%.20f", sqrt(pow(data->player.plane[X], 2) + pow(data->player.plane[Y], 2)));
 	sprite_sort(data);
 	put_sprite(data, data->player.sprite);
 	data->player.sprite = NULL;
 	show_map(data);
-//	printf("\rpos = [%f;%f]", data->player.pos[X], data->player.pos[Y]);
 	return (0);
 }

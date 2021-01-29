@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 15:03:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/29 19:38:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct	s_player_informations {
 	double		dir[2];
 	double		plane[2];
 	double		*dists;
-	int			posi[2];
 	char		life;
 	char		rot[2];
 	char		mov[2];
@@ -120,6 +119,7 @@ typedef struct	s_ray_informations {
 	t_map	*map;
 	int		h;
 	double	tex[2];
+	double	idet;
 }				t_ray;
 
 /*
