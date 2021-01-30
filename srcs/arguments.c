@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 23:33:25 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 13:48:37 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 13:07:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,71 @@ static void usage(t_gnrl *data)
 	printf("Executez ./Cub3D --help pour plus d'informations\n");
 }
 
+static void	save(t_gnrl *data)
+{
+	if (strcmp(data->av[data->ac], "--save"))
+		invalid(data);
+	data->save = ON;
+	if (data->av[data->ac + 1] && !ft_strcmp(data->av[data->ac + 1]
+				+ ft_strlen(data->av[data->ac + 1]) - 4, ".bmp"))
+		data->dest = data->av[data->ac++ + 1];
+	else
+		data->dest = "screenshot.bmp";
+}
+
+static void	smart(t_gnrl *data)
+{
+	if (strcmp(data->av[data->ac], "-smart"))
+		invalid(data);
+	data->is_smart = ON;
+}
+
+void	file_name(t_gnrl *data)
+{
+	data->file.ac = data->ac;
+}
+
+static t_args	list[] = {
+	{"--save", save},
+	{"-h", help},
+	{"--help", help},
+	{"-help", help},
+	{"-smart", smart},
+	{".cub", file_name},
+	{NULL, 0}
+};
+
+void	invalid(t_gnrl *data)
+{
+	printf("Argument invalide, faites --help pour plus de precision\n");
+	data->help = ON;
+	data->ac = -1;
+}
+
 int		args_management(int ac, char **av, t_gnrl *data)
 {
 	int		res;
+	int 	i;
 
-	res = 0;
+	res = 1;
 	if (ac == 1)
 	{
 		usage(data);
-		return (res);
+		return (0);
 	}
-	data->fov = 66;
-	while (ac-- > 1)
+	data->ac = 1;
+	data->av = av;
+	while (data->ac < ac && data->ac)
 	{
-		if (!ft_strcmp(av[ac], "--save"))
-			data->save = ON;
-		else if (!ft_strcmp(av[ac], "-h") || !ft_strcmp(av[ac], "--help")
-				|| !ft_strcmp(av[ac], "-help"))
-			help(data);
-		else if (!ft_strcmp(av[ac], "-smart"))
-			data->is_smart = ON;
-		else if (ft_strstr(av[ac], "-fov="))
-			data->fov = ft_atoi(av[ac] + 5);
-		else if (ft_strstr(av[ac], ".cub"))
-			res = ac;
+		i = 0;
+		while (list[i].arg && !ft_strstr(av[data->ac], list[i].arg))
+			i++;
+		if (!list[i].arg)
+			invalid(data);
+		else
+			list[i].fct(data);
+		data->ac++;
 	}
-	if (res == 0)
-		usage(data);
 	if (data->help)
 		res = 0;
 	return (res);

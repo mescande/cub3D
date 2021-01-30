@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 20:31:51 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 13:40:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,7 @@ static int			find_wall(t_ray *r, t_gnrl *data, int i)
 	fflush(stdout);
 	return (0);
 }
-/*
-static unsigned int	find_color(t_tex *t, int id)
-{
-	if (t->id == id)
-		return (t->color);
-	return (find_color(t->next, id));
-}
-*/
+
 static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 {
 	int		j;

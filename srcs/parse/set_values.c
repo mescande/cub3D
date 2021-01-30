@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 11:36:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 13:35:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int		open_texture(t_gnrl *data)
 **	NO,	SO,	WE,	EA,	S
 **	1	2	3	4	4
 */
-
 int		set_textures(t_file *file, char id, char *sep)
 {
 	t_tex	*new;

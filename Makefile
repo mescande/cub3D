@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/27 18:19:43 by user42           ###   ########.fr        #
+#    Updated: 2021/01/29 21:19:57 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRC_LIST	=	main.c\
 				textures.c\
 				sprite_manage.c\
 				movements.c\
-				is_mapchar.c
+				is_mapchar.c\
+				bmp.c
 
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))

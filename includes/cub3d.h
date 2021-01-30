@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 19:38:30 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 13:06:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct	s_file_information {
 	t_tex	*textures;
 	int		ceiling;
 	int		floor;
+	int		ac;
 }				t_file;
 
 typedef struct	s_mlx_informations {
@@ -96,12 +97,20 @@ typedef struct	s_general_informations {
 	int		quit;
 	char	help;
 	char	save;
+	char	*dest;
+	char	**av;
+	int		ac;
 }				t_gnrl;
 
 struct			s_parse_assign_fonction {
 	char	*id;
 	int		(*fct)(t_file *file, char id, char *sep);
 };
+
+typedef struct	s_args_assign_function {
+	char	*arg;
+	void	(*fct)(t_gnrl *data);
+}				t_args;
 
 typedef struct	s_ray_informations {
 	int		gap[2];
@@ -125,6 +134,8 @@ typedef struct	s_ray_informations {
 /*
 **		Argument management
 */
+void			file_name(t_gnrl *data);
+void			invalid(t_gnrl *data);
 int				args_management(int ac, char **av, t_gnrl *data);
 
 /*
@@ -203,5 +214,10 @@ double			*sub_2d(double *t1, double *t2);
 double			*mul_2d(double *t1, double val);
 
 double			abs_d(double i);
+
+/*
+**
+*/
+int				screen_it(t_gnrl *data);
 
 #endif
