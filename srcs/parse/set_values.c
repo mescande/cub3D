@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 13:35:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 14:21:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int		set_resolution(t_file *file, char id, char *sep)
 		return (12);
 	file->res[X] = ft_atoi(tmp);
 	tmp = ft_strtok(NULL, sep);
-	if (tmp == NULL)
+	if (tmp == NULL || file->res[X] <= 0)
 		return (12);
 	file->res[Y] = ft_atoi(tmp);
 	tmp = ft_strtok(NULL, sep);
-	if (tmp != NULL)
+	if (tmp != NULL || file->res[Y] <= 0)
 		return (13);
 	return (0);
 }
