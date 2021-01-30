@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/29 21:19:57 by user42           ###   ########.fr        #
+#    Updated: 2021/01/30 14:02:16 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ SHELL		:=	/bin/bash
 
 all: 
 	@$(MAKE) -j -C $(LIB_DIR) $(LIB_LIB)
-	@$(MAKE) -j -C $(MLX_INC)
+	@$(MAKE) -C $(MLX_INC)
 	@$(MAKE) -j $(NAME)
 #	@cp cub3D Cub3D 
 
