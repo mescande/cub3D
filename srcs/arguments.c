@@ -6,19 +6,19 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 23:33:25 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 13:07:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 23:49:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static char	args[] = "Arguments :\n\
-	fichier		un fichier .cub formatte comme indique dans le sujet\n\
-	--save		commande du sujet, permet de prendre un screenshot en .bmp\n\
-	-h ou --help	affiche cette aide\n\
-	-smart		laisse plus de libertees a certaines fonctions\n\
-	-fov=<value>	definie une valeur precise pour le fov\n\
-	-speed=<value	definie une valeur precise pour la vitesse\n";
+static char	g_args[] = "Arguments :\n\
+\tfichier		un fichier .cub formatte comme indique dans le sujet\n\
+\t--save		commande du sujet, permet de prendre un screenshot en .bmp\n\
+\t-h ou --help	affiche cette aide\n\
+\t-smart		laisse plus de libertees a certaines fonctions\n\
+\t-fov=<value>	definie une valeur precise pour le fov\n\
+\t-speed=<value	definie une valeur precise pour la vitesse\n";
 
 static void	help(t_gnrl *data)
 {
@@ -26,12 +26,12 @@ static void	help(t_gnrl *data)
 	printf("%sCube3D%s par %smescande%s (2020 Jan)\n\n", BOLDWHITE, RESET,
 			BLUE, RESET);
 	ft_printf("utilisation : ./Cub3D [args/fichier]\n\n");
-	ft_printf("%s", args);
+	ft_printf("%s", g_args);
 	ft_printf("\nAllez voir le sujet dont voici le lien si vous avez plus\
 d'interrogations :\nhttps://cdn.intra.42.fr/pdf/pdf/17283/en.subject.pdf\n");
 }
 
-static void usage(t_gnrl *data)
+static void	usage(t_gnrl *data)
 {
 	data->help = ON;
 	printf("%sUSAGE :%s\t./Cub3D [args/fichiers]\n", BOLDWHITE, RESET);
@@ -57,12 +57,7 @@ static void	smart(t_gnrl *data)
 	data->is_smart = ON;
 }
 
-void	file_name(t_gnrl *data)
-{
-	data->file.ac = data->ac;
-}
-
-static t_args	list[] = {
+static t_args	g_list[] = {
 	{"--save", save},
 	{"-h", help},
 	{"--help", help},
@@ -72,17 +67,10 @@ static t_args	list[] = {
 	{NULL, 0}
 };
 
-void	invalid(t_gnrl *data)
+int			args_management(int ac, char **av, t_gnrl *data)
 {
-	printf("Argument invalide, faites --help pour plus de precision\n");
-	data->help = ON;
-	data->ac = -1;
-}
-
-int		args_management(int ac, char **av, t_gnrl *data)
-{
-	int		res;
-	int 	i;
+	int	res;
+	int	i;
 
 	res = 1;
 	if (ac == 1)
@@ -95,12 +83,12 @@ int		args_management(int ac, char **av, t_gnrl *data)
 	while (data->ac < ac && data->ac)
 	{
 		i = 0;
-		while (list[i].arg && !ft_strstr(av[data->ac], list[i].arg))
+		while (g_list[i].arg && !ft_strstr(av[data->ac], g_list[i].arg))
 			i++;
-		if (!list[i].arg)
+		if (!g_list[i].arg)
 			invalid(data);
 		else
-			list[i].fct(data);
+			g_list[i].fct(data);
 		data->ac++;
 	}
 	if (data->help)

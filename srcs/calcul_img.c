@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 13:40:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 15:59:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void			set_side(t_ray *r)
 	if (r->ray[X] < 0)
 	{
 		r->gap[X] = -1;
-	 	r->side[X] = (r->start[X] - r->pos[X]) * r->delta[X];
+		r->side[X] = (r->start[X] - r->pos[X]) * r->delta[X];
 	}
 	else
 	{
 		r->gap[X] = 1;
-	 	r->side[X] = (r->pos[X] + 1. - r->start[X]) * r->delta[X];
+		r->side[X] = (r->pos[X] + 1. - r->start[X]) * r->delta[X];
 	}
 	if (r->ray[Y] < 0)
 	{
@@ -74,7 +74,6 @@ static int			find_wall(t_ray *r, t_gnrl *data, int i)
 		if (dist++ > 400)
 			stop = 0;
 	}
-	fflush(stdout);
 	return (0);
 }
 
@@ -87,9 +86,11 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 	bottom = top - 2 * (top - data->file.res[Y] / 2);
 	tex = find_tex(r->wall, data);
 	if (r->wall > 2)
-		r->wallx = r->start[X] + r->ray[X] * ((r->pos[Y] - r->start[Y] + (1. - r->gap[Y]) / 2) / r->ray[Y]);
+		r->wallx = r->start[X] + r->ray[X]
+			* ((r->pos[Y] - r->start[Y] + (1. - r->gap[Y]) / 2) / r->ray[Y]);
 	else
-		r->wallx = r->start[Y] + r->ray[Y] * ((r->pos[X] - r->start[X] + (1. - r->gap[X]) / 2.) / r->ray[X]);
+		r->wallx = r->start[Y] + r->ray[Y]
+			* ((r->pos[X] - r->start[X] + (1. - r->gap[X]) / 2.) / r->ray[X]);
 	r->wallx -= (int)r->wallx;
 	r->tex[X] = (int)(tex->width * r->wallx);
 	if (r->wall <= 2 && r->ray[X] > 0)
@@ -139,7 +140,6 @@ static void			put_columns(t_gnrl *data, t_ray r, int i)
 	if (r.wall == 4)
 		color = 0x50aaaa;
 	j = 0;
-//	printf("bottom %d\ttop %d\tcolonne %d\thauteur mur %d\n", bottom, top, i, h);
 	while (j < data->file.res[Y])
 	{
 		if (j < bottom)

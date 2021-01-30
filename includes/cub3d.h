@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 13:06:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 15:12:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int				is_player_position (char c);
 /*
 **		error manager and free gestion
 */
+int				free_n_ret(void *p, int val);
 int				ft_close(int fd, int ret, char *line);
 int				ft_puterror(int i);
 int				ft_freeemee(t_gnrl *info, int i);
@@ -182,6 +183,7 @@ int				focus_out(t_gnrl *data);
 int				focus_in(t_gnrl *data);
 int				key_release(int key, t_gnrl *data);
 int				key_press(int key, t_gnrl *data);
+int				expose(t_gnrl *data);
 
 /*
 **		Mouvement calcul

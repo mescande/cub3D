@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:50:08 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/30 13:37:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 23:51:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int		start_mlx(t_gnrl *data)
 	if (!(w->mlx = mlx_init()))
 		return (7);
 	mlx_get_screen_size(w->mlx, &x, &y);
-	data->file.res[X] = (x > data->file.res[X] ? data->file.res[X] : x);
-	data->file.res[Y] = (y > data->file.res[Y] ? data->file.res[Y] : y);
+	if (!data->save)
+	{
+		data->file.res[X] = (x > data->file.res[X] ? data->file.res[X] : x);
+		data->file.res[Y] = (y > data->file.res[Y] ? data->file.res[Y] : y);
+	}
 	if ((x = open_texture(data)))
 		return (x);
 	if (!data->save && !(w->win = mlx_new_window(w->mlx, data->file.res[X],

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 13:29:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 15:13:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,14 @@ int		assign(char *line, t_file *file, t_gnrl *data)
 	if (map)
 		return (-1);
 	save = ft_strdup(line);
-//	printf("Try with [%s]\n", save);
 	id = ft_strtok(save, sep);
 	if (id == NULL)
-	{
-		free(save);
-		return (0);
-	}
-//	printf("Try with [%s]\n", id);
+		return (free_n_ret(save, 0));
 	while (dest[++i].id)
 		if (!ft_strcmp(dest[i].id, id))
-		{
-			i = dest[i].fct(file, i, (char *)sep);
-			free(save);
-			return (i);
-		}
+			return (free_n_ret(save, dest[i].fct(file, i, (char *)sep)));
 	if (ft_strnstr(id, "11", ft_strlen(id)))
-	{
-		map = 1;
-		free(save);
-		return (-1);
-	}
+		return (free_n_ret(save, -1 + ((map = 1) == 0)));
 	printf("|%s|\n", id);
 	free(save);
 	return (11);

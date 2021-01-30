@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 11:25:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 15:05:59 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 15:05:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ int		c3d_loop(t_gnrl *data)
 			&data->mlx.size, &err);
 	data->mlx.size = data->mlx.size / 4;
 	mlx_do_key_autorepeatoff(data->mlx.mlx);
-	mlx_hook(data->mlx.win, 02, (1L<<0), key_press, data);
-	mlx_hook(data->mlx.win, 03, (1L<<1), key_release, data);
-	mlx_hook(data->mlx.win, 33, (1L<<17), mlx_loop_end, data->mlx.mlx);
-	mlx_hook(data->mlx.win, 10, (1L<<21), focus_out, data);
-	mlx_hook(data->mlx.win, 9, (1L<<21), focus_in, data);
-//	mlx_hook(data->mlx.win, 12, (1L<<15), expose, data);
+	mlx_hook(data->mlx.win, 02, (1L << 0), key_press, data);
+	mlx_hook(data->mlx.win, 03, (1L << 1), key_release, data);
+	mlx_hook(data->mlx.win, 33, (1L << 17), mlx_loop_end, data->mlx.mlx);
+	mlx_hook(data->mlx.win, 10, (1L << 21), focus_out, data);
+	mlx_hook(data->mlx.win, 9, (1L << 21), focus_in, data);
+	mlx_hook(data->mlx.win, 12, (1L << 15), expose, data);
 	mlx_loop_hook(data->mlx.mlx, c3d_show, data);
 	if ((err = calcul_img(data)))
 		return (err);

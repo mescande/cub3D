@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:15:48 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 13:52:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 23:48:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ static int	write_image(t_gnrl *data, int fd, t_bmp *h)
 //		return (7);
 	data->mlx.line = img;
 	data->mlx.size = h->width;
-	printf("%p\t%p\n\n", line, data->mlx.line);
 	if ((j = start_mlx(data))
 			|| (j = calcul_img(data)))
 		return (j);
 	j = 0;
+	data->file.res[X] = h->width;
+	data->file.res[Y] = h->height;
 	while (j < data->file.res[Y])
 	{
 		i = 0;

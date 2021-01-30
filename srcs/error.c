@@ -6,13 +6,13 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/30 14:18:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 23:49:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static char	*errors[] = {
+static char	*g_errors[] = {
 	"Undefined error, something went really wrong",
 	"file error; Can't find the file or the file cannot be read\n\
 		Check if the path is ok.",
@@ -76,6 +76,12 @@ static char	*errors[] = {
 	""
 };
 
+int			free_n_ret(void *p, int val)
+{
+	free(p);
+	return (val);
+}
+
 static char	*line_interpret(char *line)
 {
 	int i;
@@ -110,11 +116,11 @@ int			ft_puterror(int i)
 	int		k;
 
 	k = 0;
-	while (errors[k])
+	while (g_errors[k])
 	{
 		if (i - k == 1)
 		{
-			ft_fprintf(2, "\nError %d\n\t%s\n", i, line_interpret(errors[k]));
+			ft_fprintf(2, "\nError %d\n\t%s\n", i, line_interpret(g_errors[k]));
 			return (i);
 		}
 		k++;

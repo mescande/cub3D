@@ -6,13 +6,13 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 20:34:19 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/30 15:26:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_sprite *add_sprite(t_sprite *sp_list, t_sprite *new_sp)
+t_sprite	*add_sprite(t_sprite *sp_list, t_sprite *new_sp)
 {
 	const t_sprite *head = sp_list;
 
@@ -96,7 +96,7 @@ void		put_sprite(t_gnrl *data, t_sprite *s)
 				* (double)tex->height / (((double)size[0]));
 			if (tex->line[(int)(t[X]) * tex->size + (int)(t[Y])])
 				data->mlx.line[(born[0] + i[0]) * data->mlx.size + i[1] +
-					s->column - size[1] / 2] = 
+					s->column - size[1] / 2] =
 					tex->line[(int)(t[X]) * tex->size + (int)(t[Y])];
 			i[0]++;
 		}
