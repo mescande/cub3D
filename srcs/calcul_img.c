@@ -6,13 +6,13 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 02:08:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 16:38:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void			set_side(t_ray *r)
+void				set_side(t_ray *r)
 {
 	if (r->ray[X] < 0)
 	{
@@ -36,7 +36,7 @@ static void			set_side(t_ray *r)
 	}
 }
 
-static int			find_wall(t_ray *r, t_gnrl *data)
+static void			find_wall(t_ray *r, t_gnrl *data)
 {
 	int	stop;
 	int	dist;
@@ -59,21 +59,10 @@ static int			find_wall(t_ray *r, t_gnrl *data)
 			r->wall = 3 + (r->gap[Y] > 0 ? 1 : 0);
 			stop = 2;
 		}
-		if (r->map->map[r->pos[X]][r->pos[Y]] == '1')
-		{
-			data->player.map[r->pos[X]][r->pos[Y]] = 2;
-			stop = 0;
-		}
-		else if (r->map->map[r->pos[X]][r->pos[Y]] == '2')
-		{
-			sprite_seen(data, r);
-		}
-		else
-			data->player.map[r->pos[X]][r->pos[Y]] = 1;
+		react_map_char(r, data, &stop);
 		if (dist++ > 400)
 			stop = 0;
 	}
-	return (0);
 }
 
 static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
@@ -84,21 +73,13 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 
 	bottom = top - 2 * (top - data->file.res[Y] / 2);
 	tex = find_tex(r->wall, data);
-	if (r->wall > 2)
-		r->wallx = r->start[X] + r->ray[X]
-			* ((r->pos[Y] - r->start[Y] + (1. - r->gap[Y]) / 2) / r->ray[Y]);
-	else
-		r->wallx = r->start[Y] + r->ray[Y]
-			* ((r->pos[X] - r->start[X] + (1. - r->gap[X]) / 2.) / r->ray[X]);
-	r->wallx -= (int)r->wallx;
-	r->tex[X] = (int)(tex->width * r->wallx);
+	init_tex_values(r, tex);
 	if (r->wall <= 2 && r->ray[X] > 0)
 		r->tex[X] = tex->width - r->tex[X] - 1;
 	else if (r->wall > 2 && r->ray[Y] < 0)
 		r->tex[X] = tex->width - r->tex[X] - 1;
 	j = 0;
 	while (j < data->file.res[Y])
-	{
 		if (j < bottom)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
 		else if (j >= bottom && j < top)
@@ -110,7 +91,6 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 		}
 		else if (j >= top)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;
-	}
 }
 
 static void			put_columns(t_gnrl *data, t_ray r, int i)
@@ -130,24 +110,15 @@ static void			put_columns(t_gnrl *data, t_ray r, int i)
 	}
 	bottom = (int)(-r.h / 2 + data->file.res[Y] / 2);
 	bottom = (bottom < 0 ? 0 : bottom);
-	if (r.wall == 1)
-		color = 0xaa5050;
-	if (r.wall == 2)
-		color = 0x50aa50;
-	if (r.wall == 3)
-		color = 0x5050aa;
-	if (r.wall == 4)
-		color = 0x50aaaa;
+	color = set_color(r);
 	j = 0;
 	while (j < data->file.res[Y])
-	{
 		if (j < bottom)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
 		else if (j >= bottom && j < top)
 			data->mlx.line[(j++ * data->mlx.size) + i] = color;
 		else if (j >= top)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;
-	}
 }
 
 int					calcul_img(t_gnrl *data)
@@ -156,32 +127,17 @@ int					calcul_img(t_gnrl *data)
 	int		i;
 
 	i = -1;
-	ft_bzero((void *)&r, sizeof(t_ray));
-	map_cpy(data->player.map, data->file.map);
-	r.map = &data->file.map;
-	r.idet = 1. / (data->player.plane[Y] * data->player.dir[X] 
-			- data->player.plane[X] * data->player.dir[Y]);
-	data->cur_sp = data->sp;
-	data->player.tree = NULL;
+	init_img(&r, data);
 	while (++i < data->file.res[X])
 	{
-		r.pos[X] = (int)data->player.pos[X];
-		r.pos[Y] = (int)data->player.pos[Y];
-		data->player.map[r.pos[X]][r.pos[Y]] = 'H';
-		r.start[X] = data->player.pos[X];
-		r.start[Y] = data->player.pos[Y];
-		r.ratio = (2. * (double)i / (double)(data->file.res[X])) - 1.;
-		r.ray[X] = data->player.dir[X] + data->player.plane[X] * r.ratio;
-		r.ray[Y] = data->player.dir[Y] + data->player.plane[Y] * r.ratio;
-		r.delta[X] = sqrt(1. + pow(r.ray[Y] / r.ray[X], 2));
-		r.delta[Y] = sqrt(1. + pow(r.ray[X] / r.ray[Y], 2));
-		set_side(&r);
-		if (find_wall(&r, data))
-			return (4);
+		init_ray(&r, data, i);
+		find_wall(&r, data);
 		if (r.wall <= 2)
-			r.dist = 2 * abs_d((r.pos[X] - r.start[X] + (1. - r.gap[X]) / 2.) / r.ray[X]);
+			r.dist = 2 * abs_d((r.pos[X] - r.start[X] + (1. - r.gap[X]) / 2.)
+					/ r.ray[X]);
 		else
-			r.dist = 2 * abs_d((r.pos[Y] - r.start[Y] + (1. - r.gap[Y]) / 2.) / r.ray[Y]);
+			r.dist = 2 * abs_d((r.pos[Y] - r.start[Y] + (1. - r.gap[Y]) / 2.)
+					/ r.ray[Y]);
 		data->player.dists[i] = r.dist;
 		put_columns(data, r, i);
 	}

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 02:03:19 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 16:39:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int				map_parse(char *line, t_file *file);
 int				is_sprite(char c);
 int				is_wall(char c);
 int				is_stop(char c);
-int				is_player_position (char c);
+int				is_player_position(char c);
 
 /*
 **		error manager and free gestion
@@ -202,6 +202,14 @@ int				player_manage(t_gnrl *data);
 **		Rendering fonctions
 */
 int				show_map(t_gnrl *data);
+
+void			init_img(t_ray *r, t_gnrl *data);
+void			init_ray(t_ray *r, t_gnrl *data, int i);
+unsigned int	set_color(t_ray r);
+void			init_tex_values(t_ray *r, t_tex *tex);
+void			react_map_char(t_ray *r, t_gnrl *data, int *stop);
+
+void			set_side(t_ray *r);
 int				calcul_img(t_gnrl *data);
 
 void			sprite_sort(t_gnrl *data);
@@ -221,7 +229,7 @@ double			*mul_2d(double *t1, double val);
 double			abs_d(double i);
 
 /*
-**
+**		Screenshot
 */
 int				screen_it(t_gnrl *data);
 
