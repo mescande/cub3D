@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/30 23:49:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 00:32:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,8 @@ int			ft_freeemee(t_gnrl *data, int i)
 			free(data->player.map[l]);
 		free(data->file.map.map[l]);
 	}
-	while (data->player.sprite)
-	{
-		p1 = data->player.sprite;
-		data->player.sprite = data->player.sprite->next;
-		free(p1);
-	}
+	if (data->sp)
+		free(data->sp);
 	if (data->file.map.map)
 		free(data->file.map.map);
 	if (data->player.map)

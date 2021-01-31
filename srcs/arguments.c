@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 23:33:25 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 23:49:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 00:24:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static char	g_args[] = "Arguments :\n\
 static void	help(t_gnrl *data)
 {
 	data->help = ON;
-	printf("%sCube3D%s par %smescande%s (2020 Jan)\n\n", BOLDWHITE, RESET,
+	printf("%sCube3D%s par %smescande%s (2021 Jan)\n\n", BOLDWHITE, RESET,
 			BLUE, RESET);
 	ft_printf("utilisation : ./Cub3D [args/fichier]\n\n");
 	ft_printf("%s", g_args);
-	ft_printf("\nAllez voir le sujet dont voici le lien si vous avez plus\
+	ft_printf("\nAllez voir le sujet dont voici le lien si vous avez plus \
 d'interrogations :\nhttps://cdn.intra.42.fr/pdf/pdf/17283/en.subject.pdf\n");
 }
 

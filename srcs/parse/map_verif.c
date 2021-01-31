@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:29:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/20 20:19:38 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 03:22:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int			map_verif(t_file *file)
 		return (ret);
 	while (++i < file->map.height)
 	{
-		ft_printf("|%s|\n", file->map.map[i]);
 		j = 0;
 		while (++j < file->map.length + 1)
 		{

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 15:26:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 02:06:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,42 @@
 
 t_sprite	*add_sprite(t_sprite *sp_list, t_sprite *new_sp)
 {
-	const t_sprite *head = sp_list;
+	t_sprite	*s;
 
-	if (!sp_list || new_sp->dist > sp_list->dist)
-	{
-		new_sp->next = sp_list;
+	if (!sp_list)
 		return (new_sp);
-	}
-	while (sp_list->next && new_sp->dist < sp_list->next->dist)
-		sp_list = sp_list->next;
-	new_sp->next = sp_list->next;
-	sp_list->next = new_sp;
-	return ((t_sprite *)head);
+	s = sp_list;
+	while (1)
+		if (new_sp->dist > s->dist)
+		{
+			if (!s->left)
+			{
+				s->left = new_sp;
+				return (sp_list);
+			}
+			s = s->left;
+		}
+		else
+		{
+			if (!s->right)
+			{
+				s->right = new_sp;
+				return (sp_list);
+			}
+			s = s->right;
+		}
 }
 
-int			sprite_seen(t_gnrl *data, t_ray *r, int ind, int i)
+void		sprite_seen(t_gnrl *data, t_ray *r)
 {
 	t_sprite	*s;
 	double		tmp;
 	double		tran[2];
 
-	(void)i;
-	(void)ind;
-	if ((s = data->player.sprite))
-		while (s)
-		{
-			if (s->pos[X] == r->pos[X] && s->pos[Y] == r->pos[Y])
-				return (0);
-			s = s->next;
-		}
-	if (!(s = (t_sprite *)ft_memalloc(sizeof(t_sprite))))
-		return (4);
+	if (data->player.map[r->pos[X]][r->pos[Y]] == 3)
+		return ;
+	s = data->cur_sp;
+	data->cur_sp++;
 	data->player.map[r->pos[X]][r->pos[Y]] = 3;
 	s->id = 5;
 	s->pos[X] = r->pos[X];
@@ -56,12 +61,12 @@ int			sprite_seen(t_gnrl *data, t_ray *r, int ind, int i)
 	tran[X] = r->idet * (data->player.plane[Y] * tran[X] - data->player.plane[X] * tmp);
 	s->column = (int)((double)data->file.res[X] / 2. * (1. + tran[Y] / tran[X]));
 	s->dist = 2 * tran[X];
-	s->next = NULL;
-	data->player.sprite = add_sprite(data->player.sprite, s);
-	return (0);
+	s->left = NULL;
+	s->right = NULL;
+	data->player.tree = add_sprite(data->player.tree, s);
 }
 
-void		put_sprite(t_gnrl *data, t_sprite *s)
+void		print_sprite(t_gnrl *data, t_sprite *s)
 {
 	int		size[2];
 	int		born[2];
@@ -69,8 +74,6 @@ void		put_sprite(t_gnrl *data, t_sprite *s)
 	int		i[3];
 	t_tex	*tex;
 
-	if (!s)
-		return ;
 	size[0] = (int)(data->file.res[Y] / s->dist);
 	born[1] = (int)(data->file.res[Y] / 2 + size[0] / 2);
 	born[0] = (int)(data->file.res[Y] / 2 - size[0] / 2);
@@ -102,7 +105,13 @@ void		put_sprite(t_gnrl *data, t_sprite *s)
 		}
 		i[1]++;
 	}
-	put_sprite(data, s->next);
-	free(s);
-	s = NULL;
+}
+
+void		put_sprite(t_gnrl *data, t_sprite *s)
+{
+	if (s->left)
+		put_sprite(data, s->left);
+	print_sprite(data, s);
+	if (s->right)
+		put_sprite(data, s->right);
 }

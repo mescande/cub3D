@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 15:13:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 03:22:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int		assign(char *line, t_file *file, t_gnrl *data)
 			return (free_n_ret(save, dest[i].fct(file, i, (char *)sep)));
 	if (ft_strnstr(id, "11", ft_strlen(id)))
 		return (free_n_ret(save, -1 + ((map = 1) == 0)));
-	printf("|%s|\n", id);
 	free(save);
 	return (11);
 }
@@ -55,6 +54,7 @@ int		parsit(t_file *file, char *name, t_gnrl *data)
 	char	*line;
 	int		gnl;
 
+	line = NULL;
 	if (ft_strcmp(name + ft_strlen(name) - 4, ".cub"))
 		return (3);
 	if ((fd = open(name, O_RDONLY)) == -1)
@@ -62,7 +62,7 @@ int		parsit(t_file *file, char *name, t_gnrl *data)
 	while ((gnl = get_next_line(fd, &line)))
 	{
 		if (gnl == -1)
-			return (ft_close(fd, 5, line));
+			return (ft_close(fd, 5, NULL));
 		if ((gnl = assign(line, file, data)) > 0)
 			return (ft_close(fd, gnl, line));
 		if (gnl == -1)

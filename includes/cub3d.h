@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 15:12:24 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 02:03:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef struct	s_sprite_list {
 	int						pos[2];
 	double					dist;
 	int						column;
-	struct s_sprite_list	*next;
+	struct s_sprite_list	*left;
+	struct s_sprite_list	*right;
 }				t_sprite;
 
 typedef struct	s_player_informations {
@@ -85,21 +86,23 @@ typedef struct	s_player_informations {
 	char		show_map;
 	char		reload;
 	char		**map;
-	t_sprite	*sprite;
+	t_sprite	*tree;
 }				t_play;
 
 typedef struct	s_general_informations {
-	t_file	file;
-	t_mlx	mlx;
-	t_play	player;
-	double	fov;
-	int		is_smart;
-	int		quit;
-	char	help;
-	char	save;
-	char	*dest;
-	char	**av;
-	int		ac;
+	t_file		file;
+	t_mlx		mlx;
+	t_play		player;
+	double		fov;
+	int			is_smart;
+	int			quit;
+	char		help;
+	char		save;
+	char		*dest;
+	char		**av;
+	int			ac;
+	t_sprite	*sp;
+	t_sprite	*cur_sp;
 }				t_gnrl;
 
 struct			s_parse_assign_fonction {
@@ -128,7 +131,7 @@ typedef struct	s_ray_informations {
 	t_map	*map;
 	int		h;
 	double	tex[2];
-	double	idet;
+	double	idet;//inverse determinant matrice joueur
 }				t_ray;
 
 /*
@@ -202,7 +205,7 @@ int				show_map(t_gnrl *data);
 int				calcul_img(t_gnrl *data);
 
 void			sprite_sort(t_gnrl *data);
-int				sprite_seen(t_gnrl *data, t_ray *r, int indic, int i);
+void			sprite_seen(t_gnrl *data, t_ray *r);
 void			put_sprite(t_gnrl *data, t_sprite *s);
 
 int				is_textured(t_ray r, t_gnrl *data);

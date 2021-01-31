@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 15:59:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 02:08:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void			set_side(t_ray *r)
 	}
 }
 
-static int			find_wall(t_ray *r, t_gnrl *data, int i)
+static int			find_wall(t_ray *r, t_gnrl *data)
 {
 	int	stop;
 	int	dist;
@@ -66,8 +66,7 @@ static int			find_wall(t_ray *r, t_gnrl *data, int i)
 		}
 		else if (r->map->map[r->pos[X]][r->pos[Y]] == '2')
 		{
-			if (sprite_seen(data, r, stop, i))
-				return (4);
+			sprite_seen(data, r);
 		}
 		else
 			data->player.map[r->pos[X]][r->pos[Y]] = 1;
@@ -162,6 +161,8 @@ int					calcul_img(t_gnrl *data)
 	r.map = &data->file.map;
 	r.idet = 1. / (data->player.plane[Y] * data->player.dir[X] 
 			- data->player.plane[X] * data->player.dir[Y]);
+	data->cur_sp = data->sp;
+	data->player.tree = NULL;
 	while (++i < data->file.res[X])
 	{
 		r.pos[X] = (int)data->player.pos[X];
@@ -175,7 +176,7 @@ int					calcul_img(t_gnrl *data)
 		r.delta[X] = sqrt(1. + pow(r.ray[Y] / r.ray[X], 2));
 		r.delta[Y] = sqrt(1. + pow(r.ray[X] / r.ray[Y], 2));
 		set_side(&r);
-		if (find_wall(&r, data, i))
+		if (find_wall(&r, data))
 			return (4);
 		if (r.wall <= 2)
 			r.dist = 2 * abs_d((r.pos[X] - r.start[X] + (1. - r.gap[X]) / 2.) / r.ray[X]);
@@ -184,8 +185,8 @@ int					calcul_img(t_gnrl *data)
 		data->player.dists[i] = r.dist;
 		put_columns(data, r, i);
 	}
-	put_sprite(data, data->player.sprite);
-	data->player.sprite = NULL;
+	if (data->player.tree)
+		put_sprite(data, data->player.tree);
 	show_map(data);
 	return (0);
 }

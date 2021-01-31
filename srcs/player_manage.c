@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:50:24 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 19:59:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 02:01:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,26 @@ static int	player_map(t_gnrl *data)
 	return (0);
 }
 
+static int	sprite_init(t_gnrl *data)
+{
+	int	i;
+	int	j;
+	int	n;
+
+	i = 0;
+	n = 0;
+	while (++i < data->file.map.height)
+	{
+		j = 1;
+		while (++j < data->file.map.length)
+			if (data->file.map.map[i][j] == '2')
+				n++;
+	}
+	if (!(data->sp = ft_memalloc(sizeof(t_sprite) * n)))
+		return (4);
+	return (0);
+}
+
 int			player_manage(t_gnrl *data)
 {
 	data->player.pos[X] = data->file.map.start[X] + 0.5;
@@ -49,7 +69,8 @@ int			player_manage(t_gnrl *data)
 		data->player.plane[X] = 1 * (data->file.map.dir == 'E' ? 1 : -1);
 	}
 	if (player_map(data) || !(data->player.dists =
-				ft_memalloc(sizeof(double) * data->file.res[X])))
+				ft_memalloc(sizeof(double) * data->file.res[X]))
+			|| sprite_init(data))
 		return (4);
 	return (0);
 }

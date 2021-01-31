@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:15:48 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 23:48:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 03:24:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static int	write_image(t_gnrl *data, int fd, t_bmp *h)
 			|| (j = calcul_img(data)))
 		return (j);
 	j = 0;
-	data->file.res[X] = h->width;
-	data->file.res[Y] = h->height;
 	while (j < data->file.res[Y])
 	{
 		i = 0;
@@ -48,7 +46,7 @@ static int	write_image(t_gnrl *data, int fd, t_bmp *h)
 		}
 		j++;
 	}
-	write(fd, line, 3 * h->width * h->height - 2);
+	i = write(fd, line, 3 * h->width * h->height - 2);
 	free(img);
 	free(line);
 	return (0);
@@ -71,11 +69,13 @@ int		screen_it(t_gnrl *data)
 {
 	t_bmp	header;
 	int		fd;
+	int		res;
 
 	fd = open(data->dest, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR);
 	init_header(data, &header);
-	write(fd, &header, sizeof(t_bmp));
+	res = write(fd, &header, sizeof(t_bmp));
 	write_image(data, fd, &header);
+	(void)res;
 	close(fd);
 	return (0);
 }
