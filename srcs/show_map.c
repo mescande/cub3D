@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 11:42:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 16:37:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 20:19:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,56 @@ static int	set_map_color(char val)
 	return (color);
 }
 
-static int	put_squares(int x, int y, t_gnrl *data)
+static int	put_squares(int *coord, int *val, t_gnrl *data)
 {
 	int		color;
 	int		i;
 	int		j;
 
-	color = set_map_color(data->player.map[x][y]);
+	color = set_map_color(data->player.map[coord[X] + val[X]][coord[Y] + val[Y]]);
 	i = -1;
-	y--;
-	while (++i < 9 && data->player.map[x][y + 1] != ' ')
+	while (++i < 9 && data->player.map[coord[X] + val[X]][coord[Y] + val[Y]] != ' ')
 	{
 		j = -1;
 		while (++j < 9)
-			data->mlx.line[(x * 9 + i) * data->mlx.size + (y * 9) + j] = color;
+			data->mlx.line[(val[X] * 9 + i) * data->mlx.size + val[Y] * 9 + j] = color;
 	}
 	return (0);
 }
 
 int			show_map(t_gnrl *data)
 {
-	int	x;
-	int	y;
+	int max[2];
+	int	val[2];
+	int	start[2];
 
-	x = 0;
-	while (x < data->file.map.height && data->player.show_map)
+	start[X] = (int)data->player.pos[X] - 10;
+	if (start[X] < 0)
+		start[X] = 0;
+	max[X] = start[X] + 20;
+	if (max[X] > data->file.map.height)
 	{
-		y = 1;
-		while (y < data->file.map.length + 1)
-			put_squares(x, y++, data);
-		x++;
+		max[X] = data->file.map.height;
+		if (data->file.map.height > 20)
+			start[X] = max[X] - 20;
+	}
+	val[X] = 0;
+	while (val[X] + start[X] < max[X] && data->player.show_map)
+	{
+		start[Y] = (int)data->player.pos[Y] - 10;
+		if (start[Y] < 1)
+			start[Y] = 1;
+		max[Y] = start[Y] + 20;
+		if (max[Y] > data->file.map.length)
+		{
+			max[Y] = data->file.map.length;
+			if (data->file.map.length > 20)
+				start[Y] = max[Y] - 20;
+		}
+		val[Y] = -1;
+		while (++val[Y] + start[Y] < max[Y] + 1)
+			put_squares(start, val, data);
+		val[X]++;
 	}
 	return (0);
 }

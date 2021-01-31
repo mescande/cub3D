@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 13:12:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 17:04:26 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 19:13:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int		key_release(int key, t_gnrl *data)
 	if (data->player.tran[Y] < 0)
 		data->player.tran[Y] = 0;
 	return (res);
-
 }
 
 int		key_press(int key, t_gnrl *data)

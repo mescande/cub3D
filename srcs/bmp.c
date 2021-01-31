@@ -6,44 +6,41 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:15:48 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 03:24:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 19:10:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "bmp.h"
 
+static void	put_colors(char *line, unsigned int *img)
+{
+	line[0] = (char)(img[0]);
+	line[1] = (char)(img[0] >> 8);
+	line[2] = (char)(img[0] >> 16);
+}
+
 static int	write_image(t_gnrl *data, int fd, t_bmp *h)
 {
 	int				i;
 	int				j;
-	char		 	*line;
+	char			*line;
 	unsigned int	*img;
 
-	if (!(img  = (unsigned int *)ft_memalloc(sizeof(int) * h->width * h->height))
-			|| !(line  = (char *)ft_memalloc(sizeof(char) * 3 * h->width * h->height)))
+	if (!(img = ft_memalloc(sizeof(int) * h->width * h->height))
+	|| !(line = (char *)ft_memalloc(sizeof(char) * 3 * h->width * h->height)))
 		return (4);
-//	if (!(data->mlx.mlx = mlx_init()))
-//		return (7);
 	data->mlx.line = img;
 	data->mlx.size = h->width;
 	if ((j = start_mlx(data))
 			|| (j = calcul_img(data)))
 		return (j);
-	j = 0;
 	while (j < data->file.res[Y])
 	{
-		i = 0;
-		while (i < data->file.res[X])
-		{
-			line[(j * h->width + i) * 3 + 0] = (char)(img[(h->height - j - 1)
-					* h->width + i]);
-			line[(j * h->width + i) * 3 + 1] = (char)(img[(h->height - j - 1)
-					* h->width + i] >> 8);
-			line[(j * h->width + i) * 3 + 2] = (char)(img[(h->height - j - 1)
-					* h->width + i] >> 16);
-			i++;
-		}
+		i = -1;
+		while (++i < data->file.res[X])
+			put_colors((line + (j * h->width + i) * 3),
+					(img + (h->height - j - 1) * h->width + i));
 		j++;
 	}
 	i = write(fd, line, 3 * h->width * h->height - 2);
@@ -65,7 +62,7 @@ static void	init_header(t_gnrl *data, t_bmp *h)
 	h->colordepth = 24;
 }
 
-int		screen_it(t_gnrl *data)
+int			screen_it(t_gnrl *data)
 {
 	t_bmp	header;
 	int		fd;

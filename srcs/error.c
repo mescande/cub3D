@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/31 00:32:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 18:54:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static char	*g_errors[] = {
 	"Undefined error, something went really wrong",
-	"file error; Can't find the file or the file cannot be read\n\
-		Check if the path is ok.",
+	"file error; Can't find the file or the file cannot be read\n"
+	"Check if the path is ok.",
 	"file error; Your file is not a .cub file.",
 	"Allocation error, Malloc went wrong",
 	"GNL status -1; cf -gnlhelp",
@@ -145,18 +145,14 @@ int			ft_freeemee(t_gnrl *data, int i)
 	}
 	while (++l < data->file.map.height)
 	{
-		if (data->player.map && data->player.map[l])
+		if (data->player.map)
 			free(data->player.map[l]);
 		free(data->file.map.map[l]);
 	}
-	if (data->sp)
-		free(data->sp);
-	if (data->file.map.map)
-		free(data->file.map.map);
-	if (data->player.map)
-		free(data->player.map);
-	if (data->player.dists)
-		free(data->player.dists);
+	free(data->sp);
+	free(data->file.map.map);
+	free(data->player.map);
+	free(data->player.dists);
 	end_mlx(&data->mlx);
 	return ((i == 0 ? 0 : ft_puterror(i)));
 }

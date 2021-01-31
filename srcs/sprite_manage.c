@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 02:06:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 18:43:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,25 @@ void		sprite_seen(t_gnrl *data, t_ray *r)
 	tran[X] = s->pos[X] - data->player.pos[X] + 0.5;
 	tran[Y] = s->pos[Y] - data->player.pos[Y] + 0.5;
 	tmp = tran[Y];
-	tran[Y] = r->idet * (data->player.dir[X] * tmp - data->player.dir[Y] * tran[X]);
-	tran[X] = r->idet * (data->player.plane[Y] * tran[X] - data->player.plane[X] * tmp);
-	s->column = (int)((double)data->file.res[X] / 2. * (1. + tran[Y] / tran[X]));
+	tran[Y] = r->idet * (data->player.dir[X] * tmp
+			- data->player.dir[Y] * tran[X]);
+	tran[X] = r->idet * (data->player.plane[Y] * tran[X]
+			- data->player.plane[X] * tmp);
+	s->column = (int)((double)data->file.res[X] / 2. * (1 + tran[Y] / tran[X]));
 	s->dist = 2 * tran[X];
 	s->left = NULL;
 	s->right = NULL;
 	data->player.tree = add_sprite(data->player.tree, s);
 }
 
-void		print_sprite(t_gnrl *data, t_sprite *s)
+static void	init_print_sprite(int *size, t_gnrl *data, int *i, t_sprite *s)
 {
-	int		size[2];
-	int		born[2];
-	double	t[2];
-	int		i[3];
-	t_tex	*tex;
-
 	size[0] = (int)(data->file.res[Y] / s->dist);
-	born[1] = (int)(data->file.res[Y] / 2 + size[0] / 2);
-	born[0] = (int)(data->file.res[Y] / 2 - size[0] / 2);
-	born[1] = (born[1] > data->file.res[Y] ? data->file.res[Y] : born[1]);
-	born[0] = (born[0] < 0 ? 0 : born[0]);
+	size[3] = (int)(data->file.res[Y] / 2 + size[0] / 2);
+	size[2] = (int)(data->file.res[Y] / 2 - size[0] / 2);
+	size[3] = (size[3] > data->file.res[Y] ? data->file.res[Y] : size[3]);
+	size[2] = (size[2] < 0 ? 0 : size[2]);
 	size[1] = (int)(data->file.res[X] / s->dist);
-	tex = find_tex(s->id, data);
 	i[1] = 0;
 	i[2] = s->column - size[1] / 2;
 	if (i[2] < 0)
@@ -88,17 +83,28 @@ void		print_sprite(t_gnrl *data, t_sprite *s)
 		i[1] -= i[2];
 		i[2] -= i[2];
 	}
+}
+
+void		print_sprite(t_gnrl *data, t_sprite *s)
+{
+	int		size[4];
+	double	t[2];
+	int		i[3];
+	t_tex	*tex;
+
+	init_print_sprite(size, data, i, s);
+	tex = find_tex(s->id, data);
 	while (i[1] < size[1] && i[1] + s->column - size[1] / 2 < data->file.res[X])
 	{
 		t[Y] = (double)tex->width * (double)i[1] / ((double)size[1]);
 		i[0] = 0;
-		while (born[0] + i[0] < born[1]
+		while (size[2] + i[0] < size[3]
 				&& data->player.dists[i[1] + s->column - size[1] / 2] > s->dist)
 		{
-			t[X] = (double)((i[0] + born[0]) - data->file.res[Y] / 2 + size[0] / 2)
-				* (double)tex->height / (((double)size[0]));
+			t[X] = (double)((i[0] + size[2]) - data->file.res[Y] / 2
+					+ size[0] / 2) * (double)tex->height / (((double)size[0]));
 			if (tex->line[(int)(t[X]) * tex->size + (int)(t[Y])])
-				data->mlx.line[(born[0] + i[0]) * data->mlx.size + i[1] +
+				data->mlx.line[(size[2] + i[0]) * data->mlx.size + i[1] +
 					s->column - size[1] / 2] =
 					tex->line[(int)(t[X]) * tex->size + (int)(t[Y])];
 			i[0]++;

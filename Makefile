@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/31 16:39:35 by user42           ###   ########.fr        #
+#    Updated: 2021/01/31 16:57:10 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ EXEC		=	test
 
 CC			?=	clang-9
 CFLAGS		?=	-Wall -Werror -Wextra
-#CFLAGS		+= -fsanitize=address -g
-CFLAGS		+= -Ofast
+CFLAGS		+= -fsanitize=address -g
+#CFLAGS		+= -Ofast
 
 LEN_NAME	=	`printf "%s" $(NAME) | wc -c`
 DELTA		=	$$(echo "$$(tput cols)-32-$(LEN_NAME)" | bc)

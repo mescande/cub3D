@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:50:24 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 02:01:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 19:35:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static int	sprite_init(t_gnrl *data)
 			if (data->file.map.map[i][j] == '2')
 				n++;
 	}
+	if (!n)
+		return (0);
 	if (!(data->sp = ft_memalloc(sizeof(t_sprite) * n)))
 		return (4);
 	return (0);

@@ -1,0 +1,18 @@
+R	1920 1080
+
+NO	./textures/redbrick.xpm
+SO	./textures/wood.xpm
+WE	./textures/eagle.xpm
+EA	./textures/greystone.xpm
+S	./textures/pillar.xpm
+
+F 220,100,0
+C	50,50,255
+
+
+
+111111
+100N011 1
+1000001
+100000111
+1111111
