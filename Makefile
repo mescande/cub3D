@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/02/01 11:57:23 by user42           ###   ########.fr        #
+#    Updated: 2021/02/01 13:26:12 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,7 +104,6 @@ fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean
-	@$(MAKE) -j -C $(MLX_INC) re
 	@$(MAKE) all
 
 nolib:
