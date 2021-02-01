@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:15:48 by user42            #+#    #+#             */
-/*   Updated: 2021/02/01 14:09:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 19:32:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ static int	write_image(t_gnrl *data, int fd, t_bmp *h)
 	char			*line;
 	unsigned int	*img;
 
-	if (!(img = ft_memalloc(sizeof(int) * h->width * h->height))
-	|| !(line = (char *)ft_memalloc(sizeof(char) * 3 * h->width * h->height)))
+	if (!(img = ft_memalloc(4 * data->file.res[X] * data->file.res[Y]))
+	|| !(line = (char *)ft_memalloc(3 * data->file.res[X] * data->file.res[Y])))
 		return (4);
 	data->mlx.line = img;
 	data->mlx.size = h->width;
-	if ((j = start_mlx(data))
-			|| (j = calcul_img(data)))
+	if ((j = calcul_img(data)))
 		return (j);
 	while (j < data->file.res[Y])
 	{
@@ -71,6 +70,8 @@ int			screen_it(t_gnrl *data)
 	fd = open(data->dest, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd == -1)
 		return (1);
+	if ((res = start_mlx(data)))
+		return (res);
 	init_header(data, &header);
 	res = write(fd, &header, sizeof(t_bmp));
 	if (write_image(data, fd, &header))

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 23:25:11 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 19:25:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 		r->tex[X] = tex->width - r->tex[X] - 1;
 	j = 0;
 	while (j < data->file.res[Y])
+	{
 		if (j < bottom)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
 		else if (j >= bottom && j < top)
@@ -91,6 +92,7 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 		}
 		else if (j >= top)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;
+	}
 }
 
 static void			put_columns(t_gnrl *data, t_ray r, int i)
