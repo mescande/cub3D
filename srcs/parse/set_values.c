@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/02/01 12:32:39 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 14:00:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		set_colors(t_file *file, char id, char *sep)
 		tmp = &file->ceiling;
 	if (file->comma > 2)
 		return (66 + id - 6);
-	if (tmp[0])
+	if (tmp[0] != -1)
 		return (33 + id - 6);
 	if ((val = verif_color(sep)) > 255)
 		return (val - 255 + id - 6);

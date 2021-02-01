@@ -6,8 +6,8 @@ WE	./textures/eagle.xpm
 EA	./textures/greystone.xpm
 S	./textures/pillar.xpm
 
-F 220,100,0
 C	50,50,255
+F 0,00,0
 
 
 

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 17:17:16 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/30 15:27:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 13:59:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int		main(int ac, char **av)
 	int		err;
 
 	ft_bzero(&data, sizeof(t_gnrl));
+	data.file.floor = -1;
+	data.file.ceiling = -1;
 	if (!(err = args_management(ac, av, &data)))
 		return (0);
 	if ((err = parsit(&(data.file), av[data.file.ac], &data)))

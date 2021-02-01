@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:29:02 by user42            #+#    #+#             */
-/*   Updated: 2021/02/01 11:16:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 13:57:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	map_verif_char(int i, int j, t_map *map_d, int *pos)
 	map = map_d->map;
 	if (map[i][j] == '0' || map[i][j] == '2' || is_player_position(map[i][j]))
 	{
-		if (i == 0 || i == map_d->height || j == 1 || j == map_d->length)
+		if (i == 0 || i == map_d->height - 1 || j == 1 || j == map_d->length)
 			return (47);
 		if (map[i - 1][j - 1] == ' ' || map[i - 1][j] == ' '
 				|| map[i - 1][j + 1] == ' ' || map[i][j - 1] == ' '
@@ -70,9 +70,9 @@ static int	all_args_defined(t_file *file)
 
 	if (!file->res[X] || !file->res[Y])
 		return (61);
-	if (!file->ceiling)
+	if (file->ceiling == -1)
 		return (62);
-	if (!file->floor)
+	if (file->floor == -1)
 		return (63);
 	ft_bzero(v, 6);
 	v[0] = 1;
