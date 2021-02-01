@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/02/01 11:19:34 by user42           ###   ########.fr        #
+#    Updated: 2021/02/01 11:57:23 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,6 +112,10 @@ nolib:
 	@rm -rf $(OBJ_DIR)
 	@$(MAKE) -j $(NAME)
 
+norme:
+	norminette $(INC_DIR) $(SRC_DIR)
+	@$(MAKE) -C $(LIB_DIR) norminette
+
 help:
 	@echo "all	: compiling everything that changed, linking, not relinking\n"
 	@echo "clean	: destroy all objects and linking files from program and libs\n"
@@ -119,6 +123,7 @@ help:
 	@echo "test	: all and exec with validfile.rt or a file given in argument"
 	@echo "re	: fclean all"
 	@echo "nolib	: destroy object of programs only (not lib) then compiling again"
+	@echo "norminette	: execute a norme test on all code files but do no compile"
 	@echo "help	: print this help"
 
 .PHONY: all clean fclean re

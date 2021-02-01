@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 23:42:20 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 11:21:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void		sprite_seen(t_gnrl *data, t_ray *r)
 	data->player.tree = add_sprite(data->player.tree, s);
 }
 
- void		init_show(int *size, t_gnrl *data, int *i, t_sprite *s)
+void		init_show(int *size, t_gnrl *data, int *i, t_sprite *s)
 {
 	size[0] = (int)(data->file.res[Y] / s->dist);
 	size[3] = (int)(data->file.res[Y] / 2 + size[0] / 2);

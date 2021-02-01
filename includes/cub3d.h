@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/02/01 11:18:55 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 11:50:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,23 +116,43 @@ typedef struct	s_args_assign_function {
 	void	(*fct)(t_gnrl *data);
 }				t_args;
 
+/*
+**	typedef struct	s_ray_informations {
+**	int		gap[2];
+**	double	*i;
+**	int		pos[2];//position en int du rayon -> du mur trouve
+**	double	ray[2];//direction rayon
+**	double	start[2];//position joueur
+**	double	side[2];//longueur sur X/Y parcourue
+**	double	delta[2];//ecart entre 2 inter mur/rayon sur les axes X/Y
+**	double	ratio;//ratio colonne/largeur ecran
+**	t_play	*player;
+**	int		wall;//cote de case touche
+**	double	wallx;//distance relative entre le debut d'une case et le pt touche
+**	double	dist;//dist corrige parcouru par le rayon
+**	t_map	*map;
+**	int		h;
+**	double	tex[2];
+**	double	idet;//inverse determinant matrice joueur
+**}				t_ray;
+*/
 typedef struct	s_ray_informations {
 	int		gap[2];
 	double	*i;
-	int		pos[2];//position en int du rayon -> du mur trouve
-	double	ray[2];//direction rayon
-	double	start[2];//position joueur
-	double	side[2];//longueur sur X/Y parcourue
-	double	delta[2];//ecart entre 2 inter mur/rayon sur les axes X/Y
-	double	ratio;//ratio colonne/largeur ecran
+	int		pos[2];
+	double	ray[2];
+	double	start[2];
+	double	side[2];
+	double	delta[2];
+	double	ratio;
 	t_play	*player;
-	int		wall;//cote de case touche
-	double	wallx;//distance relative entre le debut d'une case et le pt touche
-	double	dist;//dist corrige parcouru par le rayon
+	int		wall;
+	double	wallx;
+	double	dist;
 	t_map	*map;
 	int		h;
 	double	tex[2];
-	double	idet;//inverse determinant matrice joueur
+	double	idet;
 }				t_ray;
 
 /*

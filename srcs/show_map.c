@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 11:42:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 20:19:55 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 11:44:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,31 @@ static int	put_squares(int *coord, int *val, t_gnrl *data)
 	int		i;
 	int		j;
 
-	color = set_map_color(data->player.map[coord[X] + val[X]][coord[Y] + val[Y]]);
+	color = set_map_color(data->player.map[coord[X]
+			+ val[X]][coord[Y] + val[Y]]);
 	i = -1;
-	while (++i < 9 && data->player.map[coord[X] + val[X]][coord[Y] + val[Y]] != ' ')
+	while (++i < 9
+			&& data->player.map[coord[X] + val[X]][coord[Y] + val[Y]] != ' ')
 	{
 		j = -1;
 		while (++j < 9)
-			data->mlx.line[(val[X] * 9 + i) * data->mlx.size + val[Y] * 9 + j] = color;
+			data->mlx.line[(val[X] * 9 + i)
+				* data->mlx.size + val[Y] * 9 + j] = color;
 	}
 	return (0);
+}
+
+static void	init_show_map(int *start, int *max, t_gnrl *data)
+{
+	start[X] = (int)data->player.pos[X] - 10;
+	start[X] = (start[X] < 0 ? 0 : start[X]);
+	max[X] = start[X] + 20;
+	if (max[X] > data->file.map.height)
+	{
+		max[X] = data->file.map.height;
+		if (data->file.map.height > 20)
+			start[X] = max[X] - 20;
+	}
 }
 
 int			show_map(t_gnrl *data)
@@ -54,22 +70,12 @@ int			show_map(t_gnrl *data)
 	int	val[2];
 	int	start[2];
 
-	start[X] = (int)data->player.pos[X] - 10;
-	if (start[X] < 0)
-		start[X] = 0;
-	max[X] = start[X] + 20;
-	if (max[X] > data->file.map.height)
-	{
-		max[X] = data->file.map.height;
-		if (data->file.map.height > 20)
-			start[X] = max[X] - 20;
-	}
+	init_show_map(start, max, data);
 	val[X] = 0;
 	while (val[X] + start[X] < max[X] && data->player.show_map)
 	{
 		start[Y] = (int)data->player.pos[Y] - 10;
-		if (start[Y] < 1)
-			start[Y] = 1;
+		start[Y] = (start[Y] < 1 ? 1 : start[Y]);
 		max[Y] = start[Y] + 20;
 		if (max[Y] > data->file.map.length)
 		{
