@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/02/01 10:58:18 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 12:35:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ static char	*g_errors[] = {
 	"parsing; Ceiling is not defined",
 	"",
 	"parsing; Too many separators",
-	"parsing; Ceiling is not valid",
 	"parsing; Floor is not valid",
+	"parsing; Ceiling is not valid",
 	"",
 	"",
 	"",

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/02/01 11:02:45 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 12:32:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		verif_color(char *sep)
 	if (tmp == NULL)
 		return (35 + 255);
 	if (!is_number(tmp))
-		return (67);
+		return (67 + 255);
 	val = ft_atoi(tmp);
 	if (val < 0 || 255 < val)
 		return (40 + 255);
