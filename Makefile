@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/02/01 19:35:48 by user42           ###   ########.fr        #
+#    Updated: 2021/02/01 19:53:56 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ EXEC		=	test
 
 CC			?=	clang-9
 CFLAGS		?=	-Wall -Werror -Wextra
-#CFLAGS		+= -fsanitize=address -g
+CFLAGS		+= -fsanitize=address -g
 #CFLAGS		+= -Ofast
 
 LEN_NAME	=	`printf "%s" $(NAME) | wc -c`

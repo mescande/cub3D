@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/02/01 19:25:11 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 20:46:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 	t_tex	*tex;
 	int		bottom;
 
-	bottom = top - 2 * (top - data->file.res[Y] / 2);
+	bottom = top - r->h;
 	tex = find_tex(r->wall, data);
 	init_tex_values(r, tex);
 	if (r->wall <= 2 && r->ray[X] > 0)
@@ -85,12 +85,11 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
 		else if (j >= bottom && j < top)
 		{
-			r->tex[Y] = (j * 2 - data->file.res[Y] + r->h) * (tex->height / 2)
-				/ r->h;
-			data->mlx.line[(j++ * data->mlx.size) + i] =
-				tex->line[(int)(r->tex[Y]) * tex->size + (int)(r->tex[X])];
+			r->tex[Y] = (j - bottom) * tex->height / r->h;
+			data->mlx.line[(int)((j++ * data->mlx.size) + i)] =
+				tex->line[(int)((int)(r->tex[Y]) * tex->size + (int)(r->tex[X]))];
 		}
-		else if (j >= top)
+		else
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;
 	}
 }
@@ -104,7 +103,6 @@ static void			put_columns(t_gnrl *data, t_ray r, int i)
 
 	r.h = (int)(data->file.res[Y] / r.dist);
 	top = (int)(r.h / 2 + data->file.res[Y] / 2);
-	top = (top > data->file.res[Y] ? data->file.res[Y] : top);
 	if (is_textured(r.wall, data))
 	{
 		calcul_tex(&r, data, top, i);
@@ -119,7 +117,7 @@ static void			put_columns(t_gnrl *data, t_ray r, int i)
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.ceiling;
 		else if (j >= bottom && j < top)
 			data->mlx.line[(j++ * data->mlx.size) + i] = color;
-		else if (j >= top)
+		else
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;
 }
 
