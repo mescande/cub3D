@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 23:34:53 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 11:18:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct	s_file_information {
 	int		ceiling;
 	int		floor;
 	int		ac;
+	int		comma;
 }				t_file;
 
 typedef struct	s_mlx_informations {
@@ -152,6 +153,8 @@ int				set_resolution(t_file *file, char id, char *sep);
 int				open_texture(t_gnrl *data);
 int				set_textures(t_file *file, char id, char *sep);
 int				set_colors(t_file *file, char id, char *sep);
+
+void			init_smart(t_file *file);
 
 int				is_player_position(char c);
 int				map_verif(t_file *file, t_gnrl *data);

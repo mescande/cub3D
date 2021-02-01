@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:29:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 23:35:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 11:16:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int			map_verif(t_file *file, t_gnrl *data)
 
 	if (!data->is_smart && (i = all_args_defined(file)))
 		return (i);
+	if (data->is_smart)
+		init_smart(file);
 	i = -1;
 	pos = 0;
 	if ((ret = map_squarer(&file->map)))

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 22:47:57 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 11:00:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ int		assign(char *line, t_file *file, t_gnrl *data)
 	if (map)
 		return (-1);
 	save = ft_strdup(line);
+	file->comma = ft_strcount(line, ',') + ft_strcount(line, ';');
+	if (data->is_smart)
+		file->comma = 2;
 	id = ft_strtok(save, sep);
 	if (id == NULL)
 		return (free_n_ret(save, 0));

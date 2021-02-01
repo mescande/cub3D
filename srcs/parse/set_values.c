@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 22:28:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/01 11:02:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int		verif_color(char *sep)
 	free(sep);
 	if (tmp == NULL)
 		return (35 + 255);
+	if (!is_number(tmp))
+		return (67);
 	val = ft_atoi(tmp);
 	if (val < 0 || 255 < val)
 		return (40 + 255);
@@ -71,19 +73,21 @@ int		set_colors(t_file *file, char id, char *sep)
 		tmp = &file->floor;
 	else
 		tmp = &file->ceiling;
+	if (file->comma > 2)
+		return (66 + id - 6);
 	if (tmp[0])
-		return (33);
+		return (33 + id - 6);
 	if ((val = verif_color(sep)) > 255)
 		return (val - 255 + id - 6);
 	*tmp = (val << 16);
 	if ((val = verif_color(sep)) > 255)
-		return (val - 255 + id);
+		return (val - 255 + id - 6);
 	*tmp |= val << 8;
 	if ((val = verif_color(sep)) > 255)
-		return (val - 255 + id);
+		return (val - 255 + id - 6);
 	*tmp |= val;
 	verif = ft_strtok(NULL, sep);
 	if (verif != NULL)
-		return (37 + id);
+		return (37 + id - 6);
 	return (0);
 }

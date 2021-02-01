@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/31 23:25:45 by user42           ###   ########.fr        #
+#    Updated: 2021/02/01 11:19:34 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC_LIST	=	main.c\
 				parse/set_values.c\
 				parse/map_verif.c\
 				parse/textures.c\
+				parse/init_smart.c\
 				arguments.c\
 				arguments2.c\
 				error.c\
