@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 16:38:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 23:25:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,14 @@ static void			put_columns(t_gnrl *data, t_ray r, int i)
 	r.h = (int)(data->file.res[Y] / r.dist);
 	top = (int)(r.h / 2 + data->file.res[Y] / 2);
 	top = (top > data->file.res[Y] ? data->file.res[Y] : top);
-	if (is_textured(r, data))
+	if (is_textured(r.wall, data))
 	{
 		calcul_tex(&r, data, top, i);
 		return ;
 	}
 	bottom = (int)(-r.h / 2 + data->file.res[Y] / 2);
 	bottom = (bottom < 0 ? 0 : bottom);
-	color = set_color(r);
+	color = set_color(r.wall);
 	j = 0;
 	while (j < data->file.res[Y])
 		if (j < bottom)

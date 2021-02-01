@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:15:48 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 19:10:21 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 21:38:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int			screen_it(t_gnrl *data)
 	int		res;
 
 	fd = open(data->dest, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR);
+	if (fd == -1)
+		return (1);
 	init_header(data, &header);
 	res = write(fd, &header, sizeof(t_bmp));
 	write_image(data, fd, &header);

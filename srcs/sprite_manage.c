@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 19:34:34 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 18:43:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 23:42:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void		sprite_seen(t_gnrl *data, t_ray *r)
 	data->player.tree = add_sprite(data->player.tree, s);
 }
 
-static void	init_print_sprite(int *size, t_gnrl *data, int *i, t_sprite *s)
+ void		init_show(int *size, t_gnrl *data, int *i, t_sprite *s)
 {
 	size[0] = (int)(data->file.res[Y] / s->dist);
 	size[3] = (int)(data->file.res[Y] / 2 + size[0] / 2);
@@ -87,30 +87,10 @@ static void	init_print_sprite(int *size, t_gnrl *data, int *i, t_sprite *s)
 
 void		print_sprite(t_gnrl *data, t_sprite *s)
 {
-	int		size[4];
-	double	t[2];
-	int		i[3];
-	t_tex	*tex;
-
-	init_print_sprite(size, data, i, s);
-	tex = find_tex(s->id, data);
-	while (i[1] < size[1] && i[1] + s->column - size[1] / 2 < data->file.res[X])
-	{
-		t[Y] = (double)tex->width * (double)i[1] / ((double)size[1]);
-		i[0] = 0;
-		while (size[2] + i[0] < size[3]
-				&& data->player.dists[i[1] + s->column - size[1] / 2] > s->dist)
-		{
-			t[X] = (double)((i[0] + size[2]) - data->file.res[Y] / 2
-					+ size[0] / 2) * (double)tex->height / (((double)size[0]));
-			if (tex->line[(int)(t[X]) * tex->size + (int)(t[Y])])
-				data->mlx.line[(size[2] + i[0]) * data->mlx.size + i[1] +
-					s->column - size[1] / 2] =
-					tex->line[(int)(t[X]) * tex->size + (int)(t[Y])];
-			i[0]++;
-		}
-		i[1]++;
-	}
+	if (is_textured(s->id, data))
+		show_textured(data, s);
+	else
+		show_colored(data, s);
 }
 
 void		put_sprite(t_gnrl *data, t_sprite *s)

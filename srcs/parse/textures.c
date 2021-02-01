@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:14:53 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 15:16:24 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 23:44:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		open_texture(t_gnrl *data)
 
 /*
 **	NO,	SO,	WE,	EA,	S
-**	1	2	3	4	4
+**	1	2	3	4	5
 */
 
 int		set_textures(t_file *file, char id, char *sep)
@@ -63,11 +63,11 @@ int		set_textures(t_file *file, char id, char *sep)
 		return (4);
 	tmp = ft_strtok(NULL, sep);
 	if (tmp == NULL)
-		return (22 + id);
+		return (free_n_ret(new, 22 - 1 + id));
 	new->name = tmp;
 	tmp = ft_strtok(NULL, sep);
 	if (tmp != NULL)
-		return (28 + id);
+		return (free_n_ret(new, 28 - 1 + id));
 	if (!(new->name = ft_strdup(new->name)))
 		return (4);
 	new->id = id;

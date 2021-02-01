@@ -6,7 +6,7 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/01/31 16:57:10 by user42           ###   ########.fr        #
+#    Updated: 2021/01/31 23:25:45 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,8 @@ SRC_LIST	=	main.c\
 				movements.c\
 				is_mapchar.c\
 				bmp.c\
-				init_calc_img.c
+				init_calc_img.c\
+				show_sprite.c
 
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))

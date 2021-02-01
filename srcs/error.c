@@ -6,7 +6,7 @@
 /*   By: mescande <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:36:20 by mescande          #+#    #+#             */
-/*   Updated: 2021/01/31 18:54:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 22:57:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*g_errors[] = {
 	"mlx_new_window() failed to create a new window",
 	"mlx_get_data_addr() didn't return 4 bits per pixel",
 	"parsing; Unknown identifier",
-	"parsing; Resolution has not enough arguments",
+	"parsing; Resolution has not enough arguments or is not valid",
 	"parsing; Resolution has to many arguments",
 	"parsing; Resolution is defined twice",
 	"",
@@ -73,6 +73,17 @@ static char	*g_errors[] = {
 	"Texture; File for WE couldn't been read",
 	"Texture; File for EA couldn't been read",
 	"Texture; File for S couldn't been read",
+	"",
+	"parsing; Resolution is not defined",
+	"parsing; Ceiling is not defined",
+	"parsing; Floor is not defined",
+	"parsing; Ceiling is not defined",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
 	""
 };
 

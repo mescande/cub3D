@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:21:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 16:39:07 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 23:34:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int				set_textures(t_file *file, char id, char *sep);
 int				set_colors(t_file *file, char id, char *sep);
 
 int				is_player_position(char c);
-int				map_verif(t_file *file);
+int				map_verif(t_file *file, t_gnrl *data);
 int				map_parse(char *line, t_file *file);
 
 int				is_sprite(char c);
@@ -205,18 +205,22 @@ int				show_map(t_gnrl *data);
 
 void			init_img(t_ray *r, t_gnrl *data);
 void			init_ray(t_ray *r, t_gnrl *data, int i);
-unsigned int	set_color(t_ray r);
+unsigned int	set_color(int id);
 void			init_tex_values(t_ray *r, t_tex *tex);
 void			react_map_char(t_ray *r, t_gnrl *data, int *stop);
 
 void			set_side(t_ray *r);
 int				calcul_img(t_gnrl *data);
 
+void			show_textured(t_gnrl *data, t_sprite *s);
+void			show_colored(t_gnrl *data, t_sprite *s);
+
+void			init_show(int *size, t_gnrl *data, int *i, t_sprite *s);
 void			sprite_sort(t_gnrl *data);
 void			sprite_seen(t_gnrl *data, t_ray *r);
 void			put_sprite(t_gnrl *data, t_sprite *s);
 
-int				is_textured(t_ray r, t_gnrl *data);
+int				is_textured(int id, t_gnrl *data);
 t_tex			*find_tex(int id, t_gnrl *data);
 
 /*

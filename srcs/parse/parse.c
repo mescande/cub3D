@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 03:22:20 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 22:47:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		parsit(t_file *file, char *name, t_gnrl *data)
 		}
 		free(line);
 	}
-	if ((gnl = map_verif(file)))
+	if ((gnl = map_verif(file, data)))
 		return (ft_close(fd, gnl, line));
 	return (ft_close(fd, 0, line));
 }

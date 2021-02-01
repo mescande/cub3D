@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:29:02 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 03:22:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 23:35:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,42 @@ static int	map_verif_char(int i, int j, t_map *map_d, int *pos)
 	return (0);
 }
 
-int			map_verif(t_file *file)
+static int	all_args_defined(t_file *file)
+{
+	t_tex	*t;
+	char	v[6];
+	int		i;
+
+	if (!file->res[X] || !file->res[Y])
+		return (61);
+	if (!file->ceiling)
+		return (62);
+	if (!file->floor)
+		return (63);
+	ft_bzero(v, 6);
+	v[0] = 1;
+	t = file->textures;
+	while (t)
+	{
+		v[t->id] = 1;
+		t = t->next;
+	}
+	i = 0;
+	while (++i < 6)
+		if (!v[i])
+			return (22 - 1 + i);
+	return (0);
+}
+
+int			map_verif(t_file *file, t_gnrl *data)
 {
 	int		ret;
 	int		i;
 	int		j;
 	int		pos;
 
+	if (!data->is_smart && (i = all_args_defined(file)))
+		return (i);
 	i = -1;
 	pos = 0;
 	if ((ret = map_squarer(&file->map)))

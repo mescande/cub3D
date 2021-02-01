@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 16:17:53 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 16:59:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 23:15:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,20 @@ void				init_ray(t_ray *r, t_gnrl *data, int i)
 	set_side(r);
 }
 
-unsigned int		set_color(t_ray r)
+unsigned int		set_color(int id)
 {
 	unsigned int	color;
 
-	if (r.wall == 1)
+	if (id == 1)
 		color = 0xaa5050;
-	if (r.wall == 2)
+	if (id == 2)
 		color = 0x50aa50;
-	if (r.wall == 3)
+	if (id == 3)
 		color = 0x5050aa;
-	if (r.wall == 4)
+	if (id == 4)
 		color = 0x50aaaa;
+	if (id == 5)
+		color = 0x5075b9;
 	return (color);
 }
 

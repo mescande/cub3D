@@ -6,11 +6,19 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 00:04:09 by user42            #+#    #+#             */
-/*   Updated: 2021/01/30 15:14:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/31 22:28:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int		is_number(char *str)
+{
+	while (*str)
+		if (!ft_isdigit(*str++))
+			return (0);
+	return (1);
+}
 
 int		set_resolution(t_file *file, char id, char *sep)
 {
@@ -22,9 +30,13 @@ int		set_resolution(t_file *file, char id, char *sep)
 	tmp = ft_strtok(NULL, sep);
 	if (tmp == NULL)
 		return (12);
+	if (!is_number(tmp))
+		return (12);
 	file->res[X] = ft_atoi(tmp);
 	tmp = ft_strtok(NULL, sep);
 	if (tmp == NULL || file->res[X] <= 0)
+		return (12);
+	if (!is_number(tmp))
 		return (12);
 	file->res[Y] = ft_atoi(tmp);
 	tmp = ft_strtok(NULL, sep);
