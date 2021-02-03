@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 23:33:25 by user42            #+#    #+#             */
-/*   Updated: 2021/01/31 00:24:59 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/03 13:24:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@ static char	g_args[] = "Arguments :\n\
 \tfichier		un fichier .cub formatte comme indique dans le sujet\n\
 \t--save		commande du sujet, permet de prendre un screenshot en .bmp\n\
 \t-h ou --help	affiche cette aide\n\
-\t-smart		laisse plus de libertees a certaines fonctions\n\
-\t-fov=<value>	definie une valeur precise pour le fov\n\
-\t-speed=<value	definie une valeur precise pour la vitesse\n";
+\t--smart		laisse plus de libertees a certaines fonctions\n";
 
 static void	help(t_gnrl *data)
 {
 	data->help = ON;
 	printf("%sCube3D%s par %smescande%s (2021 Jan)\n\n", BOLDWHITE, RESET,
 			BLUE, RESET);
-	ft_printf("utilisation : ./Cub3D [args/fichier]\n\n");
+	printf("%sUSAGE :%s\t./Cub3D [args/fichiers]\n", BOLDWHITE, RESET);
 	ft_printf("%s", g_args);
 	ft_printf("\nAllez voir le sujet dont voici le lien si vous avez plus \
 d'interrogations :\nhttps://cdn.intra.42.fr/pdf/pdf/17283/en.subject.pdf\n");
@@ -52,7 +50,7 @@ static void	save(t_gnrl *data)
 
 static void	smart(t_gnrl *data)
 {
-	if (strcmp(data->av[data->ac], "-smart"))
+	if (strcmp(data->av[data->ac], "--smart"))
 		invalid(data);
 	data->is_smart = ON;
 }
@@ -62,7 +60,7 @@ static t_args	g_list[] = {
 	{"-h", help},
 	{"--help", help},
 	{"-help", help},
-	{"-smart", smart},
+	{"--smart", smart},
 	{".cub", file_name},
 	{NULL, 0}
 };

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 18:50:51 by user42            #+#    #+#             */
-/*   Updated: 2021/02/01 20:46:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/03 13:19:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void			calcul_tex(t_ray *r, t_gnrl *data, int top, int i)
 		{
 			r->tex[Y] = (j - bottom) * tex->height / r->h;
 			data->mlx.line[(int)((j++ * data->mlx.size) + i)] =
-				tex->line[(int)((int)(r->tex[Y]) * tex->size + (int)(r->tex[X]))];
+				tex->line[((int)(r->tex[Y]) * tex->size + (int)(r->tex[X]))];
 		}
 		else
 			data->mlx.line[(j++ * data->mlx.size) + i] = data->file.floor;

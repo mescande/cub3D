@@ -6,16 +6,16 @@
 #    By: mescande <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 14:03:19 by mescande          #+#    #+#              #
-#    Updated: 2021/02/01 19:53:56 by user42           ###   ########.fr        #
+#    Updated: 2021/02/03 14:10:59 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	Cub3D
-EXEC		=	test
+
+MAKE		+= --no-print-directory
 
 CC			?=	clang-9
 CFLAGS		?=	-Wall -Werror -Wextra
-CFLAGS		+= -fsanitize=address -g
 #CFLAGS		+= -Ofast
 
 LEN_NAME	=	`printf "%s" $(NAME) | wc -c`
@@ -67,6 +67,7 @@ NB			=	$(words $(SRC_LIST))
 INDEX		=	0
 
 SHELL		:=	/bin/bash
+ARGS		?= ./tests/subject.cub
 
 all: 
 	@$(MAKE) -j -C $(LIB_DIR) $(LIB_LIB)
@@ -113,7 +114,17 @@ nolib:
 
 norme:
 	norminette $(INC_DIR) $(SRC_DIR)
-	@$(MAKE) -C $(LIB_DIR) norminette
+	@$(MAKE) -C $(LIB_DIR) norme
+
+norminette: norme
+
+test:
+	@$(MAKE) all
+	./$(NAME) $(ARGS)
+
+valgrind:
+	@$(MAKE) all
+	@valgrind ./$(NAME) $(ARGS)
 
 help:
 	@echo "all	: compiling everything that changed, linking, not relinking\n"
@@ -122,8 +133,10 @@ help:
 	@echo "test	: all and exec with validfile.rt or a file given in argument"
 	@echo "re	: fclean all"
 	@echo "nolib	: destroy object of programs only (not lib) then compiling again"
-	@echo "norminette	: execute a norme test on all code files but do no compile"
+	@echo "norme	: execute a norme test on all code files but do no compile"
 	@echo "help	: print this help"
+	@echo "test	: compile, and run the program with ARGS for argument (default : $$""(ARGS) = $(ARGS)"
+	@echo "valgrind	: compile and run the program with valgrind and ARGS for argument"
 
 .PHONY: all clean fclean re
 
