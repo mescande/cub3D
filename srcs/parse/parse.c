@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 14:20:29 by user42            #+#    #+#             */
-/*   Updated: 2021/02/01 12:50:05 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/05 13:06:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		assign(char *line, t_file *file, t_gnrl *data)
 	while (dest[++i].id)
 		if (!ft_strcmp(dest[i].id, id))
 			return (free_n_ret(save, dest[i].fct(file, i, (char *)sep)));
-	if (ft_strtok(NULL, "1 02NESWnesw"))
+	if (ft_strtok(id, "1 02NESWnesw"))
 		return (free_n_ret(save, 11));
 	return (free_n_ret(save, -1 + ((map = 1) == 0)));
 }
